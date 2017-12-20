@@ -8,5 +8,7 @@ namespace MostarConstruct.Models
     public class FooNisvet
     {
 
+        public int MyProperty { get; set; }
+
     }
 }
