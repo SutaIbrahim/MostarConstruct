@@ -1,160 +1,501 @@
 ﻿<section id="main-content">
     <section class="wrapper">
+        <div style="margin-top:150px;" id="ajaksDiv">
+            <h2>Test</h2>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <!-- widget start -->
+                <div class=" state-overview">
+                    <section class="panel">
+                        <div class="symbol red">
+                            <i class="fa fa-tags"></i>
+                        </div>
+                        <div class="value">
+                            <h1>140</h1>
+                            <p>Sales</p>
+                        </div>
+                    </section>
+                </div>
+                <!--widget end-->
+            </div>
+            <div class="col-lg-3">
+                <!-- widget start -->
+                <div class=" state-overview">
+                    <section class="panel">
+                        <div class="symbol red" style="background-color:cornflowerblue !important;">
+                            <i class="fa fa-user"></i>
+                        </div>
+                        <div class="value">
+                            <h1>140</h1>
+                            <p>Users</p>
+                        </div>
+                    </section>
+                </div>
+                <!--widget end-->
+            </div>
+            <div class="col-lg-3">
+                <!-- widget start -->
+                <div class=" state-overview">
+                    <section class="panel">
+                        <div class="symbol red" style="background-color:lightgreen !important;">
+                            <i class="fa fa-building-o"></i>
+                        </div>
+                        <div class="value">
+                            <h1>140</h1>
+                            <p>Buildings</p>
+                        </div>
+                    </section>
+                </div>
+                <!--widget end-->
+            </div>
+
+
+            <div class="col-md-3">
+                <!--profil card start-->
+                <aside class="profile-nav alt green-border">
+                    <section class="panel">
+                        <div class="user-heading alt green-bg">
+                            <a href="#">
+                                <img alt="" src="img/profile-avatar.jpg">
+                            </a>
+                            <h1>Jonathan Smith</h1>
+                            <p>jsmith@flatlab.com</p>
+                        </div>
+                        <ul class="nav nav-pills nav-stacked">
+                            <li><a href="javascript:;"> <i class="fa fa-clock-o"></i> Mail Inbox <span class="label label-primary pull-right r-activity">19</span></a></li>
+                            <li><a href="javascript:;"> <i class="fa fa-calendar"></i> Recent Activity <span class="label label-info pull-right r-activity">11</span></a></li>
+                            <li><a href="javascript:;"> <i class="fa fa-bell-o"></i> Notification <span class="label label-warning pull-right r-activity">03</span></a></li>
+                            <li><a href="javascript:;"> <i class="fa fa-envelope-o"></i> Message <span class="label label-success pull-right r-activity">10</span></a></li>
+                        </ul>
+                    </section>
+                </aside>
+                <!--profil card end-->
+            </div>
+
+
+        </div>
+        <form action="/Home/Prikaz/" data-ajax="true" data-ajax-update="#ajaksDiv" method="post">
+            <button type="submit" class="btn btn-success">Prikazi</button>
+        </form>
+
+
+
+        <!-- responsive tabela start-->
+
         <div class="row">
             <div class="col-lg-12">
                 <section class="panel">
                     <header class="panel-heading">
-                        Tabela
+                        Responsive table
                     </header>
-                    <table class="table table-striped table-advance table-hover">
-                        <thead>
-                            <tr>
-                                <th><i class="fa fa-bullhorn"></i> Klijent</th>
-                                <th class="hidden-phone"><i class="fa fa-question-circle"></i> Opis</th>
-                                <th><i class="fa fa-bookmark"></i> Zarada</th>
-                                <th><i class=" fa fa-edit"></i> Status</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><a href="#">Vector Ltd</a></td>
-                                <td class="hidden-phone">Lorem Ipsum dorolo imit</td>
-                                <td>12120.00$ </td>
-                                <td><span class="label label-info label-mini">Due</span></td>
-                                <td>
-                                    <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="#">
-                                        Adimin co
-                                    </a>
-                                </td>
-                                <td class="hidden-phone">Lorem Ipsum dorolo</td>
-                                <td>56456.00$ </td>
-                                <td><span class="label label-warning label-mini">Due</span></td>
-                                <td>
-                                    <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="#">
-                                        boka soka
-                                    </a>
-                                </td>
-                                <td class="hidden-phone">Lorem Ipsum dorolo</td>
-                                <td>14400.00$ </td>
-                                <td><span class="label label-success label-mini">Paid</span></td>
-                                <td>
-                                    <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="#">
-                                        salbal llb
-                                    </a>
-                                </td>
-                                <td class="hidden-phone">Lorem Ipsum dorolo</td>
-                                <td>2323.50$ </td>
-                                <td><span class="label label-danger label-mini">Paid</span></td>
-                                <td>
-                                    <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="#">Vector Ltd</a></td>
-                                <td class="hidden-phone">Lorem Ipsum dorolo imit</td>
-                                <td>12120.00$ </td>
-                                <td><span class="label label-primary label-mini">Due</span></td>
-                                <td>
-                                    <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="#">
-                                        Adimin co
-                                    </a>
-                                </td>
-                                <td class="hidden-phone">Lorem Ipsum dorolo</td>
-                                <td>56456.00$ </td>
-                                <td><span class="label label-warning label-mini">Due</span></td>
-                                <td>
-                                    <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="#">Vector Ltd</a></td>
-                                <td class="hidden-phone">Lorem Ipsum dorolo imit</td>
-                                <td>12120.00$ </td>
-                                <td><span class="label label-success label-mini">Due</span></td>
-                                <td>
-                                    <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="#">
-                                        Adimin co
-                                    </a>
-                                </td>
-                                <td class="hidden-phone">Lorem Ipsum dorolo</td>
-                                <td>56456.00$ </td>
-                                <td><span class="label label-warning label-mini">Due</span></td>
-                                <td>
-                                    <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="#">Vector Ltd</a></td>
-                                <td class="hidden-phone">Lorem Ipsum dorolo imit</td>
-                                <td>12120.00$ </td>
-                                <td><span class="label label-info label-mini">Due</span></td>
-                                <td>
-                                    <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="#">
-                                        Adimin co
-                                    </a>
-                                </td>
-                                <td class="hidden-phone">Lorem Ipsum dorolo</td>
-                                <td>56456.00$ </td>
-                                <td><span class="label label-warning label-mini">Due</span></td>
-                                <td>
-                                    <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Table heading</th>
+                                        <th>Table heading</th>
+                                        <th>Table heading</th>
+                                        <th>Table heading</th>
+                                        <th>Table heading</th>
+                                        <th>Table heading</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Table cell</td>
+                                        <td>Table cell</td>
+                                        <td>Table cell</td>
+                                        <td>Table cell</td>
+                                        <td>Table cell</td>
+                                        <td>Table cell</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>Table cell</td>
+                                        <td>Table cell</td>
+                                        <td>Table cell</td>
+                                        <td>Table cell</td>
+                                        <td>Table cell</td>
+                                        <td>Table cell</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>Table cell</td>
+                                        <td>Table cell</td>
+                                        <td>Table cell</td>
+                                        <td>Table cell</td>
+                                        <td>Table cell</td>
+                                        <td>Table cell</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </section>
             </div>
-        </div>
-        </section>
+
+            <!-- responsive tabela kraj -->
+            <!-- LISTA PROJEKATA START-->
+
+            <section id="main-content">
+                <section class="wrapper site-min-height">
+                    <!-- page start-->
+                    <section class="panel">
+                        <header class="panel-heading">
+                            All projects List
+                            <span class="pull-right">
+                                <button type="button" id="loading-btn" class="btn btn-warning btn-xs"><i class="fa fa-refresh"></i> Refresh</button>
+                                <a href="#" class=" btn btn-success btn-xs"> Create New Project</a>
+                            </span>
+                        </header>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <input type="text" placeholder="Search Here" class="input-sm form-control"> <span class="input-group-btn">
+                                            <button type="button" class="btn btn-sm btn-success"> Go!</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-hover p-table">
+                            <thead>
+                                <tr>
+                                    <th>Project Name</th>
+                                    <th>Team Member</th>
+                                    <th>Project Progress</th>
+                                    <th>Project Status</th>
+                                    <th>Custom</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="p-name">
+                                        <a href="project_details.html">New Dashboard BS3</a>
+                                        <br>
+                                        <small>Created 27.11.2014</small>
+                                    </td>
+                                    <td class="p-team">
+                                        <a href="#"><img alt="image" class="" src="img/chat-avatar.jpg"></a>
+                                        <a href="#"><img alt="image" class="" src="img/chat-avatar2.jpg"></a>
+                                        <a href="#"><img alt="image" class="" src="img/pro-ac-1.png"></a>
+                                    </td>
+                                    <td class="p-progress">
+                                        <div class="progress progress-xs">
+                                            <div style="width: 87%;" class="progress-bar progress-bar-success"></div>
+                                        </div>
+                                        <small>87% Complete </small>
+                                    </td>
+                                    <td>
+                                        <span class="label label-primary">Active</span>
+                                    </td>
+                                    <td>
+                                        <a href="project_details.html" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
+                                        <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
+                                        <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="p-name">
+                                        <a href="project_details.html">Creative Portfolio</a>
+                                        <br>
+                                        <small>Created 21.10.2014</small>
+                                    </td>
+                                    <td class="p-team">
+                                        <a href="#"><img alt="image" class="" src="img/chat-avatar2.jpg"></a>
+                                        <a href="#"><img alt="image" class="" src="img/pro-ac-1.png"></a>
+                                    </td>
+                                    <td class="p-progress">
+                                        <div class="progress progress-xs">
+                                            <div style="width: 65%;" class="progress-bar progress-bar-success"></div>
+                                        </div>
+                                        <small>65% Complete </small>
+                                    </td>
+                                    <td>
+                                        <span class="label label-primary">Active</span>
+                                    </td>
+                                    <td>
+                                        <a href="project_details.html" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
+                                        <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
+                                        <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="p-name">
+                                        <a href="project_details.html">Directory & listing</a>
+                                        <br>
+                                        <small>Created 2.09.2014</small>
+                                    </td>
+                                    <td class="p-team">
+                                        <a href="#"><img alt="image" class="" src="img/chat-avatar.jpg"></a>
+                                        <a href="#"><img alt="image" class="" src="img/chat-avatar2.jpg"></a>
+                                        <a href="#"><img alt="image" class="" src="img/pro-ac-1.png"></a>
+                                        <a href="#"><img alt="image" class="" src="img/pro-ac-2.png"></a>
+                                    </td>
+                                    <td class="p-progress">
+                                        <div class="progress progress-xs">
+                                            <div style="width: 55%;" class="progress-bar progress-bar-success"></div>
+                                        </div>
+                                        <small>55% Complete </small>
+                                    </td>
+                                    <td>
+                                        <span class="label label-primary">Active</span>
+                                    </td>
+                                    <td>
+                                        <a href="project_details.html" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
+                                        <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
+                                        <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="p-name">
+                                        <a href="project_details.html">New Dashboard BS3</a>
+                                        <br>
+                                        <small>Created 27.11.2014</small>
+                                    </td>
+                                    <td class="p-team">
+                                        <a href="#"><img alt="image" class="" src="img/chat-avatar.jpg"></a>
+                                        <a href="#"><img alt="image" class="" src="img/chat-avatar2.jpg"></a>
+                                        <a href="#"><img alt="image" class="" src="img/pro-ac-1.png"></a>
+                                    </td>
+                                    <td class="p-progress">
+                                        <div class="progress progress-xs">
+                                            <div style="width: 87%;" class="progress-bar progress-bar-success"></div>
+                                        </div>
+                                        <small>87% Complete </small>
+                                    </td>
+                                    <td>
+                                        <span class="label label-primary">Active</span>
+                                    </td>
+                                    <td>
+                                        <a href="project_details.html" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
+                                        <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
+                                        <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="p-name">
+                                        <a href="project_details.html">Creative Portfolio</a>
+                                        <br>
+                                        <small>Created 21.10.2014</small>
+                                    </td>
+                                    <td class="p-team">
+                                        <a href="#"><img alt="image" class="" src="img/chat-avatar2.jpg"></a>
+                                        <a href="#"><img alt="image" class="" src="img/pro-ac-1.png"></a>
+                                    </td>
+                                    <td class="p-progress">
+                                        <div class="progress progress-xs">
+                                            <div style="width: 65%;" class="progress-bar progress-bar-success"></div>
+                                        </div>
+                                        <small>65% Complete </small>
+                                    </td>
+                                    <td>
+                                        <span class="label label-primary">Active</span>
+                                    </td>
+                                    <td>
+                                        <a href="project_details.html" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
+                                        <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
+                                        <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="p-name">
+                                        <a href="project_details.html">Directory & listing</a>
+                                        <br>
+                                        <small>Created 2.09.2014</small>
+                                    </td>
+                                    <td class="p-team">
+                                        <a href="#"><img alt="image" class="" src="img/chat-avatar.jpg"></a>
+                                        <a href="#"><img alt="image" class="" src="img/chat-avatar2.jpg"></a>
+                                        <a href="#"><img alt="image" class="" src="img/pro-ac-1.png"></a>
+                                        <a href="#"><img alt="image" class="" src="img/pro-ac-2.png"></a>
+                                    </td>
+                                    <td class="p-progress">
+                                        <div class="progress progress-xs">
+                                            <div style="width: 55%;" class="progress-bar progress-bar-success"></div>
+                                        </div>
+                                        <small>55% Complete </small>
+                                    </td>
+                                    <td>
+                                        <span class="label label-default">Inactive</span>
+                                    </td>
+                                    <td>
+                                        <a href="project_details.html" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
+                                        <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
+                                        <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="p-name">
+                                        <a href="project_details.html">New Dashboard BS3</a>
+                                        <br>
+                                        <small>Created 27.11.2014</small>
+                                    </td>
+                                    <td class="p-team">
+                                        <a href="#"><img alt="image" class="" src="img/chat-avatar.jpg"></a>
+                                        <a href="#"><img alt="image" class="" src="img/chat-avatar2.jpg"></a>
+                                        <a href="#"><img alt="image" class="" src="img/pro-ac-1.png"></a>
+                                    </td>
+                                    <td class="p-progress">
+                                        <div class="progress progress-xs">
+                                            <div style="width: 87%;" class="progress-bar progress-bar-success"></div>
+                                        </div>
+                                        <small>87% Complete </small>
+                                    </td>
+                                    <td>
+                                        <span class="label label-primary">Active</span>
+                                    </td>
+                                    <td>
+                                        <a href="project_details.html" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
+                                        <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
+                                        <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="p-name">
+                                        <a href="project_details.html">Creative Portfolio</a>
+                                        <br>
+                                        <small>Created 21.10.2014</small>
+                                    </td>
+                                    <td class="p-team">
+                                        <a href="#"><img alt="image" class="" src="img/chat-avatar2.jpg"></a>
+                                        <a href="#"><img alt="image" class="" src="img/pro-ac-1.png"></a>
+                                    </td>
+                                    <td class="p-progress">
+                                        <div class="progress progress-xs">
+                                            <div style="width: 65%;" class="progress-bar progress-bar-success"></div>
+                                        </div>
+                                        <small>65% Complete </small>
+                                    </td>
+                                    <td>
+                                        <span class="label label-default">Inactive</span>
+                                    </td>
+                                    <td>
+                                        <a href="project_details.html" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
+                                        <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
+                                        <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="p-name">
+                                        <a href="project_details.html">Directory & listing</a>
+                                        <br>
+                                        <small>Created 2.09.2014</small>
+                                    </td>
+                                    <td class="p-team">
+                                        <a href="#"><img alt="image" class="" src="img/chat-avatar.jpg"></a>
+                                        <a href="#"><img alt="image" class="" src="img/chat-avatar2.jpg"></a>
+                                        <a href="#"><img alt="image" class="" src="img/pro-ac-1.png"></a>
+                                        <a href="#"><img alt="image" class="" src="img/pro-ac-2.png"></a>
+                                    </td>
+                                    <td class="p-progress">
+                                        <div class="progress progress-xs">
+                                            <div style="width: 55%;" class="progress-bar progress-bar-success"></div>
+                                        </div>
+                                        <small>55% Complete </small>
+                                    </td>
+                                    <td>
+                                        <span class="label label-primary">Active</span>
+                                    </td>
+                                    <td>
+                                        <a href="project_details.html" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
+                                        <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
+                                        <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="p-name">
+                                        <a href="project_details.html">New Dashboard BS3</a>
+                                        <br>
+                                        <small>Created 27.11.2014</small>
+                                    </td>
+                                    <td class="p-team">
+                                        <a href="#"><img alt="image" class="" src="img/chat-avatar.jpg"></a>
+                                        <a href="#"><img alt="image" class="" src="img/chat-avatar2.jpg"></a>
+                                        <a href="#"><img alt="image" class="" src="img/pro-ac-1.png"></a>
+                                    </td>
+                                    <td class="p-progress">
+                                        <div class="progress progress-xs">
+                                            <div style="width: 87%;" class="progress-bar progress-bar-success"></div>
+                                        </div>
+                                        <small>87% Complete </small>
+                                    </td>
+                                    <td>
+                                        <span class="label label-primary">Active</span>
+                                    </td>
+                                    <td>
+                                        <a href="project_details.html" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
+                                        <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
+                                        <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="p-name">
+                                        <a href="project_details.html">Creative Portfolio</a>
+                                        <br>
+                                        <small>Created 21.10.2014</small>
+                                    </td>
+                                    <td class="p-team">
+                                        <a href="#"><img alt="image" class="" src="img/chat-avatar2.jpg"></a>
+                                        <a href="#"><img alt="image" class="" src="img/pro-ac-1.png"></a>
+                                    </td>
+                                    <td class="p-progress">
+                                        <div class="progress progress-xs">
+                                            <div style="width: 65%;" class="progress-bar progress-bar-success"></div>
+                                        </div>
+                                        <small>65% Complete </small>
+                                    </td>
+                                    <td>
+                                        <span class="label label-primary">Active</span>
+                                    </td>
+                                    <td>
+                                        <a href="project_details.html" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
+                                        <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
+                                        <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="p-name">
+                                        <a href="project_details.html">Directory & listing</a>
+                                        <br>
+                                        <small>Created 2.09.2014</small>
+                                    </td>
+                                    <td class="p-team">
+                                        <a href="#"><img alt="image" class="" src="img/chat-avatar.jpg"></a>
+                                        <a href="#"><img alt="image" class="" src="img/chat-avatar2.jpg"></a>
+                                        <a href="#"><img alt="image" class="" src="img/pro-ac-1.png"></a>
+                                        <a href="#"><img alt="image" class="" src="img/pro-ac-2.png"></a>
+                                    </td>
+                                    <td class="p-progress">
+                                        <div class="progress progress-xs">
+                                            <div style="width: 55%;" class="progress-bar progress-bar-success"></div>
+                                        </div>
+                                        <small>55% Complete </small>
+                                    </td>
+                                    <td>
+                                        <span class="label label-primary">Active</span>
+                                    </td>
+                                    <td>
+                                        <a href="project_details.html" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
+                                        <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
+                                        <a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+                    <!-- page end-->
+                </section>
+            </section>
+
+            <!--LISTA PROJEKATA KRAJ-->
+
+
+
+</section>
 </section>

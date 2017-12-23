@@ -28,6 +28,10 @@ namespace MostarConstruct.Controllers
 
             return View();
         }
+        public string Prikaz()
+        {
+            return "Ja sam pozvan ajaxom!";
+        }
 
         public IActionResult Error()
         {
