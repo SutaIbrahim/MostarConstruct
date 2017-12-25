@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MostarConstruct.Data;
+using MostarConstruct.Web.Helper;
+using MostarConstruct.Web.Helper.IHelper;
 
 namespace MostarConstruct
 {
@@ -25,7 +27,10 @@ namespace MostarConstruct
         {
             string connectionString = Configuration.GetConnectionString("MostarConstruct");
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionString));
+            services.AddScoped<IDropdown, Dropdown>();
             services.AddMvc();
+            services.AddMemoryCache();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,7 +47,7 @@ namespace MostarConstruct
             }
 
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

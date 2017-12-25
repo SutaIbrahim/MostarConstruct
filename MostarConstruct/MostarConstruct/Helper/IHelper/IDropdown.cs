@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MostarConstruct.Models
+namespace MostarConstruct.Web.Helper.IHelper
 {
-    public class TestKlasa
+    public interface IDropdown
     {
     }
 }
