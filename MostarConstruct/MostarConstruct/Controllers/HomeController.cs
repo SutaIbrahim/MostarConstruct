@@ -45,6 +45,7 @@ namespace MostarConstruct.Controllers
             LogiranjeAktivnosti logiranje = new LogiranjeAktivnosti(context);
             logiranje.Logiraj(2, DateTime.Now.ToLocalTime(), Request.HttpContext.Connection.RemoteIpAddress.ToString(), Request.Headers["User-Agent"].ToString().Substring(0,100), "Dodavanje", "Korisnici");
             return View("Index");
+            
         }
         public IActionResult Error()
         {
