@@ -24,4 +24,8 @@
     <ProjectReference Include="..\MostarConstruct.Data\MostarConstruct.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Administracija\Controllers\" />
+  </ItemGroup>
+
 </Project>
