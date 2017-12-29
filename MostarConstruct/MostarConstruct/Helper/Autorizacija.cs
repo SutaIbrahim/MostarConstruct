@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
+using MostarConstruct.Data;
 using MostarConstruct.Models;
 using System;
 using System.Collections.Generic;
@@ -9,12 +10,11 @@ namespace MostarConstruct.Web.Helper
 {
     public class Autorizacija : Attribute, IAuthorizationFilter
     {
-        private readonly bool _sviZaposlenici;
+        private readonly bool _sviKorisnici;
         private readonly TipKorisnika[] _korisnickeUloge;
-
-        public Autorizacija(bool sviZaposlenici, params TipKorisnika[] korisnickeUloge)
+        public Autorizacija(bool sviKorisnici, params TipKorisnika[] korisnickeUloge)
         {
-            _sviZaposlenici = sviZaposlenici;
+            _sviKorisnici = sviKorisnici;
             _korisnickeUloge = korisnickeUloge;
         }
 
@@ -22,16 +22,25 @@ namespace MostarConstruct.Web.Helper
         {
             Korisnik korisnik = Autentifikacija.GetLogiraniKorisnik(context.HttpContext);
 
-            if(korisnik == null)
+            if (korisnik == null)
             {
-                context.HttpContext.Response.Redirect("/Login");
+                context.HttpContext.Response.Redirect("/Racun/Prijava");
                 return;
             }
 
-            if (_sviZaposlenici)
+            if (_sviKorisnici)
                 return;
 
-            context.HttpContext.Response.Redirect("/Login");
+            if (!_sviKorisnici && korisnik.IsAdmin && _korisnickeUloge.Contains(TipKorisnika.Administrator))
+                return;
+
+            if (!_sviKorisnici && korisnik.IsClanUprave && _korisnickeUloge.Contains(TipKorisnika.ClanUprave))
+                return;
+
+            if (!_sviKorisnici && korisnik.IsPoslovodja && _korisnickeUloge.Contains(TipKorisnika.Poslovodja))
+                return;
+
+            context.HttpContext.Response.Redirect("/Racun/Prijava");
         }
     }
 }

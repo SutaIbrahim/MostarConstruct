@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Web;
+using MostarConstruct.Data;
 
 namespace MostarConstruct.Web.Helper
 {
@@ -18,29 +19,32 @@ namespace MostarConstruct.Web.Helper
     public class Autentifikacija
     {
         private const string LogiraniKorisnik = "logirani_korisnik";
+        private IServiceProvider service;
 
-        public static void PokreniNovuSesiju(Korisnik korisnik, HttpContext context, bool zapamtiPassword)
+        public Autentifikacija(IServiceProvider service)
+        {
+            this.service = service;
+        }
+
+        public static void PokreniNovuSesiju(Korisnik korisnik, HttpContext context)
         {
             context.Session.SetJson(LogiraniKorisnik, korisnik);
 
-            if(zapamtiPassword)
-            {
-                CookieOptions options = new CookieOptions();
-                options.Expires = DateTime.Now.AddDays(10);
-                context.Response.Cookies.Append("_mvc_session", korisnik != null ? korisnik.KorisnikID.ToString() : "");
-            }
+           
         }
-
+        
         public static Korisnik GetLogiraniKorisnik(HttpContext context)
         {
             Korisnik korisnik = context.Session.GetJson<Korisnik>(LogiraniKorisnik);
 
             if (korisnik != null)
                 return korisnik;
+            
+            PokreniNovuSesiju(korisnik, context);
 
-            //context.Request.Cookies.Get("_mvc_session");
-
-            return null;
+            return korisnik;
         }
+
+
     }
 }

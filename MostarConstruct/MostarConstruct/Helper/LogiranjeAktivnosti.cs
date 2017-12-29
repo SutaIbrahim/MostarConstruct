@@ -14,9 +14,7 @@ namespace MostarConstruct.Web.Helper
         public LogiranjeAktivnosti(DatabaseContext context)
         {
             this.context = context;
-        }
-
-       
+        }       
 
         public void Logiraj(int KorisnikID,DateTime datum,string IPAdresa,string browser,string aktivnost,string tabela)
         {

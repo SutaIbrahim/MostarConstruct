@@ -10,6 +10,7 @@ using MostarConstruct.Web.Helper;
 
 namespace MostarConstruct.Controllers
 {
+    [Autorizacija(false, TipKorisnika.Poslovodja)]
     public class HomeController : Controller
     {
         private DatabaseContext context;
