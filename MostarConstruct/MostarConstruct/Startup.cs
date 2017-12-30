@@ -25,6 +25,7 @@ namespace MostarConstruct
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
             string connectionString = Configuration.GetConnectionString("MostarConstruct");
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionString));
             services.AddScoped<IDropdown, Dropdown>();

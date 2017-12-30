@@ -1,0 +1,35 @@
+﻿@model LoginViewModel
+@{
+    Layout = null;
+}
+
+
+<!-- Bootstrap core CSS -->
+<link href="~/css/bootstrap.min.css" rel="stylesheet">
+<link href="~/css/validationErrors.css" rel="stylesheet">
+<link href="~/css/bootstrap-reset.css" rel="stylesheet">
+<!--external css-->
+<link href="~/css/font-awesome/css/font-awesome.css" rel="stylesheet" />
+<!-- Custom styles for this template -->
+<link href="~/css/style.css" rel="stylesheet">
+<link href="~/css/style-responsive.css" rel="stylesheet" />
+
+<div class="container">
+    <form class="form-signin" asp-action="Prijava" method="post">
+
+        <h2 class="form-signin-heading">Mostar Construct</h2>
+
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div asp-validation-summary="All" class="alert alert-danger"></div>
+        }
+
+            <div class="login-wrap">
+                <input asp-for="LoginData" class="form-control" placeholder="Unesite vase korisnicko ime ili email" autofocus>
+                <input asp-for="Password" class="form-control" placeholder="Unesite vasu lozinku">
+
+                <button class="btn btn-lg btn-login btn-block" type="submit">PRIJAVA</button>
+
+            </div>
+    </form>
+</div>

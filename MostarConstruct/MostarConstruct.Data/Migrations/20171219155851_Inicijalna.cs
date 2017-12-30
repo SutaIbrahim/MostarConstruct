@@ -434,7 +434,7 @@ namespace MostarConstruct.Migrations
                         column: x => x.RadnikID,
                         principalTable: "Radnici",
                         principalColumn: "RadnikID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -464,7 +464,7 @@ namespace MostarConstruct.Migrations
                         column: x => x.RadnikID,
                         principalTable: "Radnici",
                         principalColumn: "RadnikID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -521,7 +521,7 @@ namespace MostarConstruct.Migrations
                         column: x => x.ProjektID,
                         principalTable: "Projekti",
                         principalColumn: "ProjektID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -552,7 +552,7 @@ namespace MostarConstruct.Migrations
                         column: x => x.ProjektID,
                         principalTable: "Projekti",
                         principalColumn: "ProjektID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -584,7 +584,7 @@ namespace MostarConstruct.Migrations
                         column: x => x.ProjektID,
                         principalTable: "Projekti",
                         principalColumn: "ProjektID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -622,7 +622,7 @@ namespace MostarConstruct.Migrations
                         column: x => x.ProjektID,
                         principalTable: "Projekti",
                         principalColumn: "ProjektID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -659,13 +659,13 @@ namespace MostarConstruct.Migrations
                         column: x => x.RadilisteID,
                         principalTable: "Radilista",
                         principalColumn: "RadilisteID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_InventarRadiliste_Radnici_RadnikID",
                         column: x => x.RadnikID,
                         principalTable: "Radnici",
                         principalColumn: "RadnikID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -700,25 +700,25 @@ namespace MostarConstruct.Migrations
                         column: x => x.KorisnikID,
                         principalTable: "Korisnici",
                         principalColumn: "KorisnikID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_PutniNalozi_Radilista_RadilisteID",
                         column: x => x.RadilisteID,
                         principalTable: "Radilista",
                         principalColumn: "RadilisteID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_PutniNalozi_Radnici_RadnikID",
                         column: x => x.RadnikID,
                         principalTable: "Radnici",
                         principalColumn: "RadnikID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_PutniNalozi_Vozila_VoziloID",
                         column: x => x.VoziloID,
                         principalTable: "Vozila",
                         principalColumn: "VoziloID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -749,7 +749,7 @@ namespace MostarConstruct.Migrations
                         column: x => x.RadnikID,
                         principalTable: "Radnici",
                         principalColumn: "RadnikID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(

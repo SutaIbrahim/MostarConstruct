@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
+    <UserSecretsId>3889e921-33c5-4bb9-b70a-cc938845ddae</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,10 +23,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MostarConstruct.Data\MostarConstruct.Data.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Areas\Administracija\Controllers\" />
   </ItemGroup>
 
 </Project>

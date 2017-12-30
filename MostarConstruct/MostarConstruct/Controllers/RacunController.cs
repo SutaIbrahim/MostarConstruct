@@ -24,12 +24,15 @@ namespace MostarConstruct.Web.Controllers
 
         public IActionResult Prijava()
         {
-            return View("Index", new LoginViewModel());
+            return View(new LoginViewModel());
         }
 
         [HttpPost]
         public IActionResult Prijava(LoginViewModel vm)
         {
+            if (!ModelState.IsValid)
+                return View(vm);
+
             // poslovodja
             Korisnik k = db.Korisnici.Where(x => x.KorisnickoIme == vm.LoginData).FirstOrDefault();
             Autentifikacija.PokreniNovuSesiju(k, httpContext.HttpContext);
