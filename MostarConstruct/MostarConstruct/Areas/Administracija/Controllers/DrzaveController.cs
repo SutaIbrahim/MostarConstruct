@@ -25,13 +25,13 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
         #endregion
 
         #region Create
-        public IActionResult Dodaj() => PartialView(new Drzava());
+        public IActionResult Dodaj() => View(new Drzava());
 
         [HttpPost]
         public IActionResult Dodaj(Drzava drzava)
         {
             if (!ModelState.IsValid)
-                return PartialView(drzava);
+                return View(drzava);
 
             db.Drzave.Add(drzava);
             db.SaveChanges();
@@ -42,7 +42,14 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
 
 
         #region Edit
+        public IActionResult Uredi(int id)
+        {
+            Drzava drzava = db.Drzave.Where(x => x.DrzavaID == id).FirstOrDefault();
 
+            if (drzava != null)
+                return View(drzava);
+            return new StatusCodeResult(404);
+        } 
         #endregion
 
 

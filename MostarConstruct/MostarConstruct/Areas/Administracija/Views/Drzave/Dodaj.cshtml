@@ -1,21 +1,42 @@
 ﻿@model Drzava
+@{
+    ViewData["Title"] = "Dodaj";
+}
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true"></span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    DODAJ DRZAVU
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"></button>
-                    <button type="button" class="btn btn-primary"></button>
-                </div>
+<h2>Nova drzava</h2>
+
+<hr />
+
+<form asp-action="Dodaj" method="post">
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div asp-validation-summary="All" class="alert alert-danger"></div>
+    }
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Naziv">Naziv:</label>
+                <input asp-for="Naziv" class="form-control" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Oznaka">Oznaka:</label>
+                <input asp-for="Oznaka" class="form-control" />
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="pull-right">
+                <button type="submit" class="btn btn-primary">Sacuvaj</button>
+                <a asp-action="Index" class="btn btn-default">Odustani</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+
