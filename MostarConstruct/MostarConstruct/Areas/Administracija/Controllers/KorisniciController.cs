@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MostarConstruct.Data;
+using MostarConstruct.Models;
 using MostarConstruct.Web.Areas.Administracija.ViewModels;
 using MostarConstruct.Web.Helper;
 using MostarConstruct.Web.Helper.IHelper;
@@ -36,7 +37,38 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
         [HttpPost]
         public IActionResult Dodaj(KorisniciDodajViewModel model)
         {
-            return View();
+            if (!ModelState.IsValid)
+                return View(GetDefaultViewModel(model));
+
+            Osoba osoba = model.Osoba;
+            db.Osobe.Add(osoba);
+
+            Korisnik korisnik = model.Korisnik;
+            korisnik.LozinkaHash = Sigurnost.GenerisiPassword();
+            korisnik.DatumRegistracije = DateTime.Now;
+            korisnik.Aktivan = true;
+            korisnik.PromijenioLozinku = false;
+
+            if(model.TipKorisnika == TipKorisnika.Administrator)
+            {
+                korisnik.IsAdmin = true;
+                korisnik.IsClanUprave = korisnik.IsPoslovodja = false;
+            }
+            else if(model.TipKorisnika == TipKorisnika.Poslovodja)
+            {
+                korisnik.IsPoslovodja = true;
+                korisnik.IsAdmin = korisnik.IsClanUprave = false;
+            }
+            else
+            {
+                korisnik.IsClanUprave = true;
+                korisnik.IsPoslovodja = korisnik.IsAdmin = false;
+            }
+
+            db.Korisnici.Add(korisnik);
+            db.SaveChanges();
+
+            return Content("De pgoedaj bazu");
         }
 
         private KorisniciDodajViewModel GetDefaultViewModel(KorisniciDodajViewModel model)
@@ -46,7 +78,7 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
             model.Gradovi = model.Gradovi ?? dropdown.Gradovi();
             model.Regije = model.Regije ?? dropdown.Regije();
             model.Drzave = model.Drzave ?? dropdown.Drzave();
-            model.Uloge = model.Uloge ?? null;
+            model.Uloge = model.Uloge ?? dropdown.Uloge();
 
             return model;
         }

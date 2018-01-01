@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MostarConstruct.Web.Areas.Administracija.Controllers
 {
-    public class KantoniController : Controller
+    public class RegijeController : Controller
     {
         public IActionResult Index()
         {

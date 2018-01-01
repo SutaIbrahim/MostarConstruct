@@ -11,9 +11,10 @@ using System;
 namespace MostarConstruct.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20180101182535_dodaniAttrs")]
+    partial class dodaniAttrs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -229,7 +230,8 @@ namespace MostarConstruct.Migrations
                         .IsRequired()
                         .HasMaxLength(30);
 
-                    b.Property<string>("LozinkaHash");
+                    b.Property<string>("LozinkaHash")
+                        .IsRequired();
 
                     b.Property<bool>("PromijenioLozinku");
 

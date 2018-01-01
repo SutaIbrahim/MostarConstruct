@@ -6,6 +6,12 @@
 <h2>Dodaj</h2>
 
 <form asp-action="Dodaj" method="post">
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div asp-validation-summary="All" class="alert alert-danger"></div>
+    }
+
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
@@ -21,31 +27,11 @@
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <label asp-for="Osoba.Email">Email:</label>
-                <input asp-for="Osoba.Email" class="form-control" />
+                <label asp-for="Osoba.DatumRodjenja">Datum rodjenja:</label>
+                <input asp-for="Osoba.DatumRodjenja" class="form-control" />
             </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-4">
-            <div class="form-group">
-                <label asp-for="Korisnik.KorisnickoIme">Korisnicko ime:</label>
-                <input asp-for="Korisnik.KorisnickoIme" class="form-control" />
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <label asp-for="Osoba.Prezime">Prezime:</label>
-                <input asp-for="Osoba.Prezime" class="form-control" />
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <label asp-for="Osoba.Email">Email:</label>
-                <input asp-for="Osoba.Email" class="form-control" />
-            </div>
-        </div>
     </div>
 
     <div class="row">
@@ -68,5 +54,37 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="Korisnik.KorisnickoIme">Korisnicko ime:</label>
+                <input asp-for="Korisnik.KorisnickoIme" class="form-control" />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="Osoba.Email">Email:</label>
+                <input asp-for="Osoba.Email" class="form-control" />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="TipKorisnika">Uloga:</label>
+                <select asp-for="TipKorisnika" class="form-control" asp-items="Model.Uloge"></select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="pull-right">
+                <button type="submit" class="btn btn-primary">Dodaj</button>
+                <a asp-action="Index" class="btn btn-default">Odustani</a>
+            </div>
+        </div>
+    </div>
+
 </form>
 

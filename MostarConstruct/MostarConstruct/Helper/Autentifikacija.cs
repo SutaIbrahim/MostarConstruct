@@ -18,24 +18,22 @@ namespace MostarConstruct.Web.Helper
     }
     public class Autentifikacija
     {
-        private const string LogiraniKorisnik = "logirani_korisnik";
-        private IServiceProvider service;
+        private const string _logiraniKorisnik = "logirani_korisnik";
+        private IHttpContextAccessor httpContextAccessor;
 
-        public Autentifikacija(IServiceProvider service)
+        public Autentifikacija(IHttpContextAccessor httpContextAccessor)
         {
-            this.service = service;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         public static void PokreniNovuSesiju(Korisnik korisnik, HttpContext context)
         {
-            context.Session.SetJson(LogiraniKorisnik, korisnik);
-
-           
+            context.Session.SetJson(_logiraniKorisnik, korisnik);           
         }
         
         public static Korisnik GetLogiraniKorisnik(HttpContext context)
         {
-            Korisnik korisnik = context.Session.GetJson<Korisnik>(LogiraniKorisnik);
+            Korisnik korisnik = context.Session.GetJson<Korisnik>(_logiraniKorisnik);
 
             if (korisnik != null)
                 return korisnik;

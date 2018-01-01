@@ -24,10 +24,8 @@ namespace MostarConstruct.Models
         [Required]
         [Display(Name = "Datum rodjenja")]
         public DateTime DatumRodjenja { get; set; }
-        [Required]
         [StringLength(13, MinimumLength = 13)]
         public string JMBG { get; set; }
-        [Required]
         [StringLength(15)]
         public string Spol { get; set; }
         public byte[] Slika { get; set; }

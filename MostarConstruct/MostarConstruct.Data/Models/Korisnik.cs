@@ -17,7 +17,6 @@ namespace MostarConstruct.Models
         [Required]
         [StringLength(30, MinimumLength = 3)]
         public string KorisnickoIme { get; set; }
-        [Required]
         public string LozinkaHash { get; set; }
         [Required]
         [Display(Name = "Datum registracije")]
@@ -32,5 +31,7 @@ namespace MostarConstruct.Models
         public bool IsPoslovodja { get; set; }
         [Required]
         public bool IsClanUprave { get; set; }
+        [Required]
+        public bool PromijenioLozinku { get; set; }
     }
 }

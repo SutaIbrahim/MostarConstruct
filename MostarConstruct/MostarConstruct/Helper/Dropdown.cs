@@ -58,7 +58,16 @@ namespace MostarConstruct.Web.Helper
 
         public IEnumerable<SelectListItem> Uloge(bool praznaLista = true)
         {
-            throw new NotImplementedException();
+            List<SelectListItem> uloge = new List<SelectListItem>();
+
+            if (praznaLista)
+                uloge.Add(new SelectListItem() { Value = string.Empty, Text = "Odaberite ulogu" });
+
+            uloge.Add(new SelectListItem() { Value = TipKorisnika.Administrator.ToString(), Text = Konfiguracija.Admin });
+            uloge.Add(new SelectListItem() { Value = TipKorisnika.Poslovodja.ToString(), Text = Konfiguracija.Poslovodja });
+            uloge.Add(new SelectListItem() { Value = TipKorisnika.ClanUprave.ToString(), Text = Konfiguracija.ClanUprave });
+
+            return uloge;
         }
     }
 }

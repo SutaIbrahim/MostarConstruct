@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MostarConstruct.Data;
 using MostarConstruct.Models;
@@ -14,13 +15,16 @@ namespace MostarConstruct.Controllers
     public class HomeController : Controller
     {
         private DatabaseContext context;
-        public HomeController(DatabaseContext context)
+        private IHttpContextAccessor httpContextAccessor;
+        public HomeController(DatabaseContext context, IHttpContextAccessor httpContextAccessor)
         {
             this.context = context;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         public IActionResult Index()
         {
+            ViewData[Konfiguracija.LogiraniKorisnik] = httpContextAccessor.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
             return View();
             
         }

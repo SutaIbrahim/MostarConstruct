@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@{ 
+    var trenutniKorisnik = ViewData[Konfiguracija.LogiraniKorisnik] as Korisnik ?? null;
+}
+<!DOCTYPE html>
 <html lang="en">
 
 <!-- Mirrored from thevectorlab.net/flatlab/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 19 Dec 2017 18:08:09 GMT -->
@@ -14,7 +17,6 @@
     @*<environment include="Development">*@
     <!-- Bootstrap core CSS -->
     <script src="~/js/jquery.js"></script>
-
 
     <link href="~/css/bootstrap.min.css" rel="stylesheet">
     <link href="~/css/bootstrap-reset.css" rel="stylesheet">
@@ -82,87 +84,67 @@
                 <!-- sidebar menu start-->
                 <ul class="sidebar-menu" id="nav-accordion">
                     <li>
-                        <a class="active" href="index.html">
+                        <a class="active" asp-controller="Home" asp-action="Index">
                             <i class="fa fa-dashboard"></i>
-                            <span>Dashboard</span>
+                            <span>Pocetna</span>
                         </a>
                     </li>
 
                     <li class="sub-menu">
                         <a href="javascript:;">
-                            <i class="fa fa-laptop"></i>
-                            <span>Layouts</span>
+                            <i class="fa fa-user"></i>
+                            <span>Korisnici</span>
                         </a>
                         <ul class="sub">
-                            <li><a href="boxed_page.html">Boxed Page</a></li>
-                            <li><a href="horizontal_menu.html">Horizontal Menu</a></li>
-                            <li><a href="header-color.html">Different Color Top bar</a></li>
-                            <li><a href="mega_menu.html">Mega Menu</a></li>
-                            <li><a href="language_switch_bar.html">Language Switch Bar</a></li>
-                            <li><a href="email_template.html" target="_blank">Email Template</a></li>
+                            <li><a asp-area="Administracija" asp-controller="Korisnici" asp-action="Index">Prikaz</a></li>
+                            <li><a asp-area="Administracija" asp-controller="Korisnici" asp-action="Dodaj">Dodaj</a></li>
+                            
                         </ul>
                     </li>
 
                     <li class="sub-menu">
                         <a href="javascript:;">
-                            <i class="fa fa-book"></i>
-                            <span>UI Elements</span>
+                            <i class="fa fa-location-arrow"></i>
+                            <span>Lokacije</span>
                         </a>
                         <ul class="sub">
-                            <li><a href="general.html">General</a></li>
-                            <li><a href="buttons.html">Buttons</a></li>
-                            <li><a href="modal.html">Modal</a></li>
-                            <li><a href="toastr.html">Toastr Notifications</a></li>
-                            <li><a href="widget.html">Widget</a></li>
-                            <li><a href="slider.html">Slider</a></li>
-                            <li><a href="nestable.html">Nestable</a></li>
-                            <li><a href="font_awesome.html">Font Awesome</a></li>
+                            <li><a asp-area="Administracija" asp-controller="Drzave" asp-action="Index">Drzave</a></li>
+                            <li><a asp-area="Administracija" asp-controller="Regije" asp-action="Index">Regije</a></li>
+                            <li><a asp-area="Administracija" asp-controller="Gradovi" asp-action="Index">Gradovi</a></li>                            
                         </ul>
                     </li>
 
                     <li class="sub-menu">
                         <a href="javascript:;">
-                            <i class="fa fa-cogs"></i>
-                            <span>Components</span>
+                            <i class="fa fa-drivers-license-o"></i>
+                            <span>Vozni park</span>
                         </a>
                         <ul class="sub">
-                            <li><a href="grids.html">Grids</a></li>
-                            <li><a href="calendar.html">Calendar</a></li>
-                            <li><a href="gallery.html">Gallery</a></li>
-                            <li><a href="todo_list.html">Todo List</a></li>
-                            <li><a href="draggable_portlet.html">Draggable Portlet</a></li>
-                            <li><a href="tree.html">Tree View</a></li>
+                            <li><a asp-area="Administracija" asp-controller="Vozila" asp-action="Index">Prikaz</a></li>
+                            <li><a asp-area="Administracija" asp-controller="Vozila" asp-action="Dodaj">Dodaj</a></li>                            
                         </ul>
                     </li>
                     <li class="sub-menu">
                         <a href="javascript:;">
-                            <i class="fa fa-tasks"></i>
-                            <span>Form Stuff</span>
+                            <i class="fa fa-usb"></i>
+                            <span>Inventar</span>
                         </a>
                         <ul class="sub">
-                            <li><a href="form_component.html">Form Components</a></li>
-                            <li><a href="advanced_form_components.html">Advanced Components</a></li>
-                            <li><a href="form_wizard.html">Form Wizard</a></li>
-                            <li><a href="form_validation.html">Form Validation</a></li>
-                            <li><a href="dropzone.html">Dropzone File Upload</a></li>
-                            <li><a href="inline_editor.html">Inline Editor</a></li>
-                            <li><a href="image_cropping.html">Image Cropping</a></li>
-                            <li><a href="file_upload.html">Multiple File Upload</a></li>
+                            <li><a asp-area="Administracija" asp-controller="Inventar" asp-action="Index">Prikaz</a></li>
+                            <li><a asp-area="Administracija" asp-controller="Inventar" asp-action="Dodaj">Dodaj</a></li>
                         </ul>
                     </li>
                     <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class="fa fa-th"></i>
-                            <span>Data Tables</span>
+                        <a asp-area="Administracija" asp-controller="Inventar" asp-action="Index">
+                            <i class="fa fa-user"></i>
+                            <span>Aktivnosti</span>
                         </a>
-                        <ul class="sub">
-                            <li><a href="basic_table.html">Basic Table</a></li>
-                            <li><a href="responsive_table.html">Responsive Table</a></li>
-                            <li><a href="dynamic_table.html">Dynamic Table</a></li>
-                            <li><a href="editable_table.html">Editable Table</a></li>
-                        </ul>
+                        @*<ul class="sub">
+                            <li><a asp-area="Administracija" asp-controller="Inventar" asp-action="Index">Prikaz</a></li>
+                          
+                        </ul>*@
                     </li>
-                    <li class="sub-menu">
+                    @*<li class="sub-menu">
                         <a href="javascript:;">
                             <i class=" fa fa-envelope"></i>
                             <span>Mail</span>
@@ -263,7 +245,7 @@
                             </li>
                         </ul>
                     </li>
-                    <!--multi level menu end-->
+                    <!--multi level menu end-->*@
 
                 </ul>
                 <!-- sidebar menu end-->

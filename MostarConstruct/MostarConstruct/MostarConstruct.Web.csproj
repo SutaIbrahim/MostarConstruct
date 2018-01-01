@@ -22,6 +22,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Areas\Administracija\Views\Shared\Error.cshtml" />
+    <None Include="Areas\Administracija\Views\Shared\_Layout.cshtml" />
+    <None Include="Areas\Administracija\Views\Shared\_ValidationScriptsPartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MostarConstruct.Data\MostarConstruct.Data.csproj" />
   </ItemGroup>
 
