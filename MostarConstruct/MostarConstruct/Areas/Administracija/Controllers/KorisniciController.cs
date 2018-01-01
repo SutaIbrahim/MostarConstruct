@@ -44,6 +44,7 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
             db.Osobe.Add(osoba);
 
             Korisnik korisnik = model.Korisnik;
+            korisnik.KorisnikID = osoba.OsobaID;
             korisnik.LozinkaHash = Sigurnost.GenerisiPassword();
             korisnik.DatumRegistracije = DateTime.Now;
             korisnik.Aktivan = true;
