@@ -31,4 +31,8 @@
     <ProjectReference Include="..\MostarConstruct.Data\MostarConstruct.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Poslovodja\ViewModels\" />
+  </ItemGroup>
+
 </Project>
