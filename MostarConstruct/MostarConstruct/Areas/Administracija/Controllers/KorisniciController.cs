@@ -61,7 +61,7 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
 
             Korisnik korisnik = model.Korisnik;
             korisnik.KorisnikID = osoba.OsobaID;
-            korisnik.LozinkaHash = Sigurnost.GenerisiPassword();
+            korisnik.LozinkaHash = Sigurnost.PostaviPocetnuLozinku();
             korisnik.DatumRegistracije = DateTime.Now;
             korisnik.Aktivan = true;
             korisnik.PromijenioLozinku = false;

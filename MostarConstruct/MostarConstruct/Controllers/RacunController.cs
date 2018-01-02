@@ -30,12 +30,50 @@ namespace MostarConstruct.Web.Controllers
         [HttpPost]
         public IActionResult Prijava(LoginViewModel vm)
         {
+            Korisnik korisnik = db.Korisnici.Where(x => x.KorisnickoIme == vm.LoginData).FirstOrDefault();
+
+            if (korisnik == null)
+                ModelState.AddModelError("", "Korisnicko ime ili lozinka nisu tacni");
+            else
+            {
+                if (!Sigurnost.DaLiSePodudaraju(korisnik.LozinkaHash, vm.Password))
+                    ModelState.AddModelError("", "Korisnicko ime ili lozinka nisu tacni");
+            }
             if (!ModelState.IsValid)
                 return View(vm);
 
-            // poslovodja
-            Korisnik k = db.Korisnici.Where(x => x.KorisnickoIme == vm.LoginData).FirstOrDefault();
-            Autentifikacija.PokreniNovuSesiju(k, httpContext.HttpContext);
+            Autentifikacija.PokreniNovuSesiju(korisnik, httpContext.HttpContext);
+
+            korisnik.DatumZadnjePrijave = DateTime.Now;
+            db.Korisnici.Update(korisnik);
+            db.SaveChanges();
+
+            if (!korisnik.PromijenioLozinku)
+                return RedirectToAction("Lozinka", "Racun");            
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult Lozinka()
+        {
+            return View(new RacunLozinkaViewModel());
+        }
+
+        [HttpPost]
+        public IActionResult Lozinka(RacunLozinkaViewModel viewModel)
+        {
+            if (viewModel.PotvrdaLozinke != viewModel.Lozinka)
+                ModelState.AddModelError("", "Lozinke se ne podudaraju");
+
+            if (!ModelState.IsValid)
+                return View(viewModel);
+            
+            Korisnik korisnik = httpContext.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
+
+            korisnik.PromijenioLozinku = true;
+            korisnik.LozinkaHash = Sigurnost.GenerisiHash(viewModel.Lozinka);
+
+            db.Korisnici.Update(korisnik);
+            db.SaveChanges();
 
             return RedirectToAction("Index", "Home");
         }

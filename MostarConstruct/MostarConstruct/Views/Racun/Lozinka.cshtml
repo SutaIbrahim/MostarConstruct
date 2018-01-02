@@ -1,0 +1,57 @@
+﻿@model RacunLozinkaViewModel
+@{
+    ViewData["Title"] = "Lozinka";
+}
+
+<section id="main-content">
+    <section class="wrapper">
+        <form asp-action="Lozinka" method="post">
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;" hidden>
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Promjena lozinke</h4>
+                        </div>
+                        <div class="modal-body">
+
+                            @if (!ViewData.ModelState.IsValid)
+                            {
+                                <div asp-validation-summary="All" class="alert alert-danger"></div>
+                            }
+                            else
+                            {
+                                <div class="alert alert-info">
+                                    Poštovani, radi sigurnosti obavezni ste promijeniti vašu lozinku.
+                                </div>
+                            }
+
+                            <div class="form group">
+                                <label asp-for="Lozinka">Lozinka:</label>
+                                <input asp-for="Lozinka" class="form-control" />
+                            </div>
+
+                            <div class="form group">
+                                <label asp-for="PotvrdaLozinke">Potvrdite lozinku:</label>
+                                <input asp-for="PotvrdaLozinke" class="form-control" />
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <div class="text-center">
+                                <button class="btn btn-primary" type="submit">Promijeni lozinku</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </section>
+</section>
+
+<script>
+    $(function () {
+        $("#myModal").modal("show");
+    });
+</script>
