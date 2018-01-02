@@ -8,10 +8,11 @@ using MostarConstruct.Models;
 using MostarConstruct.Web.Helper;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-
+using MostarConstruct.Web.Areas.Poslovodja.ViewModels;
 
 namespace MostarConstruct.Web.Areas.Poslovodja.Controllers
 {
+    [Autorizacija(false, TipKorisnika.Poslovodja)]
 
     [Area("Poslovodja")]
 
@@ -21,33 +22,66 @@ namespace MostarConstruct.Web.Areas.Poslovodja.Controllers
 
         private DatabaseContext db;
 
-        public IActionResult Index()
+        public RadilistaController(DatabaseContext db)
         {
-
-            return View(db.Radilista.Include(x=>x.Projekt));
+            this.db = db;
         }
 
+        public IActionResult Index()
+        {
+            return View(db.Radilista.Include(p=>p.Projekt).Include(g=>g.Grad));
+        }
 
 
         public IActionResult Dodaj()
         {
-
-
-            return View(new Radiliste());
+            return View(GetDefaultViewModel(new RadilistaDodajViewModel()));
         }
 
 
+        [HttpPost]
+        public IActionResult Dodaj(RadilistaDodajViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(GetDefaultViewModel(model));
+            }
+
+            Radiliste radiliste = model.Radiliste;
+
+            radiliste.ProjektID = model.ProjektID;
+            radiliste.GradID = model.GradID;
+        
+
+            db.Radilista.Add(radiliste);
+            db.SaveChanges();
 
 
-        public IActionResult Dodaj(Radiliste rad)
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        //
+        private RadilistaDodajViewModel GetDefaultViewModel(RadilistaDodajViewModel model)
         {
 
+            model.Radiliste = model.Radiliste ?? new Radiliste();
+            model.Gradovi = model.Gradovi ?? db.Gradovi.Select(g => new SelectListItem { Value = g.GradID.ToString(), Text = g.Naziv }).ToList();
+            model.Projekti= model.Projekti ?? db.Projekti.Select(s => new SelectListItem { Value = s.ProjektID.ToString(), Text = s.Naziv }).ToList();
 
-
-
-            return View();
+            return model;
         }
 
+
+        public IActionResult Obrisi(int id)
+        {
+            Radiliste x = db.Radilista.Where(y => y.RadilisteID == id).FirstOrDefault();
+
+            db.Radilista.Remove(x);
+
+            db.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
 
     }
 }

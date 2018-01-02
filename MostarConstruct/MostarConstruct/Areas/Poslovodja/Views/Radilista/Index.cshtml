@@ -1,10 +1,75 @@
 ﻿
 @{
     ViewData["Title"] = "Index";
+    int brojac = 1;
 }
 
-@model Radiliste
+@model IEnumerable<Radiliste>
 
-<h2>Index</h2>
 
-@Model.Projekt
+<div class="portlet">
+    <div class="portlet-title form-inline">
+        <h3>
+            Lista radilišta
+        </h3>
+        <div class="pull-right">
+
+            <div class="form-group">
+                <br />
+                <a id="link" href="@Url.Action("Dodaj", "Radilista")" class="btn btn-primary modal-link"> + Dodaj</a>
+                <br />
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Redni broj</th>
+            <th>Naziv</th>
+            <th>Projekat</th>
+            <th>Grad</th>
+            <th>Adresa </th>
+            <th>Početak radova</th>
+            <th>Završetak radova</th>
+            <th>Nadzorni organ</th>
+            <th>Opis </th>
+
+
+            <th class="text-center">Akcije</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td>@(brojac++)</td>
+                <td>@r.Naziv</td>
+                <td>@r.Projekt.Naziv</td>
+                <td>@r.Grad.Naziv</td>
+                <td>@r.Adresa</td>
+                <td>@r.PocetakRadova</td>
+                <td>@r.ZavrsetakRadova</td>
+                <td>@r.NadzorniOrgan</td>
+                <td>@r.Opis</td>
+
+
+
+
+
+
+                <td class="text-center">
+                        <a asp-action="Uredi" asp-route-id="@r.RadilisteID" class="btn btn-info">Uredi</a>
+                        <a asp-action="Obrisi" asp-route-id="@r.RadilisteID" class="btn btn-danger">Obriši</a>
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+</table>
