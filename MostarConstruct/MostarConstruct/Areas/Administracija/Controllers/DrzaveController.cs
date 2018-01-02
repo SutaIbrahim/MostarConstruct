@@ -45,10 +45,8 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
         public IActionResult Uredi(int id)
         {
             Drzava drzava = db.Drzave.Where(x => x.DrzavaID == id).FirstOrDefault();
-
-            if (drzava != null)
-                return View(drzava);
-            return new StatusCodeResult(404);
+                        
+            return PartialView("_Uredi", drzava);
         } 
         #endregion
 

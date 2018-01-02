@@ -28,16 +28,16 @@ namespace MostarConstruct.Web.Helper
                 return;
             }
 
-            if (_sviKorisnici)
+            if (_sviKorisnici && korisnik.Aktivan)
                 return;
 
-            if (!_sviKorisnici && korisnik.IsAdmin && _korisnickeUloge.Contains(TipKorisnika.Administrator))
+            if (!_sviKorisnici && korisnik.Aktivan && korisnik.IsAdmin && _korisnickeUloge.Contains(TipKorisnika.Administrator))
                 return;
 
-            if (!_sviKorisnici && korisnik.IsClanUprave && _korisnickeUloge.Contains(TipKorisnika.ClanUprave))
+            if (!_sviKorisnici && korisnik.Aktivan && korisnik.IsClanUprave && _korisnickeUloge.Contains(TipKorisnika.ClanUprave))
                 return;
 
-            if (!_sviKorisnici && korisnik.IsPoslovodja && _korisnickeUloge.Contains(TipKorisnika.Poslovodja))
+            if (!_sviKorisnici && korisnik.Aktivan && korisnik.IsPoslovodja && _korisnickeUloge.Contains(TipKorisnika.Poslovodja))
                 return;
 
             context.HttpContext.Response.Redirect("/Racun/Prijava");
