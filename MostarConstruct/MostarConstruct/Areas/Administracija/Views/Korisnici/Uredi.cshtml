@@ -1,0 +1,95 @@
+﻿@model KorisniciDodajViewModel
+@{
+    ViewData["Title"] = "Uredi";
+}
+
+<section id="main-content">
+    <section class="wrapper">
+        <h2>Uredi</h2>
+        <form asp-action="Uredi" method="post">
+
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div asp-validation-summary="All" class="alert alert-danger"></div>
+            }
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Osoba.Ime">Ime:</label>
+                        <input asp-for="Osoba.Ime" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Osoba.Prezime">Prezime:</label>
+                        <input asp-for="Osoba.Prezime" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Osoba.DatumRodjenja">Datum rodjenja:</label>
+                        <input asp-for="Osoba.DatumRodjenja" class="form-control" />
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="DrzavaID">Drzava:</label>
+                        <select asp-for="DrzavaID" asp-items="Model.Drzave" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="RegijaID">Regija:</label>
+                        <select asp-for="RegijaID" asp-items="Model.Regije" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Osoba.GradID">Grad:</label>
+                        <select asp-for="Osoba.GradID" asp-items="Model.Gradovi" class="form-control"></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Korisnik.KorisnickoIme">Korisnicko ime:</label>
+                        <input asp-for="Korisnik.KorisnickoIme" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Osoba.Email">Email:</label>
+                        <input asp-for="Osoba.Email" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="TipKorisnika">Uloga:</label>
+                        <select asp-for="TipKorisnika" class="form-control" asp-items="Model.Uloge"></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-primary">Sacuvaj</button>
+                        <a asp-action="Index" class="btn btn-default">Odustani</a>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+
+    </section>
+</section>
+
