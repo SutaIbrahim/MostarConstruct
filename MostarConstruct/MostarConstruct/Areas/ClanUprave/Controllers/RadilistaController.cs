@@ -8,13 +8,13 @@ using MostarConstruct.Models;
 using MostarConstruct.Web.Helper;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using MostarConstruct.Web.Areas.Poslovodja.ViewModels;
+using MostarConstruct.Web.Areas.ClanUprave.ViewModels;
 
-namespace MostarConstruct.Web.Areas.Poslovodja.Controllers
+namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
 {
-    [Autorizacija(false, TipKorisnika.Poslovodja)]
+    [Autorizacija(false, TipKorisnika.ClanUprave)]
 
-    [Area("Poslovodja")]
+    [Area("ClanUprave")]
 
     public class RadilistaController : Controller
     {
