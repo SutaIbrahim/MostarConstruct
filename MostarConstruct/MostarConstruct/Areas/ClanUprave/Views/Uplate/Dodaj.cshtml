@@ -1,0 +1,104 @@
+﻿
+@{
+    ViewData["Title"] = "Dodaj";
+}
+
+<h2>Dodaj</h2>
+
+@model MostarConstruct.Web.Areas.ClanUprave.ViewModels.UplateDodajViewModel
+
+<section id="main-content">
+    <section class="wrapper">
+        <h2>Dodaj</h2>
+        <form asp-action="Dodaj" method="post">
+
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div asp-validation-summary="All" class="alert alert-danger"></div>
+            }
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="ProjektID">Projekt:</label>
+                        <select asp-for="ProjektID" asp-items="Model.Projekti" class="form-control"></select>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Klijenti">Klijent:</label>
+                        <select asp-for="KlijentID" asp-items="Model.Klijenti" class="form-control"></select>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Uplata.DatumUplate">Datum uplate</label>
+                        <input asp-for="Uplata.DatumUplate" class="form-control" value=@DateTime.Now />
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+
+                        <label asp-for="Uplata.BrojUplate">Broj uplate:</label>
+                        <input asp-for="Uplata.BrojUplate" asp-items="Model.Projekti" class="form-control">
+
+
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Uplata.Iznos">Iznos uplate:</label>
+                        <input asp-for="Uplata.BrojUplate" asp-items="Model.Projekti" class="form-control">
+
+                    </div>
+                </div>
+               
+
+            </div>
+
+
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Uplata.Svrha">Svrha:</label>
+                        <input asp-for="Uplata.Svrha" class="form-control" />
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Uplata.Status">Status:</label>
+                        <input asp-for="Uplata.Status" class="form-control" />
+
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-primary">Dodaj</button>
+                        <a asp-action="Index" class="btn btn-default">Odustani</a>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+    </section>
+</section>
