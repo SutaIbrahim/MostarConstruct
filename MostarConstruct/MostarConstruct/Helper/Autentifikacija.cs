@@ -16,6 +16,7 @@ namespace MostarConstruct.Web.Helper
         Poslovodja,
         ClanUprave
     }
+    
     public class Autentifikacija
     {
         private const string _logiraniKorisnik = "logirani_korisnik";

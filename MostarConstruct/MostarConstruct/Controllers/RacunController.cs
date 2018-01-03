@@ -30,6 +30,7 @@ namespace MostarConstruct.Web.Controllers
         [HttpPost]
         public IActionResult Prijava(LoginViewModel vm)
         {
+            // provjeriti i za mail!
             Korisnik korisnik = db.Korisnici.Where(x => x.KorisnickoIme == vm.LoginData).FirstOrDefault();
 
             if (korisnik == null)

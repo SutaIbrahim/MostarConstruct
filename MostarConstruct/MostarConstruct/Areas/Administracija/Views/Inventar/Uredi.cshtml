@@ -1,0 +1,89 @@
+﻿@model InventarDodajViewModel
+@{
+    ViewData["Title"] = "Uredi";
+}
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+            <header class="panel-heading">
+                <h3>Uredi</h3>
+            </header>
+            <div class="panel-body">
+                <form asp-action="Uredi" method="post">
+
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div asp-validation-summary="All" class="alert alert-danger"></div>
+                    }
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Inventar.Naziv">Naziv:</label>
+                                <input asp-for="Inventar.Naziv" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Inventar.SerijskiBroj">Serijski broj:</label>
+                                <input asp-for="Inventar.SerijskiBroj" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Inventar.KategorijaID">Kategorija:</label>
+                                <select asp-for="Inventar.KategorijaID" asp-items="Model.Kategorije" class="form-control"></select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Inventar.DatumKupovine">Datum kupovine:</label>
+                                <input asp-for="Inventar.DatumKupovine" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Inventar.Pogon">Pogon:</label>
+                                <input asp-for="Inventar.Pogon" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Inventar.Tezina">Tezina:</label>
+                                <input asp-for="Inventar.Tezina" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label asp-for="Inventar.Opis">Opis:</label>
+                                <textarea asp-for="Inventar.Opis" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Sacuvaj</button>
+                                <a asp-action="Index" class="btn btn-default"><i class="fa fa-times"></i> Odustani</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </section>
+    </section>
+</section>

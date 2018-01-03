@@ -1,0 +1,64 @@
+﻿@model InventarIndexViewModel
+@{
+    ViewData["Title"] = "Index";
+    int brojac = 1;
+}
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+            <header class="panel-heading">
+                <h2>Spisak inventara</h2>
+
+            </header>
+
+            <div class="panel-body">
+                <div class="pull-right">
+                    <a class="btn btn-primary"><i class="fa fa-plus"></i> Dodaj</a>
+                </div>
+                <br />
+                <br />
+                <br />
+
+                <table class="table table-borderer table-striped">
+                    <thead>
+                        <tr>
+                            <th>Redni broj</th>
+                            <th>Naziv</th>
+                            <th>Serijski broj</th>
+                            <th>Kategorija</th>
+                            <th>Datum kupovine</th>
+                            <th>Ispravan</th>
+                            <th>Zauzet</th>
+                            <th>Akcije</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var i in Model.Rows)
+                        {
+                            <tr>
+                                <td>@(brojac++)</td>
+                                <td>@i.Naziv</td>
+                                <td>@i.SerijskiBroj</td>
+                                <td>@i.Kategorija</td>
+                                <td>@i.DatumKupovine</td>
+                                <td>@i.Ispravan</td>
+                                <td>@i.Zauzet</td>
+                                <td>
+                                    <form asp-action="Obrisi" method="post">
+                                        <input hidden name="InventarID" value="@i.InventarID" />
+                                        <a asp-action="Uredi" asp-route-inventarID="@i.InventarID" class="btn btn-info">Uredi</a>
+                                        <button type="submit" class="btn btn-danger">Obrisi</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+
+
+
+    </section>
+</section>
