@@ -69,5 +69,19 @@ namespace MostarConstruct.Web.Helper
 
             return uloge;
         }
+
+
+        public IEnumerable<SelectListItem> Pozicije(bool praznaLista = true)
+        {
+            var pozicije = db.Pozicije;
+            List<SelectListItem> lista = new List<SelectListItem>();
+
+            if (praznaLista)
+                lista.Add(new SelectListItem() { Value = string.Empty, Text = "Odaberite poziciju" });
+
+            lista.AddRange(pozicije.Select(x => new SelectListItem() { Value = x.PozicijaID.ToString(), Text = x.Naziv }));
+
+            return lista;
+        }
     }
 }
