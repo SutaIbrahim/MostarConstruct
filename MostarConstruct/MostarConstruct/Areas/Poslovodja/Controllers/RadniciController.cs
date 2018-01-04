@@ -63,6 +63,7 @@ namespace MostarConstruct.Web.Areas.Poslovodja.Controllers
 
             radnik.RadnikID = osoba.OsobaID;
             radnik.PozicijaID = model.PozicijaID;
+                 radnik.Aktivan = true;
 
             db.Radnici.Add(radnik);
             db.SaveChanges();
@@ -76,11 +77,62 @@ namespace MostarConstruct.Web.Areas.Poslovodja.Controllers
         {
             Radnik x = db.Radnici.Where(r => r.RadnikID == id).FirstOrDefault();
 
-            db.Radnici.Remove(x);
+            x.Aktivan = false;
+
+            db.Radnici.Update(x);
             db.SaveChanges();
 
             return RedirectToAction(nameof(Index));
         }
+        #endregion
+
+        #region Uredi
+        public IActionResult Uredi(int RadnikID) {
+
+            Osoba o = db.Osobe.Include(x => x.Grad).ThenInclude(k => k.Regija).Where(x => x.OsobaID == RadnikID).SingleOrDefault();
+            Radnik radnik = db.Radnici.Where(y => y.RadnikID == RadnikID).SingleOrDefault();
+
+
+            RadniciDodajViewModel vm = GetDefaultViewModel(new RadniciDodajViewModel()
+            {
+                Osoba = o,
+                Radnik = radnik,
+                DrzavaID = o.Grad.Regija.DrzavaID,
+                RegijaID = o.Grad.RegijaID,
+                GradID = o.GradID,
+                PozicijaID = radnik.PozicijaID
+
+            });
+
+            return View(vm);
+        }
+
+
+        [HttpPost]
+        public IActionResult Uredi(RadniciDodajViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(GetDefaultViewModel(model));
+
+
+            Osoba osoba = model.Osoba;
+            osoba.GradID = model.GradID;
+
+            db.Osobe.Update(osoba);
+
+
+            Radnik radnik = model.Radnik;
+
+            radnik.PozicijaID = model.PozicijaID;
+            radnik.Aktivan = true;
+
+
+            db.Radnici.Update(radnik);
+            db.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
+        }
+
         #endregion
 
         #region GrupniUploadSlika
