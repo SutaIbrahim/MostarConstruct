@@ -1,0 +1,149 @@
+﻿@model MostarConstruct.Web.Areas.Administracija.ViewModels.VozilaDodajViewModel
+@{
+    ViewData["Title"] = "Dodaj";
+}
+
+
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+            <header class="panel-heading">
+                <h3>Novo vozilo</h3>
+            </header>
+            <div class="panel-body">
+                <form asp-action="Snimi" method="post">
+
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div asp-validation-summary="All" class="alert alert-danger"></div>
+                    }
+                        @Html.HiddenFor(model=>model.Vozilo.VoziloID)
+                        <div class="row">
+
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="Vozilo.VrstaVozilaID">Vrsta vozila:</label>
+                                    <select asp-for="Vozilo.VrstaVozilaID" asp-items="Model.vrsteVozila" class="form-control"></select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="Vozilo.VozackaKategorijaID">Vozacka kategorija:</label>
+                                    <select asp-for="Vozilo.VozackaKategorijaID" asp-items="Model.vozackeKategorije" class="form-control"></select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="Vozilo.BrojSjedista">Broj sjedišta:</label>
+                                    <input asp-for="Vozilo.BrojSjedista" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Vozilo.DatumRegistracije">Datum registracije:</label>
+                                <input asp-for="Vozilo.DatumRegistracije" class="form-control " />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Vozilo.Nosivost">Nosivost:</label>
+                                <input asp-for="Vozilo.Nosivost" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Vozilo.Kubikaza">Kubikaža:</label>
+                                <input asp-for="Vozilo.Kubikaza" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Vozilo.GodinaProizvodnje">Godina proizvodnje:</label>
+                                <input asp-for="Vozilo.GodinaProizvodnje" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Vozilo.DatumKupovine">Datum kupovine:</label>
+                                <input asp-for="Vozilo.DatumKupovine" class="form-control " />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Vozilo.RegistarskaOznaka">Registarske oznake:</label>
+                                <input asp-for="Vozilo.RegistarskaOznaka" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Vozilo.DatumZadnjegServisa">Datum zadnjeg servisa:</label>
+                                <input asp-for="Vozilo.DatumZadnjegServisa" class="form-control " />
+                            </div>
+                        </div>
+
+                     
+
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Vozilo.CijenaPoSatu">Cijena po satu:</label>
+                                <input asp-for="Vozilo.CijenaPoSatu" class="form-control " />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Vozilo.BrojSasije">Broj šasije:</label>
+                                <input asp-for="Vozilo.BrojSasije" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Vozilo.Proizvodjac">Proizvođač:</label>
+                                <input asp-for="Vozilo.Proizvodjac" class="form-control" />
+                            </div>
+                        </div>
+
+
+                        
+
+                    </div>
+
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Sacuvaj</button>
+                                <a asp-action="Index" class="btn btn-default"><i class="fa fa-times"></i> Odustani</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </section>
+    </section>
+</section>

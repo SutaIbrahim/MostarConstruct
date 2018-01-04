@@ -1,0 +1,64 @@
+﻿@model MostarConstruct.Web.Areas.Administracija.ViewModels.VozilaIndexViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+            <header class="panel-heading">
+                <h2>Spisak vozila</h2>
+
+            </header>
+
+            <div class="panel-body">
+                <div class="pull-right">
+                    <a class="btn btn-primary" href="/Administracija/Vozila/Dodaj"><i class="fa fa-plus"></i> Dodaj</a>
+                </div>
+                <br />
+                <br />
+                <br />
+
+                <table class="table table-borderer table-striped">
+                    <thead>
+                        <tr>
+                            <th>Vrsta vozila</th>
+                            <th>Vozačka kategorija</th>
+                            <th>Registarske oznake</th>
+                            <th>Proizvodjac</th>
+                            <th>Godina proizvodnje</th>
+                            <th>Cijena po satu</th>
+                            <th>Zauzet</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var vozilo in Model.listaVozila)
+                        {
+                        <tr>
+                            <td>@vozilo.VrstaVozila</td>
+                            <td>@vozilo.VozackaKategorija</td>
+                            <td>@vozilo.RegistarskaOznaka</td>
+                            <td>@vozilo.Proizvodjac</td>
+                            <td>@vozilo.GodinaProizvodnje</td>
+                            <td>@vozilo.CijenaPoSatu</td>
+                            <td>@vozilo.Zauzeto</td>
+                            <td>
+                                <form asp-action="Obrisi" method="post">
+                                    <input hidden name="VoziloID" value="@vozilo.Id" />
+                                    <a asp-action="Uredi" asp-route-VoziloID="@vozilo.Id" class="btn btn-info">Uredi</a>
+                                    <button type="submit" class="btn btn-danger">Obrisi</button>
+                                </form>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+
+
+
+    </section>
+</section>
+
