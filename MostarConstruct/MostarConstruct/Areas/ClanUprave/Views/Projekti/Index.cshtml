@@ -44,7 +44,10 @@
                                     <form asp-action="Obrisi" method="post">
                                         <input hidden name="ProjektID" value="@projekt.Id" />
                                         <a asp-action="Uredi" asp-route-ProjektID="@projekt.Id" class="btn btn-info">Uredi</a>
+                                        <a class="btn btn-primary" href="/ClanUprave/Projekti/Detalji?ProjektID=@projekt.Id"><i class="fa fa-info"></i> Detalji</a>
+
                                         <button type="submit" class="btn btn-danger">Obrisi</button>
+
                                     </form>
                                 </td>
                             </tr>

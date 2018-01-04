@@ -84,6 +84,25 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
             Model.projekt = _db.Projekti.Where(x => x.ProjektID == ProjektID).FirstOrDefault();
             return View("Dodaj", Model);
         }
+        public IActionResult Detalji(int ProjektID)
+        {
+            ProjektiDetaljiViewModel Model = new ProjektiDetaljiViewModel();
+            Model.projekt = new Projekt();
+            Model.projekt.ClanUprave = new Korisnik();
+            Model.listaFajlova = new List<Fajl>();
+
+            Model.projekt = _db.Projekti.Where(x => x.ProjektID == ProjektID).FirstOrDefault();
+            Model.listaFajlova = _db.ProjektiFajlovi.Where(x=>x.ProjektID==ProjektID).Select(x => new Fajl
+            {
+                FajlId = x.FajlID,
+                DatumDodavanja = x.Fajl.DatumDodavanja,
+                Lokacija = x.Fajl.Lokacija,
+                Naziv = x.Fajl.Naziv
+            }).ToList();
+          
+
+            return View(Model);
+        }
         public IActionResult Obrisi(int ProjektID)
         {
             Projekt p = new Projekt();
@@ -93,13 +112,13 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
             return RedirectToAction("Index");
         }
         [HttpPost]
-        public async Task<IActionResult> UploadFile(IFormFile file, string ProjektId)
+        public async Task<IActionResult> UploadFile(IFormFile file, string ProjektId,string nazivFajla)
         {
             if (file == null || file.Length == 0)
                 return Content("file not selected");
 
             var path = Path.Combine(
-                        Directory.GetCurrentDirectory(), "FileStorage",
+                        Directory.GetCurrentDirectory(), "Fajlovi",
                         file.GetFilename());
 
             using (var stream = new FileStream(path, FileMode.Create))
@@ -107,7 +126,8 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
                 await file.CopyToAsync(stream);
             }
             Fajl fajl = new Fajl();
-            fajl.Naziv = file.GetFilename();
+            fajl.Lokacija = file.GetFilename();
+            fajl.Naziv = nazivFajla;
             _db.Fajlovi.Add(fajl);
             _db.SaveChanges();
             ProjektiFajlovi stavka = new ProjektiFajlovi();
@@ -115,7 +135,7 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
             stavka.ProjektID= int.Parse(ProjektId);
             _db.ProjektiFajlovi.Add(stavka);
             _db.SaveChanges();
-            return RedirectToAction("Detalji", new { ProjektId = int.Parse(ProjektId) });
+            return RedirectToAction("Detalji", new { ProjektID = int.Parse(ProjektId) });
         }
         public async Task<IActionResult> Download(string filename)
         {
@@ -124,7 +144,7 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
 
             var path = Path.Combine(
                            Directory.GetCurrentDirectory(),
-                           "FileStorage", filename);
+                           "Fajlovi", filename);
 
             var memory = new MemoryStream();
             using (var stream = new FileStream(path, FileMode.Open))
