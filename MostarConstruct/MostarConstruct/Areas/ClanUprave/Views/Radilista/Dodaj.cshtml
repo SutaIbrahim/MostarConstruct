@@ -6,100 +6,109 @@
 
 <section id="main-content">
     <section class="wrapper">
-        <h2>Dodaj</h2>
-        <form asp-action="Dodaj" method="post">
 
-            @if (!ViewData.ModelState.IsValid)
+
+        <section class="panel">
+            <header class="panel-heading">
+                <h2>Dodaj</h2>
+
+            </header>
+            <div class="panel-body">
+
+                <form asp-action="Dodaj" method="post">
+
+                    @if (!ViewData.ModelState.IsValid)
             {
-                <div asp-validation-summary="All" class="alert alert-danger"></div>
-            }
+                        <div asp-validation-summary="All" class="alert alert-danger"></div>
+                    }
 
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label asp-for="Radiliste.Naziv">Naziv:</label>
-                        <input asp-for="Radiliste.Naziv" class="form-control" />
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Radiliste.Naziv">Naziv:</label>
+                                <input asp-for="Radiliste.Naziv" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Radiliste.PocetakRadova">Početak radova:</label>
+                                <input asp-for="Radiliste.PocetakRadova" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Radiliste.ZavrsetakRadova">Završetak radova:</label>
+                                <input asp-for="Radiliste.ZavrsetakRadova" class="form-control" />
+                            </div>
+                        </div>
+
                     </div>
-                </div>
 
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label asp-for="Radiliste.PocetakRadova">Početak radova:</label>
-                        <input asp-for="Radiliste.PocetakRadova" class="form-control" />
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+
+                                <label asp-for="ProjektID">Projekt:</label>
+                                <select asp-for="ProjektID" asp-items="Model.Projekti" class="form-control"></select>
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="GradID">Grad:</label>
+                                @*@Html.DropDownList("gradovi", Model.Gradovi, new { @class = "form-control" })*@
+                                <select asp-for="GradID" asp-items="Model.Gradovi" class="form-control"></select>
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Radiliste.NadzorniOrgan">Nadzorni organ:</label>
+                                <input asp-for="Radiliste.NadzorniOrgan" class="form-control" />
+
+                            </div>
+                        </div>
+
                     </div>
-                </div>
 
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label asp-for="Radiliste.ZavrsetakRadova">Završetak radova:</label>
-                        <input asp-for="Radiliste.ZavrsetakRadova" class="form-control" />
+
+
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Radiliste.Adresa">Adresa:</label>
+                                <input asp-for="Radiliste.Adresa" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Radiliste.Opis">Opis:</label>
+                                <textarea asp-for="Radiliste.Opis" class="form-control" cols="50" rows="5"/></textarea>
+                            </div>
+                        </div>
+
                     </div>
-                </div>
 
+
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Dodaj</button>
+                                <a asp-action="Index" class="btn btn-default"><i class="fa fa-times"></i> Odustani</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
             </div>
-
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-
-                        <label asp-for="ProjektID">Projekt:</label>
-                        <select asp-for="ProjektID" asp-items="Model.Projekti" class="form-control"></select>
-
-
-
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label asp-for="GradID">Grad:</label>
-                        @*@Html.DropDownList("gradovi", Model.Gradovi, new { @class = "form-control" })*@
-                        <select asp-for="GradID" asp-items="Model.Gradovi" class="form-control"></select>
-
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label asp-for="Radiliste.NadzorniOrgan">Nadzorni organ:</label>
-                        <input asp-for="Radiliste.NadzorniOrgan" class="form-control" />
-
-                    </div>
-                </div>
-
-            </div>
-
-
-
-            <div class="row">
-
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label asp-for="Radiliste.Adresa">Adresa:</label>
-                        <input asp-for="Radiliste.Adresa" class="form-control" />
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label asp-for="Radiliste.Opis">Opis:</label>
-                        <input asp-for="Radiliste.Opis" class="form-control" />
-                    </div>
-                </div>
-
-            </div>
-
-
-
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="pull-right">
-                        <button type="submit" class="btn btn-primary">Dodaj</button>
-                        <a asp-action="Index" class="btn btn-default">Odustani</a>
-                    </div>
-                </div>
-            </div>
-
-        </form>
-
-    </section>
+            </section>
+        </section>
 </section>

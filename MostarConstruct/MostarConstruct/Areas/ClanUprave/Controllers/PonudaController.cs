@@ -64,6 +64,7 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+       
         public IActionResult Obrisi(int id)
         {
             Ponuda x = db.Ponude.Where(y => y.PonudaID == id).FirstOrDefault();
@@ -74,7 +75,33 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public IActionResult Uredi(int PonudaId)
+        {
+            Ponuda model = db.Ponude.Where(p => p.PonudaID == PonudaId).FirstOrDefault();
 
+
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public IActionResult Uredi(Ponuda model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            Ponuda ponuda = model;
+            Korisnik k = httpContext.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
+            ponuda.ClanUpraveID = k.KorisnikID;
+
+            db.Ponude.Update(ponuda);
+            db.SaveChanges();
+
+
+            return RedirectToAction(nameof(Index));
+        }
 
 
     }

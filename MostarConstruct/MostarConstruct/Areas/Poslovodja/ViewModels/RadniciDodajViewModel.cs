@@ -15,6 +15,7 @@ namespace MostarConstruct.Web.Areas.Poslovodja.ViewModels
 
         public Osoba Osoba { get; set; }
         public Radnik Radnik { get; set; }
+
         public int DrzavaID { get; set; }
         public int RegijaID { get; set; }
         public int GradID { get; set; }
