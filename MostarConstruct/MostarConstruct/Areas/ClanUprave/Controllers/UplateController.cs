@@ -70,6 +70,47 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
         }
 
 
+        public IActionResult Obrisi(int id)
+        {
+            Uplata x = db.Uplate.Where(y => y.UplataID == id).FirstOrDefault();
+
+            db.Uplate.Remove(x);
+            db.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        public IActionResult Uredi(int UplataId)
+        {
+            Uplata uplata = db.Uplate.Where(u => u.UplataID == UplataId).FirstOrDefault();
+
+            UplateDodajViewModel model = GetDefaultViewModel(new UplateDodajViewModel()
+            {
+                Uplata = uplata,
+                ProjektID=uplata.ProjektID,
+                KlijentID=uplata.KlijentID
+            });
+
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Uredi(UplateDodajViewModel model)
+        {
+            Uplata x = model.Uplata;
+            
+
+            db.Uplate.Update(x);
+            db.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
+
+
         private UplateDodajViewModel GetDefaultViewModel(UplateDodajViewModel model)
         {
 
@@ -82,15 +123,7 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
 
 
 
-        public IActionResult Obrisi(int id)
-        {
-            Uplata x = db.Uplate.Where(y => y.UplataID == id).FirstOrDefault();
 
-            db.Uplate.Remove(x);
-            db.SaveChanges();
-
-            return RedirectToAction(nameof(Index));
-        }
 
 
 

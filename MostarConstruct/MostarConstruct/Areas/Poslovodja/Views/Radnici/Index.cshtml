@@ -3,73 +3,84 @@
     ViewData["Title"] = "Index";
     int brojac = 1;
 }
-<h2>Index</h2>
 @model IEnumerable<Radnik>
 
 <section id="main-content">
     <section class="wrapper">
-        <div class="portlet">
-            <div class="portlet-title form-inline">
-                <h3>
-                    Lista radnika
-                </h3>
-                <div class="pull-right">
+        <section class="panel">
+            <header class="panel-heading">
+                <h2>Lista radnika</h2>
 
-                    <div class="form-group">
-                        <br />
-                        <a id="link" href="@Url.Action("Dodaj", "Radnici")" class="btn btn-primary modal-link"> + Dodaj</a>
-                        <br />
-                    </div>
-                </div>
+            </header>
+
+
+            <div class="panel-body">
+
+
+        <div class="pull-right">
+
+            <div class="form-group">
+                <br />
+                <a id="link" href="@Url.Action("Dodaj", "Radnici")" class="btn btn-primary modal-link"><i class="fa fa-plus"></i> Dodaj</a>
+                <br />
             </div>
         </div>
 
-        <br />
-        <br />
-        <br />
+            <br />
+            <br />
+            <br />
 
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Redni broj</th>
-                    <th>Ime</th>
-                    <th>Prezime</th>
-                    <th>Datum rodjenja</th>
-                    <th>Grad </th>
-                    <th>Pozicija</th>
-                    <th>Email</th>
-                    <th>Datum zaposlenja</th>
-                    <th>Staz</th>
-                    <th>Dodatak na satnicu</th>
-                    
-
-                    <th class="text-center">Akcije</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var r in Model)
-                {
+            <table class="table table-bordered table-striped">
+                <thead>
                     <tr>
-                        <td>@(brojac++)</td>
-                        <td>@r.Osoba.Ime</td>
-                        <td>@r.Osoba.Prezime</td>
-                        <td>@r.Osoba.DatumRodjenja</td>
-                        <td>@r.Osoba.Grad.Naziv</td>
-                        <td>@r.Pozicija.Naziv</td>
-                        <td>@r.Osoba.Email</td>
-                        <td>@r.DatumZaposlenja</td>
-                        <td>@r.Staz</td>
-                        <td>@r.DodatakNaSatnicu</td>
+                        <th>Redni broj</th>
+                        <th>Ime</th>
+                        <th>Prezime</th>
+                        <th>Datum rodjenja</th>
+                        <th>Grad </th>
+                        <th>Pozicija</th>
+                        <th>Email</th>
+                        <th>Datum zaposlenja</th>
+                        <th>Staz</th>
+                        <th>Dodatak na satnicu</th>
 
-                        <td class="text-center">
-                            <a asp-action="Uredi" asp-route-id="@r.RadnikID" class="btn btn-info">Uredi</a>&nbsp;<br /><br />
-                            <a asp-action="Obrisi" asp-route-id="@r.RadnikID" class="btn btn-danger">Obriši</a>
-                        </td>
 
+                        <th class="text-center">Akcije</th>
                     </tr>
-                }
+                </thead>
+                <tbody>
+                    @foreach (var r in Model)
+                    {
 
-            </tbody>
-        </table>
-    </section>
+                        @if (r.Aktivan == true)
+                        {
+                            <tr>
+                                <td>@(brojac++)</td>
+                                <td>@r.Osoba.Ime</td>
+                                <td>@r.Osoba.Prezime</td>
+                                <td>@r.Osoba.DatumRodjenja</td>
+                                <td>@r.Osoba.Grad.Naziv</td>
+                                <td>@r.Pozicija.Naziv</td>
+                                <td>@r.Osoba.Email</td>
+                                <td>@r.DatumZaposlenja</td>
+                                <td>@r.Staz</td>
+                                <td>@r.DodatakNaSatnicu</td>
+
+
+                                <td class="text-center">
+                                    <input name="RadnikID" value="@r.RadnikID" type="hidden" />
+                                    <a asp-action="Uredi" asp-route-RadnikID="@r.RadnikID" class="btn btn-info">Uredi</a>&nbsp;<br /><br />
+                                    <a asp-action="Obrisi" asp-route-id="@r.RadnikID" class="btn btn-danger">Obriši</a> @*postavi aktivnost na false*@
+                                </td>
+
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+
+            </div>
+            </section>
+        </section>
 </section>

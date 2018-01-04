@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "Dodaj";
+    ViewData["Title"] = "Uredi";
 }
 
 
@@ -10,7 +10,7 @@
     <section class="wrapper">
         <section class="panel">
             <header class="panel-heading">
-                <h2>Dodaj</h2>
+                <h2>Uredi</h2>
 
             </header>
 
@@ -20,7 +20,7 @@
 
 
 
-                <form asp-action="Dodaj" method="post">
+                <form asp-action="Uredi" method="post">
 
                     @if (!ViewData.ModelState.IsValid)
             {
@@ -46,7 +46,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label asp-for="Uplata.DatumUplate">Datum uplate</label>
-                                <input asp-for="Uplata.DatumUplate" class="form-control" value=@DateTime.Now />
+                                <input asp-for="Uplata.DatumUplate" class="form-control"  />
                             </div>
                         </div>
 
@@ -102,8 +102,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="pull-right">
-                                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i>Dodaj</button>
-                                <a asp-action="Index" class="btn btn-default"><i class="fa fa-times"></i>Odustani</a>
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Sacuvaj</button>
+                                <a asp-action="Index" class="btn btn-default"><i class="fa fa-times"></i> Odustani</a>
                             </div>
                         </div>
                     </div>

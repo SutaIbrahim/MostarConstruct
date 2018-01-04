@@ -3,75 +3,81 @@
     ViewData["Title"] = "Index";
     int brojac = 1;
 }
-<h2>Index</h2>
 @model IEnumerable<Uplata>
 
 <section id="main-content">
     <section class="wrapper">
-        <div class="portlet">
-            <div class="portlet-title form-inline">
-                <h3>
-                    Lista uplata
-                </h3>
+        <section class="panel">
+            <header class="panel-heading">
+                <h2>Lista radnika</h2>
+
+            </header>
+
+
+            <div class="panel-body">
+
+
                 <div class="pull-right">
 
                     <div class="form-group">
                         <br />
-                        <a id="link" href="@Url.Action("Dodaj", "Uplate")" class="btn btn-primary modal-link"> + Dodaj</a>
+                        <a id="link" href="@Url.Action("Dodaj", "Uplate")" class="btn btn-primary modal-link"><i class="fa fa-plus"></i> Dodaj</a>
                         <br />
                     </div>
                 </div>
+
+                <br />
+                <br />
+                <br />
+
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Redni broj</th>
+                            <th>Naziv Projekta</th>
+                            <th>Klijent</th>
+                            <th>Datum uplate</th>
+                            <th>Broj uplate </th>
+                            <th>Iznos</th>
+                            <th>Svrha</th>
+                            <th>Procesirao</th>
+
+                            <th class="text-center">Akcije</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var r in Model)
+                        {
+                            <tr>
+                                <td>@(brojac++)</td>
+                                <td>@r.Projekt.Naziv</td>
+                                <td>@r.Klijent.KontaktOsoba</td>
+                                <td>@r.DatumUplate</td>
+                                <td>@r.BrojUplate</td>
+                                <td>@r.Iznos</td>
+                                <td>@r.Svrha</td>
+                                <td>
+                                    @r.ClanUprave.Osoba.Ime
+                                    &nbsp;
+                                    @r.ClanUprave.Osoba.Prezime
+                                    &nbsp;
+                                    <b>[Clan uprave] </b>
+                                </td>
+
+
+                                <td class="text-center">
+                                    <a asp-action="Uredi" asp-route-UplataID="@r.UplataID" class="btn btn-info">Uredi</a>&nbsp;<br /><br />
+                                    <a asp-action="Obrisi" asp-route-id="@r.UplataID" class="btn btn-danger">Obriši</a>
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+
+
             </div>
-        </div>
-
-        <br />
-        <br />
-        <br />
-
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Redni broj</th>
-                    <th>Naziv Projekta</th>
-                    <th>Klijent</th>
-                    <th>Datum uplate</th>
-                    <th>Broj uplate </th>
-                    <th>Iznos</th>
-                    <th>Svrha</th>
-                    <th>Procesirao</th>
-
-                    <th class="text-center">Akcije</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var r in Model)
-                {
-                    <tr>
-                        <td>@(brojac++)</td>
-                        <td>@r.Projekt.Naziv</td>
-                        <td>@r.Klijent.KontaktOsoba</td>
-                        <td>@r.DatumUplate</td>
-                        <td>@r.BrojUplate</td>
-                        <td>@r.Iznos</td>
-                        <td>@r.Svrha</td>
-                        <td>
-                            @r.ClanUprave.Osoba.Ime
-                            &nbsp;
-                            @r.ClanUprave.Osoba.Prezime
-                            &nbsp;
-                            <b>[Clan uprave] </b>
-                        </td>
-
-
-                        <td class="text-center">
-                            <a asp-action="Uredi" asp-route-id="@r.UplataID" class="btn btn-info">Uredi</a>&nbsp;<br /><br />
-                            <a asp-action="Obrisi" asp-route-id="@r.UplataID" class="btn btn-danger">Obriši</a>
-                        </td>
-
-                    </tr>
-                }
-
-            </tbody>
-        </table>
+        </section>
     </section>
 </section>

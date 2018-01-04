@@ -8,21 +8,21 @@
 
 <section id="main-content">
     <section class="wrapper">
-        <div class="portlet">
-            <div class="portlet-title form-inline">
-                <h3>
-                    Lista radilišta
-                </h3>
+            <section class="panel">
+            <header class="panel-heading">
+                <h2>Lista radilista</h2>
+
+            </header>
+
+            <div class="panel-body">
                 <div class="pull-right">
 
                     <div class="form-group">
                         <br />
-                        <a id="link" href="@Url.Action("Dodaj", "Radilista")" class="btn btn-primary modal-link"> + Dodaj</a>
+                        <a id="link" href="@Url.Action("Dodaj", "Radilista")" class="btn btn-primary modal-link"><i class="fa fa-plus"></i> Dodaj</a>
                         <br />
                     </div>
                 </div>
-            </div>
-        </div>
 
         <br />
         <br />
@@ -74,5 +74,7 @@
 
             </tbody>
         </table>
+        </div>
         </section>
+    </section>
 </section>
