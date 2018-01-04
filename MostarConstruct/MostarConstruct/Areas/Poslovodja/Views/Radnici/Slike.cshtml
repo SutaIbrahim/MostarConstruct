@@ -2,7 +2,6 @@
 @{
     ViewData["Title"] = "Slike";
 }
-
 <section id="main-content">
     <section class="wrapper">
         <section class="panel">
@@ -13,83 +12,45 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                       
+
                         <!-- The file upload form used as target for the file upload widget -->
-                        <form id="fileupload" action="http://jquery-file-upload.appspot.com/" method="POST" enctype="multipart/form-data" class="">
+                        <form id="fileupload" asp-action="Slike" method="post" enctype="multipart/form-data">
                             <!-- Redirect browsers with JavaScript disabled to the origin page -->
-                            <noscript>
-                                <input type="hidden" name="redirect" value="http://blueimp.github.io/jQuery-File-Upload/">
-                            </noscript>
                             <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
                             <div class="row fileupload-buttonbar">
                                 <div class="col-lg-7">
                                     <!-- The fileinput-button span is used to style the file input field as button -->
                                     <span class="btn btn-success fileinput-button">
                                         <i class="glyphicon glyphicon-plus"></i>
-                                        <span>Add files...</span>
-                                        <input name="files[]" multiple="" type="file">
+                                        <span>Odaberite slike...</span>
+                                        <input id="upload" asp-for="Slike" type="file" multiple onchange='Preview(this)'>
                                     </span>
                                     <button type="submit" class="btn btn-primary start">
                                         <i class="glyphicon glyphicon-upload"></i>
-                                        <span>Start upload</span>
+                                        <span>Započni učitavanje</span>
                                     </button>
-                                    <button type="reset" class="btn btn-warning cancel">
-                                        <i class="glyphicon glyphicon-ban-circle"></i>
-                                        <span>Cancel upload</span>
-                                    </button>
-                                    <button type="button" class="btn btn-danger delete">
-                                        <i class="glyphicon glyphicon-trash"></i>
-                                        <span>Delete</span>
-                                    </button>
-                                    <input class="toggle" type="checkbox">
-                                    <!-- The global file processing state -->
-                                    <span class="fileupload-process"></span>
+                                    <span>
+                                        Odabrano <span id="brojFajlova">0</span> datoteka
+                                    </span>
                                 </div>
-                                <!-- The global progress state -->
-                                <div class="col-lg-5 fileupload-progress fade">
-                                    <!-- The global progress bar -->
-                                    <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                                        <div class="progress-bar progress-bar-success" style="width:0%;">
-                                        </div>
-                                    </div>
-                                    <!-- The extended global progress state -->
-                                    <div class="progress-extended">
-                                        &nbsp;
-                                    </div>
-                                </div>
+
                             </div>
+
+                            <hr />
                             <!-- The table listing the files available for upload/download -->
-                            <table role="presentation" class="table table-striped">
-                                <tbody class="files"></tbody>
+                            <table class="table table-borderer">
+                                <thead>
+                                    <tr>
+                                        <th>Pretpregled</th>
+                                        <th>Naziv</th>
+                                        <th>Veličina</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
                             </table>
                         </form>
                         <br>
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Demo Notes</h3>
-                            </div>
-                            <div class="panel-body">
-                                <ul>
-                                    <li>The maximum file size for uploads in this demo is <strong>5 MB</strong> (default file size is unlimited).</li>
-                                    <li>Only image files (<strong>JPG, GIF, PNG</strong>) are allowed in this demo (by default there is no file type restriction).</li>
-                                    <li>Uploaded files will be deleted automatically after <strong>5 minutes</strong> (demo setting).</li>
-                                    <li>You can <strong>drag &amp; drop</strong> files from your desktop on this webpage (see <a href="https://github.com/blueimp/jQuery-File-Upload/wiki/Browser-support">Browser support</a>).</li>
-                                    <li>Please refer to the <a href="https://github.com/blueimp/jQuery-File-Upload">project website</a> and <a href="https://github.com/blueimp/jQuery-File-Upload/wiki">documentation</a> for more information.</li>
-                                    <li>Built with Twitter's <a href="http://twitter.github.com/bootstrap/">Bootstrap</a> CSS framework and Icons from <a href="http://glyphicons.com/">Glyphicons</a>.</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- The blueimp Gallery widget -->
-                        <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-filter=":even">
-                            <div class="slides">
-                            </div>
-                            <h3 class="title"></h3>
-                            <a class="prev">‹</a>
-                            <a class="next">›</a>
-                            <a class="close">×</a>
-                            <a class="play-pause"></a>
-                            <ol class="indicator"></ol>
-                        </div>
 
                     </div>
                 </div>
@@ -99,4 +60,80 @@
     </section>
 </section>
 
+<script type="text/javascript">
 
+    var Slike = [];
+    var brojSlika = 0;
+
+    function Preview(element) {
+        var elementi = element.files;
+        var length = elementi.length;
+
+        brojSlika += length;
+
+        for (var i = 0; i < length; i++) {
+            if (!elementi[i].type.includes("image")) {
+                brojSlika -= 1;
+                continue;
+            }
+
+            var src = URL.createObjectURL(elementi[i]);
+            var imeFajla = elementi[i].name;
+            var velicina = formatBytes(elementi[i].size);
+
+            Slike.push(elementi[i]);
+
+            $("table > tbody").append("<tr id='" + imeFajla + "'><td><img width=100 height=100 src='"
+                + src + "'></td><td>"
+                + imeFajla + "</td><td>"
+                + velicina + "</td>"
+                + "<td style='vertical-align: middle'>" +
+                "<button type='button' class='btn btn-outline red' onclick='Obrisi(\"" + imeFajla + "\")' ><i class='fa fa-trash'></i> Obrisi</button>" + "</td></tr>");
+        }
+
+        $("#brojFajlova").html(brojSlika);
+    }
+
+    function formatBytes(bytes) {
+        if (bytes < 1024) return bytes + " Bytes";
+        else if (bytes < 1048576) return (bytes / 1024).toFixed(2) + " KB";
+        else if (bytes < 1073741824) return (bytes / 1048576).toFixed(2) + " MB";
+        else return (bytes / 1073741824).toFixed(2) + " GB";
+    }
+
+    function Obrisi(naziv) {
+
+        for (var i = 0; i < Slike.length; i++) {
+            if (Slike[i].name === naziv) {
+                Slike.splice(i, 1);
+                document.getElementById(naziv).remove();
+                brojSlika -= 1;
+                $("#brojFajlova").html(brojSlika);
+                return;
+            }
+        }
+    }
+
+    function Submit() {
+        var Model = new FormData();
+
+        for (var i = 0; i < Slike.length; i++) {
+            Model.append("Files", Slike[i]);
+        }
+
+        $.ajax({
+            url: '@Url.Action("Slike", "Radnici")',
+            type: "POST",
+            contentType: false,
+            processData: false,
+            data: Model,
+            success: function (success) {
+                if (success) {
+                    window.location.href = "/Radnici";
+                }
+            }
+        });
+    }
+
+
+</script>
