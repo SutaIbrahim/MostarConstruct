@@ -24,7 +24,6 @@ namespace MostarConstruct.Web.Areas.Poslovodja.Controllers
         private DatabaseContext db;
         private IDropdown dropdown;
 
-
         public RadniciController(DatabaseContext db, IDropdown dropdown)
         {
             this.db = db;
@@ -33,22 +32,19 @@ namespace MostarConstruct.Web.Areas.Poslovodja.Controllers
         }
 
 
+        #region Index
         public IActionResult Index()
         {
             var model = db.Radnici.Include(p => p.Pozicija).Include(o => o.Osoba).ThenInclude(g => g.Grad);
-
-
             return View(model);
         }
+        #endregion
 
-
-
-
+        #region Dodaj
         public IActionResult Dodaj()
         {
             return View(GetDefaultViewModel(new RadniciDodajViewModel()));
         }
-
 
         [HttpPost]
         public IActionResult Dodaj(RadniciDodajViewModel model)
@@ -73,9 +69,36 @@ namespace MostarConstruct.Web.Areas.Poslovodja.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+        #endregion
 
+        #region Obrisi
+        public IActionResult Obrisi(int id)
+        {
+            Radnik x = db.Radnici.Where(r => r.RadnikID == id).FirstOrDefault();
 
+            db.Radnici.Remove(x);
+            db.SaveChanges();
 
+            return RedirectToAction(nameof(Index));
+        }
+        #endregion
+
+        #region GrupniUploadSlika
+        public IActionResult Slike()
+        {
+            RadniciGrupniUploadSlikaViewModel viewModel = new RadniciGrupniUploadSlikaViewModel();
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Slike(RadniciGrupniUploadSlikaViewModel viewModel)
+        {
+
+            return RedirectToAction(nameof(Index));
+        }
+        #endregion
+
+        #region Helper
         private RadniciDodajViewModel GetDefaultViewModel(RadniciDodajViewModel model)
         {
             model.Osoba = model.Osoba ?? new Osoba();
@@ -88,17 +111,8 @@ namespace MostarConstruct.Web.Areas.Poslovodja.Controllers
 
             return model;
         }
+        #endregion
 
-
-        public IActionResult Obrisi(int id)
-        {
-            Radnik x = db.Radnici.Where(r => r.RadnikID == id).FirstOrDefault();
-
-            db.Radnici.Remove(x);
-            db.SaveChanges();
-
-            return RedirectToAction(nameof(Index));
-        }
 
 
 
