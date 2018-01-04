@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Fiver.Mvc.FileUpload.Models.Home;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using MostarConstruct.Data;
+using MostarConstruct.Data.Models;
 using MostarConstruct.Models;
 using MostarConstruct.Web.Areas.ClanUprave.ViewModels;
 using MostarConstruct.Web.Helper;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -88,6 +91,71 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
             _db.Projekti.Remove(p);
             _db.SaveChanges();
             return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public async Task<IActionResult> UploadFile(IFormFile file, string ProjektId)
+        {
+            if (file == null || file.Length == 0)
+                return Content("file not selected");
+
+            var path = Path.Combine(
+                        Directory.GetCurrentDirectory(), "FileStorage",
+                        file.GetFilename());
+
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+            Fajl fajl = new Fajl();
+            fajl.Naziv = file.GetFilename();
+            _db.Fajlovi.Add(fajl);
+            _db.SaveChanges();
+            ProjektiFajlovi stavka = new ProjektiFajlovi();
+            stavka.FajlID = fajl.FajlId;
+            stavka.ProjektID= int.Parse(ProjektId);
+            _db.ProjektiFajlovi.Add(stavka);
+            _db.SaveChanges();
+            return RedirectToAction("Detalji", new { ProjektId = int.Parse(ProjektId) });
+        }
+        public async Task<IActionResult> Download(string filename)
+        {
+            if (filename == null)
+                return Content("filename not present");
+
+            var path = Path.Combine(
+                           Directory.GetCurrentDirectory(),
+                           "FileStorage", filename);
+
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(path, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+            return File(memory, GetContentType(path), Path.GetFileName(path));
+        }
+        private string GetContentType(string path)
+        {
+            var types = GetMimeTypes();
+            var ext = Path.GetExtension(path).ToLowerInvariant();
+            return types[ext];
+        }
+        private Dictionary<string, string> GetMimeTypes()
+        {
+            return new Dictionary<string, string>
+            {
+                {".txt", "text/plain"},
+                {".pdf", "application/pdf"},
+                {".doc", "application/vnd.ms-word"},
+                {".docx", "application/vnd.ms-word"},
+                {".xls", "application/vnd.ms-excel"},
+                {".xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"},
+                {".png", "image/png"},
+                {".jpg", "image/jpeg"},
+                {".jpeg", "image/jpeg"},
+                {".gif", "image/gif"},
+                {".csv", "text/csv"}
+            };
         }
     }
 }

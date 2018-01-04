@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MostarConstruct.Data.Models;
 using MostarConstruct.Models;
 using System;
 using System.Collections.Generic;
@@ -41,7 +42,8 @@ namespace MostarConstruct.Data
         public DbSet<VozackaKategorija> VozackeKategorije { get; set; }
         public DbSet<Vozilo> Vozila { get; set; }
         public DbSet<VrstaVozila> VrsteVozila { get; set; }
-
+        public DbSet<Fajl> Fajlovi { get; set; }
+        public DbSet<ProjektiFajlovi> ProjektiFajlovi { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<VozaciKategorije>().HasKey(k => new { k.VozacID, k.KategorijaID });
