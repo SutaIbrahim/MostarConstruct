@@ -128,6 +128,7 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
             Fajl fajl = new Fajl();
             fajl.Lokacija = file.GetFilename();
             fajl.Naziv = nazivFajla;
+            fajl.DatumDodavanja = DateTime.Now;
             _db.Fajlovi.Add(fajl);
             _db.SaveChanges();
             ProjektiFajlovi stavka = new ProjektiFajlovi();
