@@ -1,0 +1,63 @@
+﻿@model MostarConstruct.Web.Areas.ClanUprave.ViewModels.ProjektiIndexViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+            <header class="panel-heading">
+                <h2>Spisak projekata</h2>
+
+            </header>
+
+            <div class="panel-body">
+                <div class="pull-right">
+                    <a class="btn btn-primary" href="/Administracija/Vozila/Dodaj"><i class="fa fa-plus"></i> Dodaj</a>
+                </div>
+                <br />
+                <br />
+                <br />
+
+                <table class="table table-borderer table-striped">
+                    <thead>
+                        <tr>
+                            <th>Naziv</th>
+                            <th>Cijena</th>
+                            <th>Broj rata</th>
+                            <th>Početak</th>
+                            <th>Završetak</th>
+                            <th>Završen</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var projekt in Model.listaProjekata)
+                        {
+                            <tr>
+                                <td>@projekt.Naziv</td>
+                                <td>@projekt.Cijena</td>
+                                <td>@projekt.BrojRata</td>
+                                <td>@projekt.stvarniPocetak</td>
+                                <td>@projekt.stvarniZavrsetak</td>
+                                <td>@projekt.zavrsen</td>
+                                <td>
+                                    <form asp-action="Obrisi" method="post">
+                                        <input hidden name="ProjektID" value="@projekt.Id" />
+                                        <a asp-action="Uredi" asp-route-ProjektID="@projekt.Id" class="btn btn-info">Uredi</a>
+                                        <button type="submit" class="btn btn-danger">Obrisi</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+
+
+
+    </section>
+</section>
+
+

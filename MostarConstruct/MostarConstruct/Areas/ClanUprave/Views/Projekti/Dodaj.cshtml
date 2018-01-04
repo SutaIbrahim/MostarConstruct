@@ -1,0 +1,101 @@
+﻿@model MostarConstruct.Web.Areas.ClanUprave.ViewModels.ProjektiDodajViewModel
+@{
+    ViewData["Title"] = "Dodaj";
+}
+
+
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+            <header class="panel-heading">
+                <h3>Novi projekt</h3>
+            </header>
+            <div class="panel-body">
+                <form asp-action="Snimi" method="post">
+
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div asp-validation-summary="All" class="alert alert-danger"></div>
+                    }
+                    @Html.HiddenFor(model => model.projekt.ProjektID)
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="projekt.Naziv">Naziv projekta:</label>
+                                    <input asp-for="projekt.Naziv" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="projekt.Cijena">Cijena projekta:</label>
+                                    <input asp-for="projekt.Cijena" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="projekt.PredlozeniPocetak">Predloženi početak:</label>
+                                    <input asp-for="projekt.PredlozeniPocetak" class="form-control" />
+                                </div>
+                            </div>
+
+                        </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="projekt.PredlozeniZavrsetak">Predloženi završetak:</label>
+                                <input asp-for="projekt.PredlozeniZavrsetak" class="form-control " />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="projekt.StvarniPocetak">Stvarni početak:</label>
+                                <input asp-for="projekt.StvarniPocetak" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="projekt.StvarniZavrsetak">Stvarni završetak:</label>
+                                <input asp-for="projekt.StvarniZavrsetak" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="projekt.BrojRata">Broj rata:</label>
+                                <input asp-for="projekt.BrojRata" class="form-control" />
+                            </div>
+                        </div>
+
+                        
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="projekt.Opis">Opis:</label>
+                                <textarea asp-for="projekt.Opis" cols="20" rows="7" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Sacuvaj</button>
+                                <a asp-action="Index" class="btn btn-default"><i class="fa fa-times"></i> Odustani</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </section>
+    </section>
+</section>
