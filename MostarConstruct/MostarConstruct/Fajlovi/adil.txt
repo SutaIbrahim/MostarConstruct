@@ -1,0 +1,15 @@
+promijeniti passwd na plesku
+promijeniti passwd na stranici
+skinuti publish fajl sa pleska -> import preko publish profila
+dodati novi projekat .Data u Solution
+
+URADITI ZADATAK sa foruma
+
+ajax airpair
+
+jquery
+
+jquery combobox select sitepoint
+easyautocomplete.om/guide
+
+github.com/adil-edu-fit-ba
