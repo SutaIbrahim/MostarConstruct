@@ -36,7 +36,7 @@ namespace MostarConstruct
             services.AddSession();
             services.AddSingleton<IFileProvider>(
                new PhysicalFileProvider(
-                   Path.Combine(Directory.GetCurrentDirectory(), "Fajlovi")));
+                   Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Fajlovi")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
