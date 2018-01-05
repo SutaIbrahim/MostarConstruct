@@ -17,6 +17,10 @@
 
                 <form asp-action="Uredi" method="post">
 
+                    <input asp-for="@Model.Radnik.RadnikID" hidden />
+                    <input asp-for="@Model.Osoba.OsobaID" hidden />
+
+
                     @if (!ViewData.ModelState.IsValid)
             {
                         <div asp-validation-summary="All" class="alert alert-danger"></div>

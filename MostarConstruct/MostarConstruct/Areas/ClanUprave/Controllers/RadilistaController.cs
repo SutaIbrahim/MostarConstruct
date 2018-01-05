@@ -61,6 +61,57 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
         }
 
 
+        public IActionResult Obrisi(int id)
+        {
+            Radiliste x = db.Radilista.Where(y => y.RadilisteID == id).FirstOrDefault();
+
+            db.Radilista.Remove(x);
+
+            db.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        #region Uredi
+        public IActionResult Uredi(int RadilisteId)
+        {
+            Radiliste radiliste = db.Radilista.Where(r => r.RadilisteID == RadilisteId).SingleOrDefault();
+            
+
+
+            RadilistaDodajViewModel vm = GetDefaultViewModel(new RadilistaDodajViewModel()
+            {
+              Radiliste=radiliste,
+              ProjektID=radiliste.ProjektID,
+              GradID=radiliste.GradID
+
+            });
+
+            return View(vm);
+        }
+
+
+        [HttpPost]
+        public IActionResult Uredi(RadilistaDodajViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(GetDefaultViewModel(model));
+
+
+            Radiliste r = model.Radiliste;
+            r.ProjektID = model.ProjektID;
+            r.GradID = model.GradID;
+
+            db.Radilista.Update(r);
+            db.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        #endregion
+
+
+
         //
         private RadilistaDodajViewModel GetDefaultViewModel(RadilistaDodajViewModel model)
         {
@@ -73,15 +124,7 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
         }
 
 
-        public IActionResult Obrisi(int id)
-        {
-            Radiliste x = db.Radilista.Where(y => y.RadilisteID == id).FirstOrDefault();
-
-            db.Radilista.Remove(x);
-
-            db.SaveChanges();
-            return RedirectToAction(nameof(Index));
-        }
+     
 
     }
 }

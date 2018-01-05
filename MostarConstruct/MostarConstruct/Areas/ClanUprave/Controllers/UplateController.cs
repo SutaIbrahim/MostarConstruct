@@ -99,8 +99,16 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
         [HttpPost]
         public IActionResult Uredi(UplateDodajViewModel model)
         {
+            if (!ModelState.IsValid)
+                return View(GetDefaultViewModel(model));
+
+            Korisnik k = httpContext.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
+
             Uplata x = model.Uplata;
-            
+
+            x.ProjektID = model.ProjektID;
+            x.KlijentID = model.KlijentID;
+           x.ClanUpraveID = k.KorisnikID;
 
             db.Uplate.Update(x);
             db.SaveChanges();

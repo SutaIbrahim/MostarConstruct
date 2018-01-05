@@ -79,7 +79,6 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
         {
             Ponuda model = db.Ponude.Where(p => p.PonudaID == PonudaId).FirstOrDefault();
 
-
             return View(model);
         }
 

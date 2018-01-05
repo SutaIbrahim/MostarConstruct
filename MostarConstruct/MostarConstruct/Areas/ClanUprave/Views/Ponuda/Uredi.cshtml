@@ -16,7 +16,12 @@
             </header>
 
             <div class="panel-body">
-                <form asp-action="Dodaj" method="post">
+                <form asp-action="Uredi" method="post">
+
+                    <input asp-for="@Model.PonudaID" hidden />
+                    <input asp-for="@Model.ClanUpraveID" hidden />
+
+
 
                     @if (!ViewData.ModelState.IsValid)
             {
