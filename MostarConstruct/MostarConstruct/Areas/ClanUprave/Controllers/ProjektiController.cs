@@ -118,7 +118,7 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
                 return Content("file not selected");
 
             var path = Path.Combine(
-                        Directory.GetCurrentDirectory(), "Fajlovi",
+                        Directory.GetCurrentDirectory(), "wwwroot/Fajlovi",
                         file.GetFilename());
 
             using (var stream = new FileStream(path, FileMode.Create))
@@ -145,7 +145,7 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
 
             var path = Path.Combine(
                            Directory.GetCurrentDirectory(),
-                           "Fajlovi", filename);
+                           "wwwroot/Fajlovi", filename);
 
             var memory = new MemoryStream();
             using (var stream = new FileStream(path, FileMode.Open))

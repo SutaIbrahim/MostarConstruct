@@ -25,6 +25,18 @@
     <None Include="Areas\Administracija\Views\Shared\Error.cshtml" />
     <None Include="Areas\Administracija\Views\Shared\_Layout.cshtml" />
     <None Include="Areas\Administracija\Views\Shared\_ValidationScriptsPartial.cshtml" />
+    <None Include="wwwroot\Fajlovi\adil.txt" />
+    <None Include="wwwroot\Fajlovi\BPl_Tabele %282%29.xls" />
+    <None Include="wwwroot\Fajlovi\ef config.PNG" />
+    <None Include="wwwroot\Fajlovi\Gradnja zgrade.txt" />
+    <None Include="wwwroot\Fajlovi\if_bulldozer_45455.png" />
+    <None Include="wwwroot\Fajlovi\proces 2.PNG" />
+    <None Include="wwwroot\Fajlovi\RSI_Implementacija softvera_2017_18.pdf" />
+    <None Include="wwwroot\Fajlovi\SkriptaBaze.sql" />
+    <None Include="wwwroot\Fajlovi\tim.PNG" />
+    <None Include="wwwroot\Fajlovi\UPRAVLJANJE PROJEKTOM - Ispaltivost projekta.pdf" />
+    <None Include="wwwroot\Fajlovi\Urbanistička saglasnost.txt" />
+    <None Include="wwwroot\Fajlovi\viber image.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,7 +44,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Fajlovi\" />
+    <Folder Include="wwwroot\Fajlovi\" />
   </ItemGroup>
 
 </Project>
