@@ -28,6 +28,7 @@ namespace MostarConstruct.Models
         public string JMBG { get; set; }
         [StringLength(15)]
         public string Spol { get; set; }
+        public string ContentType { get; set; }
         public byte[] Slika { get; set; }
         [StringLength(100)]
         public string Telefon { get; set; }
