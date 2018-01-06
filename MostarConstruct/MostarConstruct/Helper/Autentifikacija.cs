@@ -31,6 +31,8 @@ namespace MostarConstruct.Web.Helper
         {
             context.Session.SetJson(_logiraniKorisnik, korisnik);           
         }
+
+        public static void OcistiSesiju(HttpContext httpContext) => httpContext.Session.SetJson(_logiraniKorisnik, null);
         
         public static Korisnik GetLogiraniKorisnik(HttpContext context)
         {

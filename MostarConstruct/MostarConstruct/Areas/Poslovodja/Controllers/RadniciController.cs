@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MostarConstruct.Web.Areas.Poslovodja.ViewModels;
 using MostarConstruct.Web.Helper.IHelper;
+using System.Text.RegularExpressions;
+using System.IO;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MostarConstruct.Web.Areas.Poslovodja.Controllers
 {
@@ -145,8 +148,56 @@ namespace MostarConstruct.Web.Areas.Poslovodja.Controllers
         [HttpPost]
         public IActionResult Slike(RadniciGrupniUploadSlikaViewModel viewModel)
         {
+            if (viewModel.Slike == null)
+            {
+                TempData["greske"] += "<li>Morate odabrati najmanje jednu sliku za upload</li>";
+                return View(nameof(Slike), viewModel);
+            }
 
-            return RedirectToAction(nameof(Index));
+            List<string> dozvoljeneEkstenzijeSlika = new List<string>() { ".jpg", ".jpeg", ".png", ".JPG", ".JPEG", ".PNG" };
+            Regex pravilo = new Regex(@"[0-9]{13}\.[a-z]{3,}");
+
+            List<Radnik> radnici = db.Radnici.Include(x => x.Osoba).ToList();
+
+            foreach (var slika in viewModel.Slike)
+            {
+                if (slika.ContentType.Contains("images"))
+                    TempData["greske"] += $"<li>{slika.FileName} nije slika</li>";
+                if(!pravilo.IsMatch(slika.FileName))
+                    TempData["greske"] += $"<li>{slika.FileName} naziv nije validan</li>";
+                if(dozvoljeneEkstenzijeSlika.All(x => !slika.FileName.EndsWith(x)))
+                    TempData["greske"] += $"<li>{slika.FileName} naziv u validnom formatu</li>";
+
+                string JMBGRadnika = "";
+
+                string[] naziv = slika.FileName.Split(".");
+                if (naziv[0].Length == 13)
+                    JMBGRadnika = slika.FileName.Substring(0, 13);
+
+                Radnik radnik = null;
+
+                radnik = radnici.Where(x => x.Osoba.JMBG == JMBGRadnika).FirstOrDefault();
+
+                if (radnik == null)
+                    TempData["greske"] += $"<li>Radnik sa {slika.FileName} ne postoji.</li>";
+                else
+                {
+                    using (MemoryStream memoryStream = new MemoryStream())
+                    {
+                        slika.CopyTo(memoryStream);
+                        radnik.Osoba.Slika = memoryStream.ToArray();
+                        radnik.Osoba.ContentType = slika.ContentType;
+
+                        db.Radnici.Update(radnik);
+                        TempData["uspjeh"] += $"<li>Uspjesno pohranjena slika za {radnik.Osoba.Ime} {radnik.Osoba.Prezime} ({radnik.Osoba.JMBG})</li>";
+
+                    }
+                }
+            }
+
+            db.SaveChanges();
+            //return Json(new { success = true});
+            return RedirectToAction(nameof(Slike));
         }
         #endregion
 
@@ -163,6 +214,7 @@ namespace MostarConstruct.Web.Areas.Poslovodja.Controllers
 
             return model;
         }
+
         #endregion
 
 

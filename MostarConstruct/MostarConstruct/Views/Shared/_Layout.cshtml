@@ -1,5 +1,5 @@
-﻿@{ 
-    var trenutniKorisnik = ViewData[Konfiguracija.LogiraniKorisnik] as Korisnik ?? null;
+﻿@{
+    var trenutniKorisnik = httpContextAccessor.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik) ?? new Korisnik();
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -32,8 +32,8 @@
 
     <link href="~/css/style.css" rel="stylesheet">
     <link href="~/css/style-responsive.css" rel="stylesheet" />
-        
-   
+
+
 </head>
 
 <body>
@@ -68,7 +68,11 @@
                             <li><a href="#"><i class=" fa fa-suitcase"></i>Profil</a></li>
                             <li><a href="#"><i class="fa fa-cog"></i> Postavke</a></li>
                             <li><a href="#"><i class="fa fa-bell-o"></i> Notifikacije</a></li>
-                            <li><a href="login.html"><i class="fa fa-key"></i> Odjava</a></li>
+                            <li>
+                                <form asp-controller="Racun" asp-action="Odjava" method="post">
+                                    <button type="submit"><i class="fa fa-key"></i> Odjava</button>
+                                </form>
+                            </li>
                         </ul>
                     </li>
 
@@ -86,167 +90,179 @@
                     <li>
                         <a class="active" asp-controller="Home" asp-action="Index">
                             <i class="fa fa-dashboard"></i>
-                            <span>Pocetna</span>
+                            <span>Početna stranica</span>
                         </a>
                     </li>
 
-                    <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class="fa fa-user"></i>
-                            <span>Korisnici</span>
-                        </a>
-                        <ul class="sub">
-                            <li><a asp-area="Administracija" asp-controller="Korisnici" asp-action="Index">Prikaz</a></li>
-                            <li><a asp-area="Administracija" asp-controller="Korisnici" asp-action="Dodaj">Dodaj</a></li>
-                            
-                        </ul>
-                    </li>
+                    @if (trenutniKorisnik.IsAdmin)
+                    {
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa fa-user"></i>
+                                <span>Korisnici</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a asp-area="Administracija" asp-controller="Korisnici" asp-action="Index">Prikaz</a></li>
+                                <li><a asp-area="Administracija" asp-controller="Korisnici" asp-action="Dodaj">Dodaj</a></li>
+                            </ul>
+                        </li>
 
-                    <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class="fa fa-location-arrow"></i>
-                            <span>Lokacije</span>
-                        </a>
-                        <ul class="sub">
-                            <li><a asp-area="Administracija" asp-controller="Drzave" asp-action="Index">Drzave</a></li>
-                            <li><a asp-area="Administracija" asp-controller="Regije" asp-action="Index">Regije</a></li>
-                            <li><a asp-area="Administracija" asp-controller="Gradovi" asp-action="Index">Gradovi</a></li>                            
-                        </ul>
-                    </li>
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa fa-location-arrow"></i>
+                                <span>Lokacije</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a asp-area="Administracija" asp-controller="Drzave" asp-action="Index">Drzave</a></li>
+                                <li><a asp-area="Administracija" asp-controller="Regije" asp-action="Index">Regije</a></li>
+                                <li><a asp-area="Administracija" asp-controller="Gradovi" asp-action="Index">Gradovi</a></li>
+                            </ul>
+                        </li>
 
-                    <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class="fa fa-drivers-license-o"></i>
-                            <span>Vozni park</span>
-                        </a>
-                        <ul class="sub">
-                            <li><a asp-area="Administracija" asp-controller="Vozila" asp-action="Index">Prikaz</a></li>
-                            <li><a asp-area="Administracija" asp-controller="Vozila" asp-action="Dodaj">Dodaj</a></li>                            
-                        </ul>
-                    </li>
-                    <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class="fa fa-usb"></i>
-                            <span>Inventar</span>
-                        </a>
-                        <ul class="sub">
-                            <li><a asp-area="Administracija" asp-controller="Inventar" asp-action="Index">Prikaz</a></li>
-                            <li><a asp-area="Administracija" asp-controller="Inventar" asp-action="Dodaj">Dodaj</a></li>
-                        </ul>
-                    </li>
-                    <li class="sub-menu">
-                        <a asp-area="Administracija" asp-controller="Inventar" asp-action="Index">
-                            <i class="fa fa-user"></i>
-                            <span>Aktivnosti</span>
-                        </a>
-                        @*<ul class="sub">
-                            <li><a asp-area="Administracija" asp-controller="Inventar" asp-action="Index">Prikaz</a></li>
-                          
-                        </ul>*@
-                    </li>
-                    @*<li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class=" fa fa-envelope"></i>
-                            <span>Mail</span>
-                        </a>
-                        <ul class="sub">
-                            <li><a href="inbox.html">Inbox</a></li>
-                            <li><a href="inbox_details.html">Inbox Details</a></li>
-                        </ul>
-                    </li>
-                    <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class=" fa fa-bar-chart-o"></i>
-                            <span>Charts</span>
-                        </a>
-                        <ul class="sub">
-                            <li><a href="morris.html">Morris</a></li>
-                            <li><a href="chartjs.html">Chartjs</a></li>
-                            <li><a href="flot_chart.html">Flot Charts</a></li>
-                            <li><a href="xchart.html">xChart</a></li>
-                        </ul>
-                    </li>
-                    <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class="fa fa-shopping-cart"></i>
-                            <span>Shop</span>
-                        </a>
-                        <ul class="sub">
-                            <li><a href="product_list.html">List View</a></li>
-                            <li><a href="product_details.html">Details View</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="google_maps.html">
-                            <i class="fa fa-map-marker"></i>
-                            <span>Google Maps </span>
-                        </a>
-                    </li>
-                    <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class="fa fa-comments-o"></i>
-                            <span>Chat Room</span>
-                        </a>
-                        <ul class="sub">
-                            <li><a href="lobby.html">Lobby</a></li>
-                            <li><a href="chat_room.html"> Chat Room</a></li>
-                        </ul>
-                    </li>
-                    <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class="fa fa-glass"></i>
-                            <span>Extra</span>
-                        </a>
-                        <ul class="sub">
-                            <li><a href="blank.html">Blank Page</a></li>
-                            <li><a href="sidebar_closed.html">Sidebar Closed</a></li>
-                            <li><a href="people_directory.html">People Directory</a></li>
-                            <li><a href="coming_soon.html">Coming Soon</a></li>
-                            <li><a href="lock_screen.html">Lock Screen</a></li>
-                            <li><a href="profile.html">Profile</a></li>
-                            <li><a href="invoice.html">Invoice</a></li>
-                            <li><a href="project_list.html">Project List</a></li>
-                            <li><a href="project_details.html">Project Details</a></li>
-                            <li><a href="search_result.html">Search Result</a></li>
-                            <li><a href="pricing_table.html">Pricing Table</a></li>
-                            <li><a href="faq.html">FAQ</a></li>
-                            <li><a href="fb_wall.html">FB Wall</a></li>
-                            <li><a href="404.html">404 Error</a></li>
-                            <li><a href="500.html">500 Error</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="login.html">
-                            <i class="fa fa-user"></i>
-                            <span>Login Page</span>
-                        </a>
-                    </li>
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa fa-drivers-license-o"></i>
+                                <span>Vozni park</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a asp-area="Administracija" asp-controller="Vozila" asp-action="Index">Prikaz</a></li>
+                                <li><a asp-area="Administracija" asp-controller="Vozila" asp-action="Dodaj">Dodaj</a></li>
+                            </ul>
+                        </li>
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa fa-usb"></i>
+                                <span>Inventar</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a asp-area="Administracija" asp-controller="Inventar" asp-action="Index">Prikaz</a></li>
+                                <li><a asp-area="Administracija" asp-controller="Inventar" asp-action="Dodaj">Dodaj</a></li>
+                            </ul>
+                        </li>
+                        <li class="sub-menu">
+                            <a asp-area="Administracija" asp-controller="Inventar" asp-action="Index">
+                                <i class="fa fa-user"></i>
+                                <span>Aktivnosti</span>
+                            </a>
+                            @*<ul class="sub">
+                                    <li><a asp-area="Administracija" asp-controller="Inventar" asp-action="Index">Prikaz</a></li>
+                                </ul>*@
+                        </li>
 
-                    <!--multi level menu start-->
-                    <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class="fa fa-sitemap"></i>
-                            <span>Multi level Menu</span>
-                        </a>
-                        <ul class="sub">
-                            <li><a href="javascript:;">Menu Item 1</a></li>
-                            <li class="sub-menu">
-                                <a href="boxed_page.html">Menu Item 2</a>
-                                <ul class="sub">
-                                    <li><a href="javascript:;">Menu Item 2.1</a></li>
-                                    <li class="sub-menu">
-                                        <a href="javascript:;">Menu Item 3</a>
-                                        <ul class="sub">
-                                            <li><a href="javascript:;">Menu Item 3.1</a></li>
-                                            <li><a href="javascript:;">Menu Item 3.2</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <!--multi level menu end-->*@
+                    }
+                    else if (trenutniKorisnik.IsPoslovodja)
+                    {
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa fa-user"></i>
+                                <span>Korisnici</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a asp-area="Administracija" asp-controller="Korisnici" asp-action="Index">Prikaz</a></li>
+                                <li><a asp-area="Administracija" asp-controller="Korisnici" asp-action="Dodaj">Dodaj</a></li>
+                            </ul>
+                        </li>
 
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa fa-location-arrow"></i>
+                                <span>Lokacije</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a asp-area="Administracija" asp-controller="Drzave" asp-action="Index">Drzave</a></li>
+                                <li><a asp-area="Administracija" asp-controller="Regije" asp-action="Index">Regije</a></li>
+                                <li><a asp-area="Administracija" asp-controller="Gradovi" asp-action="Index">Gradovi</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa fa-drivers-license-o"></i>
+                                <span>Vozni park</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a asp-area="Administracija" asp-controller="Vozila" asp-action="Index">Prikaz</a></li>
+                                <li><a asp-area="Administracija" asp-controller="Vozila" asp-action="Dodaj">Dodaj</a></li>
+                            </ul>
+                        </li>
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa fa-usb"></i>
+                                <span>Inventar</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a asp-area="Administracija" asp-controller="Inventar" asp-action="Index">Prikaz</a></li>
+                                <li><a asp-area="Administracija" asp-controller="Inventar" asp-action="Dodaj">Dodaj</a></li>
+                            </ul>
+                        </li>
+                        <li class="sub-menu">
+                            <a asp-area="Administracija" asp-controller="Inventar" asp-action="Index">
+                                <i class="fa fa-user"></i>
+                                <span>Aktivnosti</span>
+                            </a>
+                            @*<ul class="sub">
+                                    <li><a asp-area="Administracija" asp-controller="Inventar" asp-action="Index">Prikaz</a></li>
+                                </ul>*@
+                        </li>
+
+                    }
+                    else
+                    {
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa fa-user"></i>
+                                <span>Projekti</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a asp-area="ClanUprave" asp-controller="Projekti" asp-action="Index">Prikaz</a></li>
+                                <li><a asp-area="ClanUprave" asp-controller="Projekti" asp-action="Dodaj">Dodaj</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa fa-user"></i>
+                                <span>Radilišta</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a asp-area="ClanUprave" asp-controller="Radilista" asp-action="Index">Prikaz</a></li>
+                                <li><a asp-area="ClanUprave" asp-controller="Radilista" asp-action="Index">Dodaj</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa fa-money"></i>
+                                <span>Uplate</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a asp-area="ClanUprave" asp-controller="Uplate" asp-action="Index">Prikaz</a></li>
+                                <li><a asp-area="ClanUprave" asp-controller="Uplate" asp-action="Dodaj">Dodaj</a></li>
+                            </ul>
+                        </li>
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa fa-money"></i>
+                                <span>Ponude</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a asp-area="ClanUprave" asp-controller="Ponuda" asp-action="Index">Prikaz</a></li>
+                                <li><a asp-area="ClanUprave" asp-controller="Ponuda" asp-action="Dodaj">Dodaj</a></li>
+                            </ul>
+                        </li>
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa fa-usb"></i>
+                                <span>Izvještaji</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a asp-area="ClanUprave" asp-controller="Izvjestaj" asp-action="Dodaj">Izdaj izvještaj</a></li>
+                            </ul>
+                        </li>
+
+                    }
+
+                    
                 </ul>
                 <!-- sidebar menu end-->
             </div>
@@ -255,12 +271,10 @@
         <!--main content start-->
         @RenderBody()
         <!--main content end-->
-        <!-- Right Slidebar start -->
-        <!-- Right Slidebar end -->
         <!--footer start-->
         <footer class="site-footer">
             <div class="text-center">
-                2018 &copy; Mostar Construct.
+                @DateTime.Now.Year &copy; Mostar Construct.
 
             </div>
         </footer>
@@ -290,7 +304,7 @@
     <script src="~/js/count.js"></script>
     <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
 
-    
+
     <script>
 
         //owl carousel

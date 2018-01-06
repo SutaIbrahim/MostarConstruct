@@ -25,18 +25,26 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
         #endregion
 
         #region Create
-        public IActionResult Dodaj() => View(new Drzava());
+        public IActionResult Dodaj() => View("_Dodaj", new Drzava());
 
         [HttpPost]
         public IActionResult Dodaj(Drzava drzava)
         {
+            string messages = string.Join("; ", ModelState.Values
+                                        .SelectMany(x => x.Errors)
+                                        .Select(x => x.ErrorMessage));
+
             if (!ModelState.IsValid)
-                return View(drzava);
+            {
+                return Json(new { success = false, errors = messages });
+            }
+
+            return View(drzava);
 
             db.Drzave.Add(drzava);
             db.SaveChanges();
 
-            return RedirectToAction(nameof(Index));
+            return Json(new { success = true});
         }
         #endregion
 
@@ -45,9 +53,9 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
         public IActionResult Uredi(int id)
         {
             Drzava drzava = db.Drzave.Where(x => x.DrzavaID == id).FirstOrDefault();
-                        
+
             return PartialView("_Uredi", drzava);
-        } 
+        }
         #endregion
 
 

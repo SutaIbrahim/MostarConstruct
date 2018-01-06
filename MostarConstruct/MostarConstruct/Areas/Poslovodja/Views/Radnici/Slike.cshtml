@@ -9,10 +9,37 @@
                 <h2>Slike</h2>
             </div>
             <div class="panel-body">
+                @if (TempData["greske"] == null && TempData["uspjeh"] == null)
+                {
+                    <div class="alert alert-info">
+                        Slike koje želite učitati moraju biti u sljedećem formatu: (JMBG radnika).jpg
+                    </div>
+                }
+
+                @if (TempData["uspjeh"] != null)
+                {
+                <div class="alert alert-success alert-dismissable">
+                    <button class="close" type="button" data-dismiss="alert"></button>
+                    <strong>Uspješno ste uploadovali slike sljedećim radnicima:</strong>
+                    <ul>
+                        @Html.Raw(TempData["uspjeh"])
+                    </ul>
+                </div>
+                }
+
+                @if (TempData["greske"] != null)
+                {
+                <div class="alert alert-danger alert-dismissable">
+                    <button class="close" type="button" data-dismiss="alert"></button>
+                    <strong>Došlo je do sljedećih greški:</strong>
+                    <ul>
+                        @Html.Raw(TempData["greske"])
+                    </ul>
+                </div>
+                }
 
                 <div class="row">
                     <div class="col-md-12">
-
                         <!-- The file upload form used as target for the file upload widget -->
                         <form id="fileupload" asp-action="Slike" method="post" enctype="multipart/form-data">
                             <!-- Redirect browsers with JavaScript disabled to the origin page -->
@@ -23,7 +50,7 @@
                                     <span class="btn btn-success fileinput-button">
                                         <i class="glyphicon glyphicon-plus"></i>
                                         <span>Odaberite slike...</span>
-                                        <input id="upload" asp-for="Slike" type="file" multiple onchange='Preview(this)'>
+                                        <input id="upload" asp-for="Slike" type="file" multiple onchange='Pretpregled(this)'>
                                     </span>
                                     <button type="submit" class="btn btn-primary start">
                                         <i class="glyphicon glyphicon-upload"></i>
@@ -65,7 +92,7 @@
     var Slike = [];
     var brojSlika = 0;
 
-    function Preview(element) {
+    function Pretpregled(element) {
         var elementi = element.files;
         var length = elementi.length;
 
@@ -126,12 +153,12 @@
             type: "POST",
             contentType: false,
             processData: false,
-            data: Model,
-            success: function (success) {
-                if (success) {
-                    window.location.href = "/Radnici";
-                }
-            }
+            data: Model
+            //success: function (success) {
+            //    if (success) {
+            //        window.location.href = "/Radnici";
+            //    }
+            //}
         });
     }
 

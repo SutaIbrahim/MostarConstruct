@@ -54,6 +54,7 @@ namespace MostarConstruct.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        #region PromjenaLozinke
         public IActionResult Lozinka()
         {
             return View(new RacunLozinkaViewModel());
@@ -67,7 +68,7 @@ namespace MostarConstruct.Web.Controllers
 
             if (!ModelState.IsValid)
                 return View(viewModel);
-            
+
             Korisnik korisnik = httpContext.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
 
             korisnik.PromijenioLozinku = true;
@@ -78,5 +79,18 @@ namespace MostarConstruct.Web.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        #endregion
+
+        #region Odjava
+        [HttpPost]
+        public IActionResult Odjava()
+        {
+            Autentifikacija.OcistiSesiju(httpContext.HttpContext);
+
+            return RedirectToAction(nameof(Prijava));
+        }
+        #endregion
+
     }
 }

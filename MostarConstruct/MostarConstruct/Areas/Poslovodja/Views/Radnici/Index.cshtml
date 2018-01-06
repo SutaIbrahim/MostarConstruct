@@ -34,6 +34,7 @@
                 <thead>
                     <tr>
                         <th>Redni broj</th>
+                        <th>Slika</th>
                         <th>Ime</th>
                         <th>Prezime</th>
                         <th>Datum rodjenja</th>
@@ -43,8 +44,6 @@
                         <th>Datum zaposlenja</th>
                         <th>Staz</th>
                         <th>Dodatak na satnicu</th>
-
-
                         <th class="text-center">Akcije</th>
                     </tr>
                 </thead>
@@ -56,6 +55,12 @@
                         {
                             <tr>
                                 <td>@(brojac++)</td>
+                                <td>
+                                @if (r.Osoba.Slika == null) {
+                                    @:"N/A"
+                                } else {
+                                    <img src="@Slika.GetSlika(r.Osoba.Slika, r.Osoba.ContentType)" width="50" height="50"/>
+                                }</td>
                                 <td>@r.Osoba.Ime</td>
                                 <td>@r.Osoba.Prezime</td>
                                 <td>@r.Osoba.DatumRodjenja</td>
@@ -65,7 +70,6 @@
                                 <td>@r.DatumZaposlenja</td>
                                 <td>@r.Staz</td>
                                 <td>@r.DodatakNaSatnicu</td>
-
 
                                 <td class="text-center">
                                     <input name="RadnikID" value="@r.RadnikID" type="hidden" />
