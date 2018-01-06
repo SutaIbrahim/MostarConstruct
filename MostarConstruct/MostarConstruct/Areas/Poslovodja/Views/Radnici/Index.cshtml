@@ -42,6 +42,7 @@
                         <th>Pozicija</th>
                         <th>Email</th>
                         <th>Datum zaposlenja</th>
+                        <th>JMBG</th>
                         <th>Staz</th>
                         <th>Dodatak na satnicu</th>
                         <th class="text-center">Akcije</th>
@@ -68,13 +69,14 @@
                                 <td>@r.Pozicija.Naziv</td>
                                 <td>@r.Osoba.Email</td>
                                 <td>@r.DatumZaposlenja</td>
+                                <td>@r.Osoba.JMBG</td>
                                 <td>@r.Staz</td>
                                 <td>@r.DodatakNaSatnicu</td>
 
                                 <td class="text-center">
                                     <input name="RadnikID" value="@r.RadnikID" type="hidden" />
                                     <a asp-action="Uredi" asp-route-RadnikID="@r.RadnikID" class="btn btn-info">Uredi</a>&nbsp;<br /><br />
-                                    <a asp-action="Obrisi" asp-route-id="@r.RadnikID" class="btn btn-danger">Obriši</a> @*postavi aktivnost na false*@
+                                    <a asp-action="Obrisi" asp-route-id="@r.RadnikID" class="btn btn-danger">Obriši</a>                     @*postavi aktivnost na false*@
                                 </td>
 
                             </tr>
