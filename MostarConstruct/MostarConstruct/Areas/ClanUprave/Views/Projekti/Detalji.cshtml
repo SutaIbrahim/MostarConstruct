@@ -52,45 +52,12 @@
 
                         <hr />
 
-                        @{
-                            foreach (var item in Model.listaFajlova)
-                            {
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <img src="~/images/if_file_173011.png" height="40" width="40" />
-                                    </div>
-                                    <div class="col-md-4">
-                                       <h5>@item.Naziv</h5>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <a href="/ClanUprave/Projekti/Download?filename=@item.Lokacija"><button class="btn btn-success"><i class="fa fa-download"></i> Preuzmi</button></a>
-                                    </div>
-                                </div>
-                                <hr />
-                            }
-                        }
+                      
 
                     </div>
                 </div>
                 <hr />
-                <div id="dodavanjeFajlova" class="row">
-                    <img src="~/images/if_file_add_48761.png" height="50" width="50" style="display:inline;" />
-
-                    <h3 style="display:inline;"><b>  Dodavanje dokumenta:</b></h3>
-
-                    <hr />
-                    <form asp-controller="Projekti" asp-action="UploadFile" method="post"
-                          enctype="multipart/form-data">
-
-                        <input type="file" required name="file" />
-                        <br />
-                        <label>Unesite naziv fajla</label>
-                        <input type="text" required class="form-control" style="width:50%;" name="nazivFajla" />
-                        <input type="text"  name="ProjektId" value="@Model.projekt.ProjektID" hidden />
-                        <br />
-                        <button type="submit" class="btn btn-success"><i class="fa fa-upload"></i> Dodaj fajl</button>
-                    </form>
-                </div>
+               
             </div>
 
 
