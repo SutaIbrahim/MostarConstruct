@@ -16,8 +16,10 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
     public class VozilaController : Controller
     {
         private DatabaseContext _db;
-        public VozilaController(DatabaseContext db)
+        IHttpContextAccessor context;
+        public VozilaController(DatabaseContext db,IHttpContextAccessor context)
         {
+            this.context = context;
             _db = db;
         }
         public IActionResult Index()
@@ -63,7 +65,21 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
         public IActionResult Snimi(VozilaDodajViewModel model)
         {
             if (!ModelState.IsValid)
-                return View("Dodaj",model);
+            {
+                model.vozackeKategorije = _db.VozackeKategorije.Select(x => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
+                {
+                    Value = x.VozackaKategorijaID.ToString(),
+                    Text = x.Naziv
+                }).ToList();
+
+                model.vrsteVozila = _db.VrsteVozila.Select(x => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
+                {
+                    Value = x.VrstaVozilaID.ToString(),
+                    Text = x.Naziv
+                }).ToList();
+                return View("Dodaj", model);
+            }
+                
             Vozilo vozilo;
             if (model.Vozilo.VoziloID == 0)
             {
@@ -81,8 +97,10 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
                 
                 _db.SaveChanges();
             }
-          
 
+            LogiranjeAktivnosti logiranje = new LogiranjeAktivnosti(_db);
+            Korisnik korisnik = context.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
+            logiranje.Logiraj(korisnik.KorisnikID, DateTime.Now, context.HttpContext.Connection.RemoteIpAddress.ToString(), context.HttpContext.Request.Headers["User-Agent"].ToString().Substring(0, 100), "Dodavanje/Uredjivanje vozila", "Vozila");
 
             return RedirectToAction("Index");
         }
@@ -114,6 +132,10 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
             Vozilo v = _db.Vozila.Where(x => x.VoziloID == VoziloID).FirstOrDefault();
             _db.Vozila.Remove(v);
             _db.SaveChanges();
+            LogiranjeAktivnosti logiranje = new LogiranjeAktivnosti(_db);
+            Korisnik korisnik = context.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
+            logiranje.Logiraj(korisnik.KorisnikID, DateTime.Now, context.HttpContext.Connection.RemoteIpAddress.ToString(), context.HttpContext.Request.Headers["User-Agent"].ToString().Substring(0, 100), "Brisanje vozila", "Vozila");
+
             return RedirectToAction("Index");
         }
     }

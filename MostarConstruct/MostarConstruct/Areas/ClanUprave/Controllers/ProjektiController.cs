@@ -56,7 +56,7 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View("Dodaj",model);
             }
             Projekt novi;
             Korisnik korisnik = context.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
@@ -75,6 +75,10 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
                 _db.Projekti.Update(model.projekt);
                 _db.SaveChanges();
             }
+            LogiranjeAktivnosti logiranje = new LogiranjeAktivnosti(_db);
+            Korisnik k = context.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
+            logiranje.Logiraj(korisnik.KorisnikID, DateTime.Now, context.HttpContext.Connection.RemoteIpAddress.ToString(), context.HttpContext.Request.Headers["User-Agent"].ToString().Substring(0, 100), "Dodavanje/Uredjivanje projekata", "Projekti");
+
             return RedirectToAction("Index");
         }
         public IActionResult Uredi(int ProjektID)
@@ -109,6 +113,10 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
             p = _db.Projekti.Where(x => x.ProjektID == ProjektID).FirstOrDefault();
             _db.Projekti.Remove(p);
             _db.SaveChanges();
+            LogiranjeAktivnosti logiranje = new LogiranjeAktivnosti(_db);
+            Korisnik korisnik = context.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
+            logiranje.Logiraj(korisnik.KorisnikID, DateTime.Now, context.HttpContext.Connection.RemoteIpAddress.ToString(), context.HttpContext.Request.Headers["User-Agent"].ToString().Substring(0, 100), "Brisanje projekta", "Projekti");
+
             return RedirectToAction("Index");
         }
        

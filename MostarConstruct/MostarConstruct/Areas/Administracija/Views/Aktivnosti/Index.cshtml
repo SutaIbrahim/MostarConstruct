@@ -1,0 +1,54 @@
+﻿@model MostarConstruct.Web.Areas.Administracija.ViewModels.AktivnostiIndexViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+            <header class="panel-heading">
+                <h2>Spisak aktivnosti</h2>
+
+            </header>
+
+            <div class="panel-body">
+               
+                <br />
+                <br />
+                <br />
+
+                <table class="table table-borderer table-striped">
+                    <thead>
+                        <tr>
+                            <th>Korisnik ID</th>
+                            <th>Datum</th>
+                            <th>IP Adresa</th>
+                            <th>Browser</th>
+                            <th>Aktivnost</th>
+                            <th>Tabela</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var aktivnost in Model.listaAktivnosti)
+                        {
+                            <tr>
+                                <td>@aktivnost.KorisnikID</td>
+                                <td>@aktivnost.Datum.ToShortDateString()</td>
+                                <td>@aktivnost.IPAdresa</td>
+                                <td>@aktivnost.Browser</td>
+                                <td>@aktivnost.Aktivnost</td>
+                                <td>@aktivnost.Tabela</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+
+
+
+    </section>
+</section>
+
+
