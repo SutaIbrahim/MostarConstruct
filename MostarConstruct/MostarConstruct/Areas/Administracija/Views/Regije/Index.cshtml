@@ -1,0 +1,75 @@
+﻿@model RegijeIndexViewModel
+@{
+    ViewData["Title"] = "Index";
+    int brojac = 1;
+}
+<section id="main-content">
+    <section class="wrapper">
+        <div class="panel">
+            <div class="panel-heading">
+                <h2>Regije</h2>
+            </div>
+            <div class="panel-body">
+                <div class="pull-left">
+                    <form asp-action="Index" method="post">
+                        <div class="form-inline">
+                            <input asp-for="Pretraga" class="form-control" />
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Trazi</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="pull-right">
+                    <a asp-action="Dodaj" class="btn btn-primary"><i class="fa fa-plus"></i> Dodaj</a>
+                </div>
+                <br />
+                <br />
+                <br />
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Redni broj</th>
+                            <th>Regija</th>
+                            <th>Oznaka</th>
+                            <th>Drzava</th>
+                            <th class="text-center">Akcije</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var r in Model.Rows)
+                        {
+                            <tr>
+                                <td>@(brojac++).</td>
+                                <td>@r.Naziv</td>
+                                <td>@r.Oznaka</td>
+                                <td>@r.Drzava</td>
+                                <td class="text-center">
+                                    <form asp-action="Obrisi" method="post">
+                                        <input id="id" value="@r.RegijaID" hidden />
+                                        <a asp-action="Uredi" asp-route-id="@r.RegijaID" class="btn btn-info"><i class="fa fa-pencil"></i> Uredi</a>
+                                        <button type="submit" class="btn btn-danger"><i class="fa fa-trash-o"></i> Obrisi</button>
+
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <hr />
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="pull-right">
+                            <div class="form-group">
+                                <label>Broj rezultata po stranici:</label>
+                                <select asp-for="BrojRezultata" asp-items="Model.UkupnoRezultata" class="form-control"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>

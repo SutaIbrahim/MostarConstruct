@@ -36,7 +36,8 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
 
             if (!ModelState.IsValid)
             {
-                return Json(new { success = false, errors = messages });
+                return View(drzava);
+                //return Json(new { success = false, errors = messages });
             }
 
             return View(drzava);

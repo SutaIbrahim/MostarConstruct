@@ -96,5 +96,16 @@ namespace MostarConstruct.Web.Helper
 
             return lista;
         }
+
+        public IEnumerable<SelectListItem> Rezultati(bool praznaLista = true)
+        {
+            return new List<SelectListItem>()
+            {
+                new SelectListItem(){Value = 5.ToString(), Text = "5"},
+                new SelectListItem(){Value = 10.ToString(), Text = "10"},
+                new SelectListItem(){Value = 15.ToString(), Text = "15"},
+                new SelectListItem(){Value = 20.ToString(), Text = "20"}
+            };
+        }
     }
 }

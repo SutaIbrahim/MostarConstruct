@@ -14,6 +14,7 @@ namespace MostarConstruct.Web.Helper.IHelper
         IEnumerable<SelectListItem> Uloge(bool praznaLista = true);
         IEnumerable<SelectListItem> Pozicije(bool praznaLista = true);
         IEnumerable<SelectListItem> Kategorije(bool praznaLista = true);
+        IEnumerable<SelectListItem> Rezultati(bool praznaLista = true);
 
     }
 }
