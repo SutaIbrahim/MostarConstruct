@@ -13,6 +13,7 @@ using MostarConstruct.Web.Helper.IHelper;
 using System.Text.RegularExpressions;
 using System.IO;
 using static System.Net.Mime.MediaTypeNames;
+using Microsoft.AspNetCore.Http;
 
 namespace MostarConstruct.Web.Areas.Poslovodja.Controllers
 {
@@ -26,11 +27,14 @@ namespace MostarConstruct.Web.Areas.Poslovodja.Controllers
     {
         private DatabaseContext db;
         private IDropdown dropdown;
+        IHttpContextAccessor context;
 
-        public RadniciController(DatabaseContext db, IDropdown dropdown)
+
+        public RadniciController(DatabaseContext db, IDropdown dropdown, IHttpContextAccessor context)
         {
             this.db = db;
             this.dropdown = dropdown;
+            this.context = context;
 
         }
 
@@ -38,10 +42,30 @@ namespace MostarConstruct.Web.Areas.Poslovodja.Controllers
         #region Index
         public IActionResult Index()
         {
-            var model = db.Radnici.Include(p => p.Pozicija).Include(o => o.Osoba).ThenInclude(g => g.Grad);
+            RadniciIndexViewModel model = new RadniciIndexViewModel();
+
+            model.Radnici = db.Radnici.Include(p => p.Pozicija).Include(o => o.Osoba).ThenInclude(g => g.Grad).ToList();
+
             return View(model);
         }
         #endregion
+
+        #region Pretraga
+        public IActionResult Pretraga(string srchTxt)
+        {
+            if (srchTxt == null)
+                return RedirectToAction(nameof(Index));
+
+            RadniciIndexViewModel model = new RadniciIndexViewModel();
+
+            model.Radnici = db.Radnici.Include(p => p.Pozicija).Include(o => o.Osoba).ThenInclude(g => g.Grad).Where(x => (x.Osoba.Ime + " " + x.Osoba.Prezime).StartsWith(srchTxt) || (x.Osoba.Prezime + " " + x.Osoba.Ime).StartsWith(srchTxt)).ToList();
+
+            model.srchTxt = srchTxt;
+            
+            return View("Index",model);
+        }
+        #endregion
+
 
         #region Dodaj
         public IActionResult Dodaj()
@@ -71,6 +95,13 @@ namespace MostarConstruct.Web.Areas.Poslovodja.Controllers
             db.Radnici.Add(radnik);
             db.SaveChanges();
 
+            Korisnik korisnik = context.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
+
+            LogiranjeAktivnosti logiranje = new LogiranjeAktivnosti(db);
+            Korisnik k = context.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
+            logiranje.Logiraj(korisnik.KorisnikID, DateTime.Now, context.HttpContext.Connection.RemoteIpAddress.ToString(), context.HttpContext.Request.Headers["User-Agent"].ToString().Substring(0, 100), "Dodavanje radnika", "Radnici");
+
+
             return RedirectToAction(nameof(Index));
         }
         #endregion
@@ -84,6 +115,13 @@ namespace MostarConstruct.Web.Areas.Poslovodja.Controllers
 
             db.Radnici.Update(x);
             db.SaveChanges();
+
+            Korisnik korisnik = context.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
+
+            LogiranjeAktivnosti logiranje = new LogiranjeAktivnosti(db);
+            Korisnik k = context.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
+            logiranje.Logiraj(korisnik.KorisnikID, DateTime.Now, context.HttpContext.Connection.RemoteIpAddress.ToString(), context.HttpContext.Request.Headers["User-Agent"].ToString().Substring(0, 100), "Brisanje radnika", "Radnici");
+
 
             return RedirectToAction(nameof(Index));
         }
@@ -132,6 +170,14 @@ namespace MostarConstruct.Web.Areas.Poslovodja.Controllers
 
             db.Radnici.Update(radnik);
             db.SaveChanges();
+
+
+            Korisnik korisnik = context.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
+
+            LogiranjeAktivnosti logiranje = new LogiranjeAktivnosti(db);
+            Korisnik k = context.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
+            logiranje.Logiraj(korisnik.KorisnikID, DateTime.Now, context.HttpContext.Connection.RemoteIpAddress.ToString(), context.HttpContext.Request.Headers["User-Agent"].ToString().Substring(0, 100), "Uredjivanje radnika", "Radnici");
+
 
             return RedirectToAction(nameof(Index));
         }

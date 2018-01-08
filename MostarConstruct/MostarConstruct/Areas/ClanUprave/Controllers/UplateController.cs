@@ -33,9 +33,22 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
         public IActionResult Index()
         {
 
-            var model = db.Uplate.Include(p => p.Projekt).Include(k => k.Klijent).Include(c => c.ClanUprave).ThenInclude(o => o.Osoba);
+            UplateIndexViewModel model = new UplateIndexViewModel();
+          model.Uplate=  db.Uplate.Include(p => p.Projekt).Include(k => k.Klijent).Include(c => c.ClanUprave).ThenInclude(o => o.Osoba).ToList();
 
             return View(model);
+        }
+
+        public IActionResult Pretraga(string srchTxt)
+        {
+            if (srchTxt == null)
+                return RedirectToAction(nameof(Index));
+
+            UplateIndexViewModel model = new UplateIndexViewModel();
+            model.Uplate = db.Uplate.Include(p => p.Projekt).Include(k => k.Klijent).Include(c => c.ClanUprave).ThenInclude(o => o.Osoba).Where(x=>x.Projekt.Naziv.StartsWith(srchTxt)).ToList();
+            model.srchTxt = srchTxt;
+
+            return View("Index",model);
         }
 
         public IActionResult Dodaj()
@@ -52,18 +65,24 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
                 return View(GetDefaultViewModel(model));
             }
 
-            Korisnik k = httpContext.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
+            Korisnik korisnik = httpContext.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
 
             Uplata uplata = model.Uplata;
 
             uplata.KlijentID = model.KlijentID;
             uplata.ProjektID = model.ProjektID;
 
-            uplata.ClanUpraveID = k.KorisnikID;
+            uplata.ClanUpraveID = korisnik.KorisnikID;
 
 
             db.Uplate.Add(uplata);
             db.SaveChanges();
+
+
+            LogiranjeAktivnosti logiranje = new LogiranjeAktivnosti(db);
+            Korisnik k = httpContext.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
+            logiranje.Logiraj(korisnik.KorisnikID, DateTime.Now, httpContext.HttpContext.Connection.RemoteIpAddress.ToString(), httpContext.HttpContext.Request.Headers["User-Agent"].ToString().Substring(0, 100), "Dodavanje uplate", "Uplate");
+
 
 
             return RedirectToAction(nameof(Index));
@@ -76,6 +95,14 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
 
             db.Uplate.Remove(x);
             db.SaveChanges();
+
+
+            Korisnik korisnik = httpContext.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
+
+            LogiranjeAktivnosti logiranje = new LogiranjeAktivnosti(db);
+            Korisnik k = httpContext.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
+            logiranje.Logiraj(korisnik.KorisnikID, DateTime.Now, httpContext.HttpContext.Connection.RemoteIpAddress.ToString(), httpContext.HttpContext.Request.Headers["User-Agent"].ToString().Substring(0, 100), "Brisanje uplate", "Uplate");
+
 
             return RedirectToAction(nameof(Index));
         }
@@ -102,16 +129,22 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
             if (!ModelState.IsValid)
                 return View(GetDefaultViewModel(model));
 
-            Korisnik k = httpContext.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
+            Korisnik korisnik = httpContext.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
 
             Uplata x = model.Uplata;
 
             x.ProjektID = model.ProjektID;
             x.KlijentID = model.KlijentID;
-           x.ClanUpraveID = k.KorisnikID;
+           x.ClanUpraveID = korisnik.KorisnikID;
 
             db.Uplate.Update(x);
             db.SaveChanges();
+
+
+            LogiranjeAktivnosti logiranje = new LogiranjeAktivnosti(db);
+            Korisnik k = httpContext.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
+            logiranje.Logiraj(korisnik.KorisnikID, DateTime.Now, httpContext.HttpContext.Connection.RemoteIpAddress.ToString(), httpContext.HttpContext.Request.Headers["User-Agent"].ToString().Substring(0, 100), "Uredjivanje uplate", "Uplate");
+
 
             return RedirectToAction(nameof(Index));
         }

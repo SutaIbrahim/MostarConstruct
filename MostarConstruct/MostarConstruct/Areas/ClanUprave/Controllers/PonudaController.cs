@@ -51,14 +51,18 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
             }
 
             Ponuda ponuda = _ponuda;
-            Korisnik k = httpContext.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
+            Korisnik korisnik = httpContext.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
 
             ponuda.DatumIzdavanja= DateTime.Now;
-            ponuda.ClanUpraveID = k.KorisnikID;
+            ponuda.ClanUpraveID = korisnik.KorisnikID;
 
             db.Ponude.Add(ponuda);
             db.SaveChanges();
 
+
+            LogiranjeAktivnosti logiranje = new LogiranjeAktivnosti(db);
+            Korisnik k = httpContext.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
+            logiranje.Logiraj(korisnik.KorisnikID, DateTime.Now, httpContext.HttpContext.Connection.RemoteIpAddress.ToString(), httpContext.HttpContext.Request.Headers["User-Agent"].ToString().Substring(0, 100), "Dodavanje ponude", "Ponuda");
 
 
             return RedirectToAction(nameof(Index));
@@ -72,6 +76,16 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
             db.Ponude.Remove(x);
 
             db.SaveChanges();
+
+            Korisnik korisnik = httpContext.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
+
+
+            LogiranjeAktivnosti logiranje = new LogiranjeAktivnosti(db);
+            Korisnik k = httpContext.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
+            logiranje.Logiraj(korisnik.KorisnikID, DateTime.Now, httpContext.HttpContext.Connection.RemoteIpAddress.ToString(), httpContext.HttpContext.Request.Headers["User-Agent"].ToString().Substring(0, 100), "Brisanje ponude", "Ponuda");
+
+
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -92,12 +106,17 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
             }
 
             Ponuda ponuda = model;
-            Korisnik k = httpContext.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
-            ponuda.ClanUpraveID = k.KorisnikID;
+            Korisnik korisnik = httpContext.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
+            ponuda.ClanUpraveID = korisnik.KorisnikID;
 
             db.Ponude.Update(ponuda);
             db.SaveChanges();
 
+
+
+            LogiranjeAktivnosti logiranje = new LogiranjeAktivnosti(db);
+            Korisnik k = httpContext.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
+            logiranje.Logiraj(korisnik.KorisnikID, DateTime.Now, httpContext.HttpContext.Connection.RemoteIpAddress.ToString(), httpContext.HttpContext.Request.Headers["User-Agent"].ToString().Substring(0, 100), "Uredjivanje ponude", "Ponuda");
 
             return RedirectToAction(nameof(Index));
         }

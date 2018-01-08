@@ -9,6 +9,7 @@ using MostarConstruct.Web.Helper;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MostarConstruct.Web.Areas.ClanUprave.ViewModels;
+using Microsoft.AspNetCore.Http;
 
 namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
 {
@@ -21,15 +22,36 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
 
 
         private DatabaseContext db;
+        IHttpContextAccessor context;
 
-        public RadilistaController(DatabaseContext db)
+
+        public RadilistaController(DatabaseContext db, IHttpContextAccessor context)
         {
             this.db = db;
+            this.context = context;
+            
         }
 
         public IActionResult Index()
         {
-            return View(db.Radilista.Include(p=>p.Projekt).Include(g=>g.Grad));
+            RadilistaIndexViewModel model = new RadilistaIndexViewModel();
+            model.Radilista = db.Radilista.Include(p => p.Projekt).Include(g => g.Grad).ToList();
+
+            return View(model);
+        }
+
+
+        public IActionResult Pretraga(string srchTxt)
+        {
+            if (srchTxt == null)
+                return RedirectToAction(nameof(Index));
+
+
+            RadilistaIndexViewModel model = new RadilistaIndexViewModel();
+               model.Radilista = db.Radilista.Include(p => p.Projekt).Include(g => g.Grad).Where(y => y.Naziv.StartsWith(srchTxt)).ToList();
+            model.srchTxt = srchTxt;
+
+            return View("Index",model);
         }
 
 
@@ -56,6 +78,13 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
             db.Radilista.Add(radiliste);
             db.SaveChanges();
 
+            Korisnik korisnik = context.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
+
+            LogiranjeAktivnosti logiranje = new LogiranjeAktivnosti(db);
+            Korisnik k = context.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
+            logiranje.Logiraj(korisnik.KorisnikID, DateTime.Now, context.HttpContext.Connection.RemoteIpAddress.ToString(), context.HttpContext.Request.Headers["User-Agent"].ToString().Substring(0, 100), "Dodavanje radilista", "Radilista");
+
+
 
             return RedirectToAction(nameof(Index));
         }
@@ -68,6 +97,14 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
             db.Radilista.Remove(x);
 
             db.SaveChanges();
+
+            Korisnik korisnik = context.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
+
+            LogiranjeAktivnosti logiranje = new LogiranjeAktivnosti(db);
+            Korisnik k = context.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
+            logiranje.Logiraj(korisnik.KorisnikID, DateTime.Now, context.HttpContext.Connection.RemoteIpAddress.ToString(), context.HttpContext.Request.Headers["User-Agent"].ToString().Substring(0, 100), "Brisanje radilista", "Radilista");
+
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -104,6 +141,14 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
 
             db.Radilista.Update(r);
             db.SaveChanges();
+
+            Korisnik korisnik = context.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
+
+            LogiranjeAktivnosti logiranje = new LogiranjeAktivnosti(db);
+            Korisnik k = context.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
+            logiranje.Logiraj(korisnik.KorisnikID, DateTime.Now, context.HttpContext.Connection.RemoteIpAddress.ToString(), context.HttpContext.Request.Headers["User-Agent"].ToString().Substring(0, 100), "Uredjivanje radilista", "Radilista");
+
+
 
             return RedirectToAction(nameof(Index));
         }

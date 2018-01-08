@@ -3,7 +3,10 @@
     ViewData["Title"] = "Index";
     int brojac = 1;
 }
-@model IEnumerable<Radnik>
+@*@model IEnumerable<Radnik>*@
+
+@model RadniciIndexViewModel
+
 
 <section id="main-content">
     <section class="wrapper">
@@ -16,77 +19,95 @@
 
             <div class="panel-body">
 
+                <div class="pull-left">
+                    <form asp-action="Pretraga" method="post">
+                        <div class="form-inline">
+                            <input asp-for="srchTxt" class="form-control" placeholder="Ime i/ili prezime radnika" value="@Model.srchTxt" />
 
-        <div class="pull-right">
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Trazi</button>
+                            <a asp-action="Pretraga" class="btn btn-primary">Prikaži sve</a>
 
-            <div class="form-group">
+                        </div>
+                    </form>
+                </div>
+
+
+
+
+                <div class="pull-right">
+
+                    <div class="form-group">
+                        <br />
+                        <a id="link" href="@Url.Action("Dodaj", "Radnici")" class="btn btn-primary modal-link"><i class="fa fa-plus"></i> Dodaj</a>
+                        <br />
+                    </div>
+                </div>
+
                 <br />
-                <a id="link" href="@Url.Action("Dodaj", "Radnici")" class="btn btn-primary modal-link"><i class="fa fa-plus"></i> Dodaj</a>
                 <br />
-            </div>
-        </div>
+                <br />
 
-            <br />
-            <br />
-            <br />
-
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>Redni broj</th>
-                        <th>Slika</th>
-                        <th>Ime</th>
-                        <th>Prezime</th>
-                        <th>Datum rodjenja</th>
-                        <th>Grad </th>
-                        <th>Pozicija</th>
-                        <th>Email</th>
-                        <th>Datum zaposlenja</th>
-                        <th>JMBG</th>
-                        <th>Staz</th>
-                        <th>Dodatak na satnicu</th>
-                        <th class="text-center">Akcije</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var r in Model)
-                    {
-
-                        @if (r.Aktivan == true)
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Redni broj</th>
+                            <th>Slika</th>
+                            <th>Ime</th>
+                            <th>Prezime</th>
+                            <th>Datum rodjenja</th>
+                            <th>Grad </th>
+                            <th>Pozicija</th>
+                            <th>Email</th>
+                            <th>Datum zaposlenja</th>
+                            <th>JMBG</th>
+                            <th>Staz</th>
+                            <th>Dodatak na satnicu</th>
+                            <th class="text-center">Akcije</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var r in Model.Radnici)
                         {
-                            <tr>
-                                <td>@(brojac++)</td>
-                                <td>
-                                @if (r.Osoba.Slika == null) {
-                                    @:"N/A"
-                                } else {
-                                    <img src="@Slika.GetSlika(r.Osoba.Slika, r.Osoba.ContentType)" width="50" height="50"/>
-                                }</td>
-                                <td>@r.Osoba.Ime</td>
-                                <td>@r.Osoba.Prezime</td>
-                                <td>@r.Osoba.DatumRodjenja</td>
-                                <td>@r.Osoba.Grad.Naziv</td>
-                                <td>@r.Pozicija.Naziv</td>
-                                <td>@r.Osoba.Email</td>
-                                <td>@r.DatumZaposlenja</td>
-                                <td>@r.Osoba.JMBG</td>
-                                <td>@r.Staz</td>
-                                <td>@r.DodatakNaSatnicu</td>
 
-                                <td class="text-center">
-                                    <input name="RadnikID" value="@r.RadnikID" type="hidden" />
-                                    <a asp-action="Uredi" asp-route-RadnikID="@r.RadnikID" class="btn btn-info">Uredi</a>&nbsp;<br /><br />
-                                    <a asp-action="Obrisi" asp-route-id="@r.RadnikID" class="btn btn-danger">Obriši</a>                     @*postavi aktivnost na false*@
-                                </td>
+                            @if (r.Aktivan == true)
+                            {
+                                <tr>
+                                    <td>@(brojac++)</td>
+                                    <td>
+                                        @if (r.Osoba.Slika == null)
+                                        {
+                                            @:"N/A"
+                                }
+                                        else
+                                        {
+                                            <img src="@Slika.GetSlika(r.Osoba.Slika, r.Osoba.ContentType)" width="50" height="50" />
+                                        }
+                                    </td>
+                                    <td>@r.Osoba.Ime</td>
+                                    <td>@r.Osoba.Prezime</td>
+                                    <td>@r.Osoba.DatumRodjenja</td>
+                                    <td>@r.Osoba.Grad.Naziv</td>
+                                    <td>@r.Pozicija.Naziv</td>
+                                    <td>@r.Osoba.Email</td>
+                                    <td>@r.DatumZaposlenja</td>
+                                    <td>@r.Osoba.JMBG</td>
+                                    <td>@r.Staz</td>
+                                    <td>@r.DodatakNaSatnicu</td>
 
-                            </tr>
+                                    <td class="text-center">
+                                        <input name="RadnikID" value="@r.RadnikID" type="hidden" />
+                                        <a asp-action="Uredi" asp-route-RadnikID="@r.RadnikID" class="btn btn-info">Uredi</a>&nbsp;<br /><br />
+                                        <a asp-action="Obrisi" asp-route-id="@r.RadnikID" class="btn btn-danger">Obriši</a>                     @*postavi aktivnost na false*@
+                                    </td>
+
+                                </tr>
+                            }
                         }
-                    }
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
 
             </div>
-            </section>
         </section>
+    </section>
 </section>

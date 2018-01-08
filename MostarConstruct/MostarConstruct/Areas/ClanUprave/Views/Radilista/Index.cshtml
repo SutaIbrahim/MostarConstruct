@@ -4,7 +4,9 @@
     int brojac = 1;
 }
 
-@model IEnumerable<Radiliste>
+@*@model IEnumerable<Radiliste>*@
+
+@model RadilistaIndexViewModel
 
 <section id="main-content">
     <section class="wrapper">
@@ -15,6 +17,23 @@
             </header>
 
             <div class="panel-body">
+
+                <div class="pull-left">
+                    <form asp-action="Pretraga" method="post">
+                        <div class="form-inline">
+                            <input asp-for="srchTxt" class="form-control" placeholder="Naziv radilista" value="@Model.srchTxt" />
+                                
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Trazi</button>
+                            <a asp-action="Pretraga" class="btn btn-primary">Prikaži sve</a>
+
+                        </div>
+                    </form>
+                </div>
+
+
+
+
+
                 <div class="pull-right">
 
                     <div class="form-group">
@@ -46,7 +65,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var r in Model)
+                @foreach (var r in Model.Radilista)
                 {
                     <tr>
                         <td>@(brojac++)</td>

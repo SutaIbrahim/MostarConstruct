@@ -3,7 +3,9 @@
     ViewData["Title"] = "Index";
     int brojac = 1;
 }
-@model IEnumerable<Uplata>
+@*@model IEnumerable<Uplata>*@
+
+@model UplateIndexViewModel
 
 <section id="main-content">
     <section class="wrapper">
@@ -16,6 +18,17 @@
 
             <div class="panel-body">
 
+                <div class="pull-left">
+                    <form asp-action="Pretraga" method="post">
+                        <div class="form-inline">
+                            <input asp-for="srchTxt" class="form-control" placeholder="Naziv projekta" value="@Model.srchTxt" /> @*Uplate za trazeni projekat*@
+
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Pretraga po projektu</button>
+                            <a asp-action="Pretraga" class="btn btn-primary">Prikaži sve</a>
+
+                        </div>
+                    </form>
+                </div>
 
                 <div class="pull-right">
 
@@ -46,7 +59,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var r in Model)
+                        @foreach (var r in Model.Uplate)
                         {
                             <tr>
                                 <td>@(brojac++)</td>
