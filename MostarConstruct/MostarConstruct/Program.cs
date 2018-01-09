@@ -20,8 +20,6 @@ namespace MostarConstruct
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                .UseSetting("detailedErrors","true")
-                .CaptureStartupErrors(true)
                 .Build();
     }
 }
