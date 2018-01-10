@@ -5,9 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.FileProviders;
 using MostarConstruct.Data;
 using MostarConstruct.Web.Helper;
@@ -27,6 +29,9 @@ namespace MostarConstruct
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Dodano 11.1.2018
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
             string connectionString = Configuration.GetConnectionString("MostarConstruct");
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionString));
@@ -40,7 +45,8 @@ namespace MostarConstruct
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
+            app.UseDeveloperExceptionPage();
+           /* if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
@@ -49,7 +55,7 @@ namespace MostarConstruct
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
+            */
             app.UseStaticFiles();
             app.UseSession();
             app.UseMvc(routes =>
