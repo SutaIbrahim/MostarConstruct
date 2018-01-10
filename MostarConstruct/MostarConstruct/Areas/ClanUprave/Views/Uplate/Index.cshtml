@@ -17,28 +17,30 @@
 
 
             <div class="panel-body">
+                    <div class="pull-left">
+                        <form asp-action="Pretraga" method="post">
+                            <div class="form-inline">
+                                <input asp-for="srchTxt" class="form-control" placeholder="Naziv projekta" value="@Model.srchTxt" /> @*Uplate za trazeni projekat*@
 
-                <div class="pull-left">
-                    <form asp-action="Pretraga" method="post">
-                        <div class="form-inline">
-                            <input asp-for="srchTxt" class="form-control" placeholder="Naziv projekta" value="@Model.srchTxt" /> @*Uplate za trazeni projekat*@
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Pretraga po projektu</button>
 
-                            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Pretraga po projektu</button>
-                            <a asp-action="Pretraga" class="btn btn-primary">Prikaži sve</a>
+                                @if (Model.srchTxt != null)
+                                {
+                                    <a asp-action="Pretraga" class="btn btn-primary">Prikaži sve</a>
+                                }
 
-                        </div>
-                    </form>
-                </div>
-
-                <div class="pull-right">
-
-                    <div class="form-group">
-                        <br />
-                        <a id="link" href="@Url.Action("Dodaj", "Uplate")" class="btn btn-primary modal-link"><i class="fa fa-plus"></i> Dodaj</a>
-                        <br />
+                            </div>
+                        </form>
                     </div>
-                </div>
 
+                    <div class="pull-right">
+
+                        <div class="form-group">
+                            <br />
+                            <a id="link" href="@Url.Action("Dodaj", "Uplate")" class="btn btn-primary modal-link"><i class="fa fa-plus"></i> Dodaj</a>
+                            <br />
+                        </div>
+                    </div>
                 <br />
                 <br />
                 <br />

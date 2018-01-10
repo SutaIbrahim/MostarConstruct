@@ -38,7 +38,9 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
 
         public IActionResult Dodaj()
         {
-            return View(new Ponuda());
+            return View(new Ponuda()); // - za standardni view...
+
+            //return View("_Dodaj", new Ponuda());
         }
 
 
@@ -108,6 +110,7 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
             Ponuda ponuda = model;
             Korisnik korisnik = httpContext.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
             ponuda.ClanUpraveID = korisnik.KorisnikID;
+            ponuda.DatumIzdavanja = DateTime.Now;
 
             db.Ponude.Update(ponuda);
             db.SaveChanges();

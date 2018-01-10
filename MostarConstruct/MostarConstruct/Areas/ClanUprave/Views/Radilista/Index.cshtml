@@ -24,7 +24,11 @@
                             <input asp-for="srchTxt" class="form-control" placeholder="Naziv radilista" value="@Model.srchTxt" />
                                 
                             <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Trazi</button>
-                            <a asp-action="Pretraga" class="btn btn-primary">Prikaži sve</a>
+
+                            @if (Model.srchTxt != null)
+                            {
+                                <a asp-action="Pretraga" class="btn btn-primary">Prikaži sve</a>
+                            }
 
                         </div>
                     </form>

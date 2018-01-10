@@ -45,7 +45,7 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
                 return RedirectToAction(nameof(Index));
 
             UplateIndexViewModel model = new UplateIndexViewModel();
-            model.Uplate = db.Uplate.Include(p => p.Projekt).Include(k => k.Klijent).Include(c => c.ClanUprave).ThenInclude(o => o.Osoba).Where(x=>x.Projekt.Naziv.StartsWith(srchTxt)).ToList();
+            model.Uplate = db.Uplate.Include(p => p.Projekt).Include(k => k.Klijent).Include(c => c.ClanUprave).ThenInclude(o => o.Osoba).Where(x=>x.Projekt.Naziv.Contains(srchTxt)).ToList();
             model.srchTxt = srchTxt;
 
             return View("Index",model);
