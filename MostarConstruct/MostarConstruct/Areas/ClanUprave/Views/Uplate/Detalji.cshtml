@@ -1,0 +1,80 @@
+﻿
+@{
+    ViewData["Title"] = "Detalji";
+}
+
+<h2>Detalji</h2>
+@model UplateDetaljiViewModel
+
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+            <header class="panel-heading">
+                <h2>Detalji o uplati broj: @Model.uplata.UplataID</h2>
+
+            </header>
+
+
+            <div class="panel-body">
+               
+
+                <div class="pull-right">
+
+                 
+                </div>
+                <br />
+                <br />
+                <br />
+
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Naziv Projekta</th>
+                            <th>Klijent</th>
+                            <th>Datum uplate</th>
+                            <th>Broj uplate </th>
+                            <th>Iznos</th>
+                            <th>Svrha</th>
+                            <th>Status</th>
+                            <th>Procesirao</th>
+
+                            <th class="text-center">Akcije</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <tr>
+                                <td>@Model.uplata.Projekt.Naziv</td>
+                                <td>@Model.uplata.Klijent.KontaktOsoba</td>
+                                <td>@Model.uplata.DatumUplate</td>
+                                <td>@Model.uplata.BrojUplate</td>
+                                <td>@Model.uplata.Iznos</td>
+                                <td>@Model.uplata.Svrha</td>
+                                <td>@Model.uplata.Status</td>
+
+
+                                <td>
+                                    @Model.uplata.ClanUprave.Osoba.Ime
+                                    &nbsp;
+                                    @Model.uplata.ClanUprave.Osoba.Prezime
+                                    &nbsp;
+                                    <b>[Clan uprave] </b>
+                                </td>
+
+
+                                <td class="text-center">
+                                    <a asp-action="Uredi" asp-route-UplataID="@Model.uplata.UplataID" class="btn btn-info">Uredi</a>&nbsp;<br /><br />
+                                    <a asp-action="Obrisi" asp-route-id="@Model.uplata.UplataID" class="btn btn-danger">Obriši</a>
+                                </td>
+
+                            </tr>
+
+                    </tbody>
+                </table>
+
+                <a id="link" href="@Url.Action("Index", "Uplate")" class="btn btn-primary modal-link"><i class="fa fa-backward"></i> Nazad</a>
+
+            </div>
+        </section>
+    </section>
+</section>
+

@@ -20,9 +20,9 @@
                     <div class="pull-left">
                         <form asp-action="Pretraga" method="post">
                             <div class="form-inline">
-                                <input asp-for="srchTxt" class="form-control" placeholder="Naziv projekta" value="@Model.srchTxt" /> @*Uplate za trazeni projekat*@
-
-                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Pretraga po projektu</button>
+                                <label>Pretraga po broju uplate ili nazivu projekta: &nbsp;</label><br /><br />
+                                <input asp-for="srchTxt" class="form-control" placeholder="Broj uplate ili naziv projekta" value="@Model.srchTxt" size="24"/> @*Uplate za trazeni projekat*@
+                                &nbsp; <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Traži</button>
 
                                 @if (Model.srchTxt != null)
                                 {
@@ -30,6 +30,7 @@
                                 }
 
                             </div>
+                            <br />
                         </form>
                     </div>
 
@@ -49,13 +50,10 @@
                     <thead>
                         <tr>
                             <th>Redni broj</th>
+                            <th>Broj uplate</th>
                             <th>Naziv Projekta</th>
-                            <th>Klijent</th>
                             <th>Datum uplate</th>
-                            <th>Broj uplate </th>
                             <th>Iznos</th>
-                            <th>Svrha</th>
-                            <th>Procesirao</th>
 
                             <th class="text-center">Akcije</th>
                         </tr>
@@ -65,22 +63,14 @@
                         {
                             <tr>
                                 <td>@(brojac++)</td>
+                                <td><center><b>@(r.UplataID)</b></center></td>
                                 <td>@r.Projekt.Naziv</td>
-                                <td>@r.Klijent.KontaktOsoba</td>
                                 <td>@r.DatumUplate</td>
-                                <td>@r.BrojUplate</td>
                                 <td>@r.Iznos</td>
-                                <td>@r.Svrha</td>
-                                <td>
-                                    @r.ClanUprave.Osoba.Ime
-                                    &nbsp;
-                                    @r.ClanUprave.Osoba.Prezime
-                                    &nbsp;
-                                    <b>[Clan uprave] </b>
-                                </td>
-
+                              
 
                                 <td class="text-center">
+                                    <a asp-action="Detalji" asp-route-UplataID="@r.UplataID" class="btn btn-info"><i class="fa fa-info-circle"></i> Detalji</a>&nbsp;<br /><br />
                                     <a asp-action="Uredi" asp-route-UplataID="@r.UplataID" class="btn btn-info">Uredi</a>&nbsp;<br /><br />
                                     <a asp-action="Obrisi" asp-route-id="@r.UplataID" class="btn btn-danger">Obriši</a>
                                 </td>

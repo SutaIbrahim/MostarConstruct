@@ -34,7 +34,7 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
         {
 
             UplateIndexViewModel model = new UplateIndexViewModel();
-          model.Uplate=  db.Uplate.Include(p => p.Projekt).Include(k => k.Klijent).Include(c => c.ClanUprave).ThenInclude(o => o.Osoba).ToList();
+            model.Uplate = db.Uplate.Include(p => p.Projekt).Include(k => k.Klijent).Include(c => c.ClanUprave).ThenInclude(o => o.Osoba).ToList();
 
             return View(model);
         }
@@ -45,10 +45,17 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
                 return RedirectToAction(nameof(Index));
 
             UplateIndexViewModel model = new UplateIndexViewModel();
-            model.Uplate = db.Uplate.Include(p => p.Projekt).Include(k => k.Klijent).Include(c => c.ClanUprave).ThenInclude(o => o.Osoba).Where(x=>x.Projekt.Naziv.Contains(srchTxt)).ToList();
+
+            model.Uplate = db.Uplate.Include(p => p.Projekt).Include(k => k.Klijent).Include(c => c.ClanUprave).ThenInclude(o => o.Osoba).Where(x => x.Projekt.Naziv.Contains(srchTxt)).ToList();
+
+            if (!model.Uplate.Any() )
+            {
+                model.Uplate = db.Uplate.Include(p => p.Projekt).Include(k => k.Klijent).Include(c => c.ClanUprave).ThenInclude(o => o.Osoba).Where(x => x.UplataID.ToString().Equals(srchTxt)).ToList();
+            }
+
             model.srchTxt = srchTxt;
 
-            return View("Index",model);
+            return View("Index", model);
         }
 
         public IActionResult Dodaj()
@@ -88,6 +95,16 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public IActionResult Detalji(int UplataID)
+        {
+            UplateDetaljiViewModel model = new UplateDetaljiViewModel();
+
+            model.uplata = db.Uplate.Include(k => k.Klijent).Include(p => p.Projekt).Include(c => c.ClanUprave).ThenInclude(o => o.Osoba).Where(i => i.UplataID == UplataID).FirstOrDefault();
+
+
+            return View(model);
+        }
+
 
         public IActionResult Obrisi(int id)
         {
@@ -115,8 +132,8 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
             UplateDodajViewModel model = GetDefaultViewModel(new UplateDodajViewModel()
             {
                 Uplata = uplata,
-                ProjektID=uplata.ProjektID,
-                KlijentID=uplata.KlijentID
+                ProjektID = uplata.ProjektID,
+                KlijentID = uplata.KlijentID
             });
 
 
@@ -135,7 +152,7 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
 
             x.ProjektID = model.ProjektID;
             x.KlijentID = model.KlijentID;
-           x.ClanUpraveID = korisnik.KorisnikID;
+            x.ClanUpraveID = korisnik.KorisnikID;
 
             db.Uplate.Update(x);
             db.SaveChanges();
@@ -146,7 +163,7 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
             logiranje.Logiraj(korisnik.KorisnikID, DateTime.Now, httpContext.HttpContext.Connection.RemoteIpAddress.ToString(), httpContext.HttpContext.Request.Headers["User-Agent"].ToString().Substring(0, 100), "Uredjivanje uplate", "Uplate");
 
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Detalji), new { UplataID = x.UplataID });
         }
 
 
@@ -156,7 +173,7 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
         {
 
             model.Uplata = model.Uplata ?? new Uplata();
-            model.Klijenti = model.Klijenti ?? db.Klijenti.Select(g => new SelectListItem { Value =g.KlijentID.ToString(), Text = g.KontaktOsoba }).ToList();
+            model.Klijenti = model.Klijenti ?? db.Klijenti.Select(g => new SelectListItem { Value = g.KlijentID.ToString(), Text = g.KontaktOsoba }).ToList();
             model.Projekti = model.Projekti ?? db.Projekti.Select(s => new SelectListItem { Value = s.ProjektID.ToString(), Text = s.Naziv }).ToList();
 
             return model;
