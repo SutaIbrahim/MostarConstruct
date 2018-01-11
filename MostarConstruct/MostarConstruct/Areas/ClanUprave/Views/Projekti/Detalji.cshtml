@@ -1,8 +1,15 @@
 ﻿@model MostarConstruct.Web.Areas.ClanUprave.ViewModels.ProjektiDetaljiViewModel
 @{
     ViewData["Title"] = "Detalji";
+    int greska=-1;
+    if (ViewData["greska"]!=null)
+    {
+         greska = (int)ViewData["greska"];
+    }
+
 }
 <section id="main-content">
+   
     <section class="wrapper">
         <section class="panel">
             <header class="panel-heading">
@@ -17,43 +24,104 @@
             </header>
             <div class="panel-body">
                 <div id="projektniDetalji" class="row">
+                    @if (ViewData["greska"] != null && greska == 1)
+    {
+                <div id="greska" class="alert alert-danger">
+                    <strong>Greška!</strong> Prekoračena maksimalna veličina fajla od 1 MB !
+                </div>
+}
+                    @if (ViewData["greska"] != null && greska == 0)
+    {
+                <div id="greska" class="alert alert-success">
+                    <strong></strong> Dokument je uspjesno pohranjen !
+                </div>
+}
+
                     <div class="col-md-6">
+
                         <img src="~/images/if_kdeprint-printer-infos_9346.png" height="50" width="50" style="display:inline;" />
 
                         <h3 style="display:inline;"><b>  Detalji:</b></h3>
                         <hr />
                         <h4><b>Naziv:</b> @Model.projekt.Naziv</h4>
+                        <hr />
                         <h4><b>Opis:</b> @Model.projekt.Opis</h4>
+                        <hr />
+
                         <h4><b>Preloženi početak:</b> @Model.projekt.PredlozeniPocetak.ToShortDateString()</h4>
+                        <hr />
+
                         <h4><b>Preloženi završetak:</b> @Model.projekt.PredlozeniZavrsetak.ToShortDateString()</h4>
+                        <hr />
+
                         <h4><b>Stvarni početak:</b> @Model.projekt.StvarniPocetak.ToString()</h4>
+                        <hr />
+
                         <h4><b>Stvarni završetak:</b> @Model.projekt.StvarniZavrsetak.ToString()</h4>
+                        <hr />
+
                         <h4><b>Cijena:</b> @Model.projekt.Cijena</h4>
+                        <hr />
+
                         <h4><b>Broj rata:</b> @Model.projekt.BrojRata</h4>
+                        <hr />
+
                         <h4 style="display:inline;">
                             <b>Završen:</b> @{
-                                if (Model.projekt.Zavrsen == true)
-                                {
-                                    <h4 style="display:inline;">DA</h4>
-                                }
-                                else
-                                {
-                                    <h4 style="display:inline;">NE</h4>
+                if (Model.projekt.Zavrsen == true)
+                {
+                    <h4 style="display:inline;">DA</h4>
+}
+else
+{
+                <h4 style="display:inline;">NE</h4>
 
-                                }
+}
 
                             }
                         </h4>
                     </div>
-                    <div class="col-md-6" >
+                    <div class="col-md-6">
                         <img src="~/images/docs.png" height="50" width="50" style="display:inline;" />
 
                         <h3 style="display:inline;"><b>  Dokumenti:</b></h3>
                         <hr />
+                        @foreach (var item in Model.listaFajlova)
+        {
+                <div class="row">
+                    <div class="col-md-10">
+                        <img src="~/images/if_file_173011.png" height="40" width="40" style="display:inline;" />
+                        <h4 style="display:inline;">@item.Naziv</h4>
+
+                        <a href="/ClanUprave/Projekti/DownloadFajl?fajlid=@item.FajlId" style="display:inline;"><img src="~/images/if_download-alt_173001.png" height="25" width="25" style="display:inline;" /></a>
+                    </div>
+
+                </div>
+                <hr />
+}
                     </div>
                 </div>
                 <hr />
+                <div id="dodavanje-fajlovi">
+                    <img src="~/images/if_file_add_48761.png" height="50" width="50" style="display:inline;" />
+                    <h3 style="display:inline;"><b>  Dodavanje dokumenata:</b></h3>
+                    <br />
+                    <br />
+                    <form asp-controller="Projekti" asp-action="UploadFajl" method="post"
+                          enctype="multipart/form-data">
+                        <input type="file" name="dokument" style="display:inline;" required />
+                        <input type="text" value="@Model.projekt.ProjektID" name="projektid" hidden />
+                        <input class="btn btn-animate" type="submit" style="display:inline;" value="Dodaj" />
+                    </form>
+                    <p style="color:red;">Upozorenje: Veličina fajlova je ograničena na 1 MB !</p>
+                </div>
             </div>
         </section>
     </section>
 </section>
+<script>
+    var element = $("#greska");
+    setTimeout(function () {
+        element.fadeOut();
+    },2000)
+</script>

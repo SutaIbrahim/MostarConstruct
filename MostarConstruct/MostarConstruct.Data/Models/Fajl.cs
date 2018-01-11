@@ -9,10 +9,9 @@ namespace MostarConstruct.Data.Models
     {
         [Key]
         public int FajlId { get; set; }
-        [Required(ErrorMessage = "Naziv je obavezan")]
         public string Naziv { get; set; }
+        public string Tip { get; set; }
         public DateTime DatumDodavanja { get; set; }
-        public string Lokacija { get; set; }
-
+        public byte[] Podaci { get; set; }
     }
 }

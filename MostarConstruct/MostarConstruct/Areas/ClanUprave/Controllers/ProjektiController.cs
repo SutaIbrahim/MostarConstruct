@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.EntityFrameworkCore;
 using MostarConstruct.Data;
 using MostarConstruct.Data.Models;
 using MostarConstruct.Models;
@@ -22,7 +23,7 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
     {
         DatabaseContext _db;
         IHttpContextAccessor context;
-        public ProjektiController(DatabaseContext db,IHttpContextAccessor context)
+        public ProjektiController(DatabaseContext db, IHttpContextAccessor context)
         {
             _db = db;
             this.context = context;
@@ -50,13 +51,13 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
             Model.projekt = new Projekt();
             return View(Model);
 
-            
+
         }
         public IActionResult Snimi(ProjektiDodajViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return View("Dodaj",model);
+                return View("Dodaj", model);
             }
             Projekt novi;
             Korisnik korisnik = context.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
@@ -88,22 +89,27 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
             Model.projekt = _db.Projekti.Where(x => x.ProjektID == ProjektID).FirstOrDefault();
             return View("Dodaj", Model);
         }
-        public IActionResult Detalji(int ProjektID)
+        public IActionResult Detalji(int ProjektID,int ? greska)
         {
             ProjektiDetaljiViewModel Model = new ProjektiDetaljiViewModel();
             Model.projekt = new Projekt();
             Model.projekt.ClanUprave = new Korisnik();
             Model.listaFajlova = new List<Fajl>();
+            if(greska!=null)
+            {
+                ViewData["greska"] = greska;
+            }
 
             Model.projekt = _db.Projekti.Where(x => x.ProjektID == ProjektID).FirstOrDefault();
-            Model.listaFajlova = _db.ProjektiFajlovi.Where(x=>x.ProjektID==ProjektID).Select(x => new Fajl
+            Model.listaFajlova = _db.ProjektiFajlovi.Where(x => x.ProjektID == ProjektID).Select(x => new Fajl
             {
                 FajlId = x.FajlID,
                 DatumDodavanja = x.Fajl.DatumDodavanja,
-                Lokacija = x.Fajl.Lokacija,
-                Naziv = x.Fajl.Naziv
+                Naziv = x.Fajl.Naziv,
+                Podaci = x.Fajl.Podaci,
+                Tip = x.Fajl.Tip
             }).ToList();
-          
+
 
             return View(Model);
         }
@@ -119,6 +125,41 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
 
             return RedirectToAction("Index");
         }
-       
+        public IActionResult UploadFajl(IFormFile dokument, int projektid)
+        {
+            Fajl noviFajl = new Fajl();
+            if (dokument.Length > 1000000)
+            {
+                return RedirectToAction("Detalji", new { ProjektID = projektid, greska=1 });
+            }
+            else
+            {
+                noviFajl.DatumDodavanja = DateTime.Now;
+                noviFajl.Naziv = dokument.FileName;
+                noviFajl.Tip = dokument.ContentType;
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    dokument.CopyTo(ms);
+                    noviFajl.Podaci = ms.ToArray();
+                }
+                _db.Fajlovi.Add(noviFajl);
+                _db.SaveChanges();
+
+                ProjektiFajlovi novaStavka = new ProjektiFajlovi();
+                novaStavka.FajlID = noviFajl.FajlId;
+                novaStavka.ProjektID = projektid;
+                _db.ProjektiFajlovi.Add(novaStavka);
+                _db.SaveChanges();
+
+            }
+            return RedirectToAction("Detalji", new { ProjektID = projektid, greska = 0 });
+
+        }
+        public IActionResult DownloadFajl(int fajlid)
+        {
+            Fajl zaDownload = new Fajl();
+            zaDownload = _db.Fajlovi.Where(x => x.FajlId == fajlid).FirstOrDefault();
+            return File(zaDownload.Podaci, zaDownload.Tip, zaDownload.Naziv);
+        }
     }
 }
