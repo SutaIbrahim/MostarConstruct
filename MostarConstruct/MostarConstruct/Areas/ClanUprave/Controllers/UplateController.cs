@@ -39,6 +39,22 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
             return View(model);
         }
 
+        public IActionResult Izvjestaj(int UplataId)
+        {
+            UplateIndexViewModel model = new UplateIndexViewModel();
+
+            if (UplataId != 0)
+            {
+                model.Uplate = db.Uplate.Include(p => p.Projekt).Include(k => k.Klijent).Include(c => c.ClanUprave).ThenInclude(o => o.Osoba).Where(u=>u.UplataID==UplataId).ToList();
+            }
+            else
+            {
+                model.Uplate = db.Uplate.Include(p => p.Projekt).Include(k => k.Klijent).Include(c => c.ClanUprave).ThenInclude(o => o.Osoba).ToList();
+            }
+
+            return View(model);
+        }
+
         public IActionResult Pretraga(string srchTxt)
         {
             if (srchTxt == null)
@@ -57,6 +73,9 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
 
             return View("Index", model);
         }
+
+    
+
 
         public IActionResult Dodaj()
         {

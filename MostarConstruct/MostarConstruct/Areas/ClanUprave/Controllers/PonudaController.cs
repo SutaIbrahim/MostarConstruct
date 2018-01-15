@@ -35,6 +35,21 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
             return View(model);
         }
 
+        public IActionResult Izvjestaj(int PonudaId)
+        {
+            if (PonudaId !=0)
+            {
+                var model = db.Ponude.Include(k => k.ClanUprave).ThenInclude(o => o.Osoba).Where(p=>p.PonudaID==PonudaId);
+                return View("IzvjestajPonuda", model);
+
+            }
+            else
+            {
+                var model = db.Ponude.Include(k => k.ClanUprave).ThenInclude(o => o.Osoba);
+                return View("IzvjestajPonuda", model);
+
+            }
+        }
 
         public IActionResult Dodaj()
         {
@@ -98,6 +113,7 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
             return View(model);
         }
 
+    
 
         [HttpPost]
         public IActionResult Uredi(Ponuda model)
