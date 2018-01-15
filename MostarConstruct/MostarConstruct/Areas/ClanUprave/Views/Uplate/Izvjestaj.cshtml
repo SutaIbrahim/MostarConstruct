@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewData["Title"] = "Izvjestaj";
+    int brojac = 1;
+
+    Layout = null;
+
+    <script src="~/js/jquery.js"></script>
+
+        <link href="~/css/bootstrap.min.css" rel="stylesheet">
+        <link href="~/css/bootstrap-reset.css" rel="stylesheet">
+    <!--external css-->
+        <link href="~/css/font-awesome.css" rel="stylesheet" />
+        <link href="~/css/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen" />
+        <link rel="stylesheet" href="~/css/owl.carousel.css" type="text/css">
+
+    <!--right slidebar-->
+        <link href="~/css/slidebars.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+
+        <link href="~/css/style.css" rel="stylesheet">
+        <link href="~/css/style-responsive.css" rel="stylesheet" />
+}
+@model UplateIndexViewModel
+
+
+            <header class="panel-heading">
+                <h2>Lista uplata</h2>
+
+            </header>
+
+
+            <div class="panel-body">
+          
+                <br />
+                <br />
+                <br />
+
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Redni broj</th>
+                            <th>Broj uplate</th>
+                            <th>Naziv Projekta</th>
+                            <th>Datum uplate</th>
+                            <th>Iznos</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var r in Model.Uplate)
+                        {
+                            <tr>
+                                <td>@(brojac++)</td>
+                                <td><center><b>@(r.UplataID)</b></center></td>
+                                <td>@r.Projekt.Naziv</td>
+                                <td>@r.DatumUplate</td>
+                                <td>@r.Iznos</td>
+
+
+
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+
+                <a id="print" href="javascript:window.print()" ><i class="fa fa-print"></i> Print</a>&nbsp;<br />
+
+
+            </div>
+
+<script>
+    $(document).ready(function () {
+        $('#print').click(function (){
+
+        });
+</script>

@@ -1,0 +1,90 @@
+﻿
+@{
+    ViewData["Title"] = "IzvjestajPonuda";
+    int brojac = 0;
+
+    Layout = null;
+
+    <script src="~/js/jquery.js"></script>
+
+    <link href="~/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/css/bootstrap-reset.css" rel="stylesheet">
+    <!--external css-->
+    <link href="~/css/font-awesome.css" rel="stylesheet" />
+        <link href="~/css/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen" />
+        <link rel="stylesheet" href="~/css/owl.carousel.css" type="text/css">
+
+    <!--right slidebar-->
+        <link href="~/css/slidebars.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+
+        <link href="~/css/style.css" rel="stylesheet">
+        <link href="~/css/style-responsive.css" rel="stylesheet" />
+}
+
+
+
+@model IEnumerable<Ponuda>
+
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+            <header class="panel-heading">
+                <h2>Izvjestaj</h2>
+
+            </header>
+
+            <div class="panel-body">
+                
+
+                <br />
+                <br />
+                <br />
+
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Redni broj</th>
+                            <th>Naziv</th>
+                            <th>Datum izdavanja</th>
+                            <th>Sadržaj</th>
+                            <th>Potrebno vrijeme </th>
+                            <th>Predlozena cijena</th>
+                            <th>Izdao</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var r in Model)
+                        {
+                            <tr>
+                                <td>@(brojac++)</td>
+                                <td>@r.Naziv</td>
+                                <td>@r.DatumIzdavanja</td>
+                                <td>@r.Sadrzaj</td>
+                                <td>@r.PotrebnoVrijeme (mjeseci)</td>
+                                <td>@r.PredlozenaCijena KM</td>
+                                <td>
+                                    @r.ClanUprave.Osoba.Ime
+                                    &nbsp;
+                                    @r.ClanUprave.Osoba.Prezime
+                                    &nbsp;
+                                    <b>[Clan uprave] </b>
+                                </td>
+
+
+
+
+
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+                <a id="print" href="javascript:window.print()"><i class="fa fa-print"></i> Print</a>&nbsp;<br />
+
+            </div>
+        </section>
+    </section>
+</section>
