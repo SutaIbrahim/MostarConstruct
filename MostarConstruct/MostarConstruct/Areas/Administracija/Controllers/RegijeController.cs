@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MostarConstruct.Data;
 using MostarConstruct.Web.Areas.Administracija.ViewModels;
@@ -95,6 +96,14 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
         #endregion
 
         #region Helpers
+
+        public JsonResult GetRegijeByDrzavaId(int drzavaId)
+        {
+            List<SelectListItem> regije = dd.Regije(drzavaId).ToList();
+            return Json(regije);
+        }
+
+
         private RegijeDodajViewModel GetDefaultViewModel(RegijeDodajViewModel viewModel)
         {
             viewModel.Regija = viewModel.Regija ?? new Models.Regija();

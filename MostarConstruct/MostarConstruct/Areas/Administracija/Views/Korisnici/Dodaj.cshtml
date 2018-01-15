@@ -43,13 +43,13 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label asp-for="DrzavaID">Drzava:</label>
-                                <select asp-for="DrzavaID" asp-items="Model.Drzave" class="form-control"></select>
+                                <select asp-for="DrzavaID" asp-items="Model.Drzave" class="form-control" onchange="FillRegionsByCountryId()"></select>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label asp-for="RegijaID">Regija:</label>
-                                <select asp-for="RegijaID" asp-items="Model.Regije" class="form-control"></select>
+                                <select asp-for="RegijaID" asp-items="Model.Regije" class="form-control" onchange="FillCitiesByRegionId()"></select>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -101,7 +101,67 @@
 </section>
 <script>
     $(function () {
-        $("#Osoba_DatumRodjenja").val("");
+        $("#Osoba_DatumRodjenja").val("");     
+        OcistiListe();
     });
+
+    function FillRegionsByCountryId() {
+        if ($("#DrzavaID").prop("selectedIndex") == 0) {
+            $("#RegijaID").html("");
+            $("#RegijaID").append("<option value=\"\">Odaberite regiju</option>");
+
+            $("#Osoba_GradID").html("");
+            $("#Osoba_GradID").append("<option value=\"\">Odaberite grad</option>");
+        }
+        else {
+            var countryId = $("#DrzavaID").val();
+
+            $.ajax({
+                url: "@Url.Action("GetRegijeByDrzavaId", "Regije")",
+                type: "GET",
+                dataType: "JSON",
+                data: { drzavaId: countryId },
+                success: function (data) {
+                    $("#RegijaID").html("");
+
+                    $.each(data, function (i, country) {
+                        $("#RegijaID").append($("<option></option>").val(country.value).html(country.text));
+                    });
+                }
+            });
+
+        }
+    };
+
+    function FillCitiesByRegionId() {
+        if ($("#RegijaID").prop("selectedIndex") == 0) {
+            $("#Osoba_GradID").html("");
+            $("#Osoba_GradID").append("<option value=\"\">Odaberite grad</option>");
+        }
+        else {
+            var regijaId = $("#RegijaID").val();
+
+            $.ajax({
+                url: "@Url.Action("GetGradoviByRegijaId", "Gradovi")",
+                type: "GET",
+                dataType: "JSON",
+                data: { regijaId: regijaId },
+                success: function (data) {
+                    $("#Osoba_GradID").html("");
+                    $.each(data, function (i, regija) {
+                        $("#Osoba_GradID").append($("<option></option>").val(regija.value).html(regija.text));
+                    });
+                }
+            });
+        }
+    }
+
+    function OcistiListe() {
+        $("#RegijaID").html("");
+        $("#RegijaID").append("<option value=\"\">Odaberite regiju</option>");
+
+        $("#Osoba_GradID").html("");
+        $("#Osoba_GradID").append("<option value=\"\">Odaberite grad</option>");
+    }
 </script>
 

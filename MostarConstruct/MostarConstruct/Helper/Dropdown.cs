@@ -107,5 +107,31 @@ namespace MostarConstruct.Web.Helper
                 new SelectListItem(){Value = 20.ToString(), Text = "20"}
             };
         }
+
+        public IEnumerable<SelectListItem> Regije(int drzavaId, bool praznaLista = true)
+        {
+            var regije = db.Regije.Where(x => x.DrzavaID == drzavaId);
+            List<SelectListItem> lista = new List<SelectListItem>();
+
+            if (praznaLista)
+                lista.Add(new SelectListItem() { Value = string.Empty, Text = "Odaberite regiju" });
+
+            lista.AddRange(regije.Select(x => new SelectListItem() { Value = x.RegijaID.ToString(), Text = x.Naziv }));
+
+            return lista;
+        }
+
+        public IEnumerable<SelectListItem> Gradovi(int regijaId, bool praznaLista = true)
+        {
+            var gradovi = db.Gradovi.Where(x => x.RegijaID == regijaId);
+            List<SelectListItem> lista = new List<SelectListItem>();
+
+            if (praznaLista)
+                lista.Add(new SelectListItem() { Value = string.Empty, Text = "Odaberite grad" });
+
+            lista.AddRange(gradovi.Select(x => new SelectListItem() { Value = x.GradID.ToString(), Text = x.Naziv }));
+
+            return lista;
+        }
     }
 }
