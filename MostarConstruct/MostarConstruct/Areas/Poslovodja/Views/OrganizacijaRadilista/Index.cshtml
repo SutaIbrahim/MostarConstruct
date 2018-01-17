@@ -1,0 +1,59 @@
+﻿@model MostarConstruct.Web.Areas.Poslovodja.ViewModels.OrganizacijaRadilistaIndexVM
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+            <header class="panel-heading">
+                <h2>Organizacija radilišta</h2>
+            </header>
+
+
+            <div class="panel-body">
+                <br />
+                <div id="parent" class="row" style="margin-left:1%;margin-right:1%;">
+                    <div class="forma">
+                        <form class="form-group" style="width:60%;">
+                            @{
+                                if (Model.listaRadilista.Count == 0)
+                                {
+                                    <label class="form-control-label">Odaberite projekat: </label>
+                                    @Html.DropDownListFor(model => model.ProjekatId, Model.listaProjekata, new { @class = "form-control" })
+
+                                }
+                            }
+
+                            <br />
+                            @{
+                                if (Model.listaRadilista.Count != 0)
+                                {
+                                    <div id="radilista">
+                                        <label class="form-control-label">Odaberite radilište: </label>
+                                        @Html.DropDownListFor(model => model.RadilisteId, Model.listaRadilista, new { @class = "form-control" })
+                                        <br />
+                                    </div>
+                                }
+
+                            }
+
+                            <button id="odabir" type="submit" class="btn btn-default">Odaberi</button>
+                            <br />
+                        </form>
+                    </div>
+
+
+                </div>
+            </div>
+        </section>
+    </section>
+</section>
+<script>
+    $("#odabir").click(function () {
+        $.ajax({
+            url: "/Poslovodja/OrganizacijaRadilista/Index?ProjektID=@Model.ProjekatId&RadilisteId=@Model.RadilisteId",
+            type: "GET",
+            success: (function (data) {
+                $(".panel-body").html(data);
+            })
+        });
+    });
+
+</script>
