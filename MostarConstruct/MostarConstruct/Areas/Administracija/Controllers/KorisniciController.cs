@@ -19,11 +19,24 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
     {
         private DatabaseContext db;
         private IDropdown dropdown;
+        private IEmailSender emailSender;
 
-        public KorisniciController(DatabaseContext db, IDropdown dropdown)
+        public KorisniciController(DatabaseContext db, IDropdown dropdown, IEmailSender emailSender)
         {
             this.db = db;
             this.dropdown = dropdown;
+            this.emailSender = emailSender;
+        }
+
+        public async Task<string> PosaljiMail()
+        {
+            await emailSender.SendEmailAsync("mirza.medar@edu.fit.ba", "radi ovo",
+                       $"Mirza <3 <3");
+
+            await emailSender.SendEmailAsync("suta.ibrahim@edu.fit.ba", "radi ovo",
+                       $"Ibro <3 <3");
+
+            return "Pogledaj mail";
         }
 
         public IActionResult Index()

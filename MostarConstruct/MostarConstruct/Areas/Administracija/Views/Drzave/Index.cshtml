@@ -27,6 +27,7 @@
                             <th>Redni broj</th>
                             <th>Naziv</th>
                             <th>Oznaka</th>
+                            <th>Kantoni</th>
                             <th class="text-center">Akcije</th>
                         </tr>
                     </thead>
@@ -37,6 +38,9 @@
                                 <td>@(brojac++)</td>
                                 <td>@d.Naziv</td>
                                 <td>@d.Oznaka</td>
+                                <td>
+
+                                </td>
                                 <td class="text-center">
                                     <form asp-action="Obrisi" method="post">
                                         <a asp-action="Detalji" asp-route-id="@d.DrzavaID" class="btn btn-info">Detalji</a>
