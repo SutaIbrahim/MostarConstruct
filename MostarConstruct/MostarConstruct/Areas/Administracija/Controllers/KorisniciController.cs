@@ -29,18 +29,7 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
             this.emailSender = emailSender;
         }
         #endregion
-
-        public async Task<string> PosaljiMail()
-        {
-            await emailSender.SendEmailAsync("mirza.medar@edu.fit.ba", "radi ovo",
-                       $"Mirza <3 <3");
-
-            await emailSender.SendEmailAsync("suta.ibrahim@edu.fit.ba", "radi ovo",
-                       $"Ibro <3 <3");
-
-            return "Pogledaj mail";
-        }
-
+                
         #region Index
         public IActionResult Index()
         {
@@ -109,7 +98,7 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
             db.Korisnici.Add(korisnik);
             db.SaveChanges();
 
-            return Content("De pgoedaj bazu");
+            return RedirectToAction(nameof(Index));
         }
         #endregion
 
