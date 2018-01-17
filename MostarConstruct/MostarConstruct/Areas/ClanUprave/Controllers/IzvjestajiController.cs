@@ -44,15 +44,31 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
 
         public IActionResult Dodaj()
         {
+            IzvjestajDodajVIewModel model = new IzvjestajDodajVIewModel();
+
+            model.projekti = db.Projekti.Select(x => new SelectListItem
+            {
+                Value = x.ProjektID.ToString(),
+                Text = x.Naziv
+
+            }).ToList();
+
+            model.izvjestaj = new Izvjestaj();
+            model.izvjestaj.DatumIzdavanja = DateTime.Now;
 
 
-
-            return View();
+            return View(model);
         }
 
         [HttpPost]
-        public IActionResult Dodaj(Izvjestaj model)
+        public IActionResult Kreiraj(IzvjestajDodajVIewModel model)
         {
+
+            Izvjestaj novi = model.izvjestaj;
+
+            db.Izvjestaji.Add(novi);
+
+            db.SaveChanges();
 
 
 
