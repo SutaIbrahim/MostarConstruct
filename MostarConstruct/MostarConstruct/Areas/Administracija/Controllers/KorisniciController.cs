@@ -17,6 +17,7 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
     [Area("Administracija")]
     public class KorisniciController : Controller
     {
+        #region DI
         private DatabaseContext db;
         private IDropdown dropdown;
         private IEmailSender emailSender;
@@ -27,6 +28,7 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
             this.dropdown = dropdown;
             this.emailSender = emailSender;
         }
+        #endregion
 
         public async Task<string> PosaljiMail()
         {
@@ -39,6 +41,7 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
             return "Pogledaj mail";
         }
 
+        #region Index
         public IActionResult Index()
         {
             KorisniciIndexViewModel vm = new KorisniciIndexViewModel()
@@ -47,7 +50,7 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
                 {
                     KorisnikID = k.KorisnikID,
                     Ime = k.Osoba.Ime,
-                    Prezime = k.Osoba.Prezime, 
+                    Prezime = k.Osoba.Prezime,
                     DatumRegistracije = k.DatumRegistracije,
                     Email = k.Osoba.Email,
                     KorisnickoIme = k.KorisnickoIme,
@@ -56,6 +59,7 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
             };
             return View(vm);
         }
+        #endregion
 
         #region Dodaj
         public IActionResult Dodaj()
@@ -74,10 +78,17 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
 
             Korisnik korisnik = model.Korisnik;
             korisnik.KorisnikID = osoba.OsobaID;
-            korisnik.LozinkaHash = Sigurnost.PostaviPocetnuLozinku();
+
+            string lozinka = Sigurnost.GenerisiPassword(10, false);
+
+            korisnik.LozinkaHash = Sigurnost.GenerisiHash(lozinka);
             korisnik.DatumRegistracije = DateTime.Now;
             korisnik.Aktivan = true;
             korisnik.PromijenioLozinku = false;
+
+            string poruka = $"Poštovani {osoba.Ime} {osoba.Prezime}, na sistem se možete logovati sa sljedećim podacima:\nEmail: <strong>{osoba.Email}</strong>\nLozinka: <strong>{lozinka}</strong>\n\nNapomena: Prilikom prvog logiranja morate promijeniti vašu lozinku.";
+
+            emailSender.SendEmailAsync(osoba.Email, "Prisutni podaci", poruka);
 
             if (model.TipKorisnika == TipKorisnika.Administrator)
             {
@@ -161,6 +172,7 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
 
         #endregion
 
+        #region Helpers
         private KorisniciDodajViewModel GetDefaultViewModel(KorisniciDodajViewModel model)
         {
             model.Osoba = model.Osoba ?? new Models.Osoba();
@@ -172,5 +184,7 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
 
             return model;
         }
+
+        #endregion
     }
 }

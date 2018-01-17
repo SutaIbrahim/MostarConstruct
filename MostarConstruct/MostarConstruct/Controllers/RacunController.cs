@@ -7,21 +7,27 @@ using Microsoft.AspNetCore.Mvc;
 using MostarConstruct.Data;
 using MostarConstruct.Models;
 using MostarConstruct.Web.Helper;
+using MostarConstruct.Web.Helper.IHelper;
 using MostarConstruct.Web.ViewModels;
 
 namespace MostarConstruct.Web.Controllers
 {
     public class RacunController : Controller
     {
+        #region DI
         private DatabaseContext db;
         private IHttpContextAccessor httpContext;
+        private IEmailSender emailSender;
 
-        public RacunController(DatabaseContext db, IHttpContextAccessor httpContext)
+        public RacunController(DatabaseContext db, IHttpContextAccessor httpContext, IEmailSender emailSender)
         {
             this.db = db;
-            this.httpContext = httpContext;  
+            this.httpContext = httpContext;
+            this.emailSender = emailSender;
         }
+        #endregion
 
+        #region Prijava
         public IActionResult Prijava()
         {
             return View(new LoginViewModel());
@@ -50,9 +56,10 @@ namespace MostarConstruct.Web.Controllers
             db.SaveChanges();
 
             if (!korisnik.PromijenioLozinku)
-                return RedirectToAction("Lozinka", "Racun");            
+                return RedirectToAction("Lozinka", "Racun");
             return RedirectToAction("Index", "Home");
         }
+        #endregion
 
         #region PromjenaLozinke
         public IActionResult Lozinka()
