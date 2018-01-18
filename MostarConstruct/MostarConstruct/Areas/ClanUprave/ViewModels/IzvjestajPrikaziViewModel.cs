@@ -14,7 +14,7 @@ namespace MostarConstruct.Web.Areas.ClanUprave.ViewModels
 
         public List<Uplata> uplate { get; set; }
 
-
+        public int BrojNaloga { get; set; }
 
     }
 }

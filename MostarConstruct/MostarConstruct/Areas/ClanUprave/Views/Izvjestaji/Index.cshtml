@@ -14,14 +14,44 @@
             </header>
 
             <div class="panel-body">
-                <div class="pull-right">
 
+                <div class="pull-left">
+                    <div class="form-group">
+
+                        <form asp-action="Pretraga" method="post">
+                            <div class="form-inline">
+                                <h7>Pretraga prema nazivu projekta</h7>
+                                <input asp-for="srchTxt" class="form-control" placeholder="Naziv projekta" value="@Model.srchTxt" />
+
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Trazi</button>
+
+                                @if (Model.srchTxt != null)
+                                {
+                                    <a asp-action="Pretraga" class="btn btn-primary">Prikaži sve</a>
+                                }
+                            </div>
+                        </form>
+                    </div>
+
+                    </div>
+
+
+
+                <div class="pull-right">
                     <div class="form-group">
                         <br />
-                        <a id="link" href="@Url.Action("Dodaj", "Izvjestaji")" class="btn btn-primary modal-link"><i class="fa fa-plus"></i> Kreiraj novi izvjestaj</a>
+                        <a id="novi" class="btn btn-primary modal-link"><i class="fa fa-plus"></i> Kreiraj novi izvjestaj</a>
                         <br />
                     </div>
                 </div>
+
+                <div id="zaDodavanje">
+
+
+
+                </div>
+                
+
 
                 <br />
                 <br />
@@ -37,7 +67,6 @@
                             <th>Svrha</th>
                             <th>Napomena </th>
                             <th>Izdao</th>
-                            <th class="text-center">Akcije</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -49,7 +78,7 @@
                                 <td>@r.Projekt.Naziv</td>
                                 <td>@r.DatumIzdavanja</td>
                                 <td>@r.Svrha</td>
-                                <td>@r.Napomena (mjeseci)</td>
+                                <td>@r.Napomena</td>
                                 <td>
                                     @r.Korisnik.Osoba.Ime    &nbsp; @r.Korisnik.Osoba.Prezime
                                     &nbsp;
@@ -57,7 +86,8 @@
                                 </td>
 
                                 <td class="text-center">
-                                    <a asp-action="Prikazi" asp-route-id="@r.IzvjestajID" class="btn btn-danger">Prikazi</a>
+                                    <a asp-action="Prikazi" asp-route-id="@r.IzvjestajID" class="btn btn-danger" target="_blank">Prikazi</a> @*O
+                                        tvori u novom tabu*@
                                 </td>
 
                             </tr>
@@ -65,8 +95,28 @@
 
                     </tbody>
                 </table>
+
+
+
             </div>
+
         </section>
     </section>
 </section>
 
+
+
+<script>
+    $("#novi").click(function () {
+        $.ajax({
+            url: "/ClanUprave/Izvjestaji/Dodaj",
+            type: "GET",
+            success: (function (data) {
+                $("#zaDodavanje").html(data);
+            })
+        });
+    });
+
+
+
+</script>

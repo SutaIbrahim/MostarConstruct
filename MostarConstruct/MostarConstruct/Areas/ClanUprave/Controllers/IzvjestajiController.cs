@@ -39,10 +39,23 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
         {
             IzvjestajIndexViewModel model = new IzvjestajIndexViewModel();
 
-            model.izvjestaji = db.Izvjestaji.Include(x=>x.Korisnik).ThenInclude(y=>y.Osoba).Include(p=>p.Projekt).ToList();
+            model.izvjestaji = db.Izvjestaji.Include(x => x.Korisnik).ThenInclude(y => y.Osoba).Include(p => p.Projekt).ToList();
 
             return View(model);
         }
+        public IActionResult Pretraga(string srchTxt)
+        {
+            if (srchTxt == null)
+                return RedirectToAction(nameof(Index));
+
+
+            IzvjestajIndexViewModel model = new IzvjestajIndexViewModel();
+            model.izvjestaji = db.Izvjestaji.Include(x => x.Korisnik).ThenInclude(y => y.Osoba).Include(p => p.Projekt).Where(y => y.Projekt.Naziv.StartsWith(srchTxt)).ToList();
+            model.srchTxt = srchTxt;
+
+            return View("Index", model);
+        }
+
 
         public IActionResult Dodaj()
         {
@@ -107,12 +120,15 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
         {
             IzvjestajPrikaziViewModel model = new IzvjestajPrikaziViewModel();
 
-            Izvjestaj izv = db.Izvjestaji.Include(p=>p.Projekt).Where(x => x.IzvjestajID == id).FirstOrDefault();
+            Izvjestaj izv = db.Izvjestaji.Include(p => p.Projekt).Where(x => x.IzvjestajID == id).FirstOrDefault();
             model.izvjestaj = izv;
 
-            model.radilista = db.Radilista.Where(x => x.ProjektID == izv.ProjektID).ToList();
+            model.radilista = db.Radilista.Include(g => g.Grad).Where(x => x.ProjektID == izv.ProjektID).ToList();
 
-            model.uplate = db.Uplate.Where(x => x.ProjektID == izv.ProjektID).ToList();
+            model.uplate = db.Uplate.Include(k => k.Klijent).Where(x => x.ProjektID == izv.ProjektID).ToList();
+
+            model.BrojNaloga = db.RadniNalozi.Where(x => x.Radiliste.ProjektID == izv.ProjektID).Count();
+
 
             return View(model);
         }
