@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewData["Title"] = "Prikazi";
+
+    Layout = null;
+
+    <script src="~/js/jquery.js"></script>
+
+    <link href="~/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/css/bootstrap-reset.css" rel="stylesheet">
+    <!--external css-->
+    <link href="~/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/css/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen" />
+        <link rel="stylesheet" href="~/css/owl.carousel.css" type="text/css">
+
+    <!--right slidebar-->
+        <link href="~/css/slidebars.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+
+        <link href="~/css/style.css" rel="stylesheet">
+        <link href="~/css/style-responsive.css" rel="stylesheet" />
+}
+@model IzvjestajPrikaziViewModel
+
+<header class="panel-heading">
+    <h2>Izvjestaj o projektu: @Model.izvjestaj.Projekt.Naziv | ID: @Model.izvjestaj.ProjektID</h2>
+    <br />
+</header>
+
+<div class="panel-body">
+
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+
+                <label asp-for="izvjestaj.Projekt.StvarniPocetak">Početak rada: </label>
+                <input asp-for="izvjestaj.Projekt.StvarniPocetak" class="form-control" readonly />
+
+
+            </div>
+        </div>
+
+
+        <div class="col-md-4">
+            <div class="form-group">
+
+                <label asp-for="izvjestaj.Projekt.StvarniZavrsetak">Završetak rada: </label>
+                <input asp-for="izvjestaj.Projekt.StvarniZavrsetak" class="form-control" readonly />
+
+
+            </div>
+        </div>
+
+        <div class="col-md-4">
+        <div class="form-group">
+
+            <label asp-for="izvjestaj.Projekt.Cijena">Cijena </label>
+            <input asp-for="izvjestaj.Projekt.Cijena" class="form-control" readonly />
+
+
+        </div>
+    </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+
+                <label asp-for="izvjestaj.Projekt.Opis">Opis: </label>
+                <textarea asp-for="izvjestaj.Projekt.Opis" class="form-control"   readonly ></textarea>
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+    <a id="print" href="javascript:window.print()"><i class="fa fa-print"></i> Print</a>&nbsp;<br />
+
+</div>

@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    int brojac = 1;
+}
+
+@model IzvjestajIndexViewModel
+
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+            <header class="panel-heading">
+                <h2>Izdati izvještaji</h2>
+            </header>
+
+            <div class="panel-body">
+                <div class="pull-right">
+
+                    <div class="form-group">
+                        <br />
+                        <a id="link" href="@Url.Action("Dodaj", "Izvjestaji")" class="btn btn-primary modal-link"><i class="fa fa-plus"></i> Kreiraj novi izvjestaj</a>
+                        <br />
+                    </div>
+                </div>
+
+                <br />
+                <br />
+                <br />
+
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Redni broj</th>
+                            <th>Broj protokola</th>
+                            <th>Naziv projekta</th>
+                            <th>Datum izdavanja</th>
+                            <th>Svrha</th>
+                            <th>Napomena </th>
+                            <th>Izdao</th>
+                            <th class="text-center">Akcije</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var r in Model.izvjestaji)
+                        {
+                            <tr>
+                                <td>@(brojac++)</td>
+                                <td>@r.BrojProtokola</td>
+                                <td>@r.Projekt.Naziv</td>
+                                <td>@r.DatumIzdavanja</td>
+                                <td>@r.Svrha</td>
+                                <td>@r.Napomena (mjeseci)</td>
+                                <td>
+                                    @r.Korisnik.Osoba.Ime    &nbsp; @r.Korisnik.Osoba.Prezime
+                                    &nbsp;
+                                    <b>[Clan uprave]</b>
+                                </td>
+
+                                <td class="text-center">
+                                    <a asp-action="Prikazi" asp-route-id="@r.IzvjestajID" class="btn btn-danger">Prikazi</a>
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </section>
+</section>
+
