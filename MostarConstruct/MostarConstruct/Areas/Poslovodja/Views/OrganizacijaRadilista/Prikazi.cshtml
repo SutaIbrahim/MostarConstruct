@@ -1,17 +1,112 @@
-﻿
+﻿@model MostarConstruct.Web.Areas.Poslovodja.ViewModels.OrganizacijaRadilistaPrikaziVM
 @{
     ViewData["Title"] = "Prikazi";
 }
 <section id="main-content">
     <section class="wrapper">
         <section class="panel">
-            <header class="panel-heading">
-                <h2>Detalji o radilistu</h2>
-            </header>
 
 
-            <div class="panel-body">
+
+            <div id="glavno" class="panel-body">
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <header class="panel-heading">
+                            <h2><i class="fa fa-info"></i> Detalji o radilistu</h2>
+                        </header>
+                        <h5>Naziv radilišta: @Model.Radiliste.Naziv</h5>
+                        <hr />
+                        <h5>Naziv projekta: @Model.Radiliste.Projekt.Naziv</h5>
+                        <hr />
+                        <h5>Grad: @Model.Radiliste.Grad.Naziv</h5>
+                        <hr />
+                        <h5>Adresa: @Model.Radiliste.Adresa</h5>
+                        <hr />
+                        <h5>Početak radova: @Model.Radiliste.PocetakRadova</h5>
+                        <hr />
+                        <h5>Završetak radova: @Model.Radiliste.ZavrsetakRadova</h5>
+                        <hr />
+                        <h5>Nadzorni organ: @Model.Radiliste.NadzorniOrgan</h5>
+                    </div>
+                    <div class="col-md-4" style="border-left:1px solid #d7e0ef;">
+                        <header class="panel-heading">
+                            <h2><i class="fa fa-truck"></i> Popis inventara</h2>
+                        </header>
+                        @foreach (var item in Model.listaInventara)
+                        {
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h5>@item.Inventar.Naziv</h5>
+                                </div>
+                                <div class="col-md-3">
+                                    <h5>@item.Inventar.Kategorija.Naziv</h5>
+                                </div>
+                                <div class="col-md-3">
+                                    <h5>@item.Inventar.SerijskiBroj</h5>
+                                </div>
+                                <div class="col-md-3">
+                                    <a href="/Poslovodja/OrganizacijaRadilista/OslobodiInventar?InventarId=@item.Inventar.InventarID&RadilisteId=@Model.Radiliste.RadilisteID"><button class="btn btn-danger">Oslobodi</button></a>
+                                </div>
+                            </div>
+                            <hr />
+                        }
+                        <button id="dodajInventar" class="btn btn-default">Dodaj inventar <i class="fa fa-plus"></i></button>
+                    </div>
+                    <div class="col-md-4" style="border-left:1px solid #d7e0ef;">
+                        <header class="panel-heading">
+                            <h2><i class="fa fa-truck"></i> Popis radnika</h2>
+                        </header>
+                        @foreach (var item in Model.listaRadnika)
+                        {
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img src="@Slika.GetSlika(item.Radnik.Osoba.Slika,item.Radnik.Osoba.ContentType)" width="50" height="50" />
+                            </div>
+                            <div class="col-md-3">
+                                <h5>@item.Radnik.Osoba.Ime @item.Radnik.Osoba.Prezime</h5>
+                            </div>
+                            <div class="col-md-3">
+                                <h5>@item.Radnik.Osoba.JMBG</h5>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="/Poslovodja/OrganizacijaRadilista/OtpustiRadnika?RadnikId=@item.Radnik.RadnikID&RadilisteId=@Model.Radiliste.RadilisteID"><button class="btn btn-danger">Otpusti</button></a>
+                            </div>
+                        </div>
+                            <hr />
+                        }
+                        <button id="dodajRadnika" class="btn btn-default">Dodaj radnika <i class="fa fa-plus"></i></button>
+                    </div>
+                </div>
+                <div id="dodavanja">
+                    <hr />
+                </div>
             </div>
         </section>
     </section>
 </section>
+<script>
+    $("#dodajInventar").click(function () {
+        $.ajax({
+            url: "/Poslovodja/OrganizacijaRadilista/DodajInventar?RadilisteId=@Model.Radiliste.RadilisteID",
+            type: "GET",
+            success: (function (data) {
+                $("#dodavanja").html(data);
+            })
+
+        });
+
+    });
+
+    $("#dodajRadnika").click(function () {
+        $.ajax({
+            url: "/Poslovodja/OrganizacijaRadilista/DodajRadnika?RadilisteId=@Model.Radiliste.RadilisteID",
+            type: "GET",
+            success: (function (data) {
+                $("#dodavanja").html(data);
+            })
+
+        });
+
+    });
+</script>

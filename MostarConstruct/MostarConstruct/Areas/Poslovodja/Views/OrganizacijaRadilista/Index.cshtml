@@ -9,6 +9,15 @@
 
             <div class="panel-body">
                 <br />
+                @{
+                    if (Model.ProjekatId != 0 && Model.listaRadilista.Count == 0)
+                    {
+                        <div id="upozorenje" class="alert alert-danger">
+                            <strong>Obavijest!</strong> Odabrani projekt ne sadrži niti jedno radilište.
+                        </div>
+
+                    }
+                }
                 <div id="parent" class="row" style="margin-left:1%;margin-right:1%;">
                     <div class="forma">
                         <form class="form-group" style="width:60%;">
@@ -25,6 +34,8 @@
                             @{
                                 if (Model.listaRadilista.Count != 0)
                                 {
+                                    <label class="form-control-label">Odaberite projekat: </label>
+                                    @Html.DropDownListFor(model => model.ProjekatId, Model.listaProjekata, new { @class = "form-control", @disabled = "disabled" })
                                     <div id="radilista">
                                         <label class="form-control-label">Odaberite radilište: </label>
                                         @Html.DropDownListFor(model => model.RadilisteId, Model.listaRadilista, new { @class = "form-control" })
@@ -55,5 +66,7 @@
             })
         });
     });
-
+    setTimeout(function () {
+        $("#upozorenje").slideUp();
+    },2000)
 </script>

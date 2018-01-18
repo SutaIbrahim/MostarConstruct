@@ -1,0 +1,25 @@
+﻿@model MostarConstruct.Web.Areas.Poslovodja.ViewModels.OrganizacijaRadilistaDodajInventarVM
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<hr />
+<form asp-controller="OrganizacijaRadilista" asp-action="SnimiInventar" class="form-group" style="width:60%;">
+    <label>Odaberite inventar: </label>
+    @Html.DropDownListFor(model => model.InventarId, Model.listaInventara, new { @class = "form-control" })
+    <br />
+    <label>Odaberite radnika: </label>
+    @Html.DropDownListFor(model => model.RadnikId, Model.listaRadnika, new { @class = "form-control" })
+    <br />
+    <label>Zauzeto do: </label>
+    <input asp-for="ZauzetoDo" class="form-control" />
+    <br />
+    <input asp-for="RadilisteId" hidden />
+    <input type="submit" class="btn btn-success" value="Dodaj" />
+    <button id="odustani" class="btn btn-default"><i class="fa fa-close"></i> Odustani</button>
+</form>
+<script>
+    $("#odustani").click(function () {
+        $("#dodavanja").html("");
+
+    })
+</script>

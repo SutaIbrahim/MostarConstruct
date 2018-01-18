@@ -73,7 +73,10 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
             }
             else
             {
-                _db.Projekti.Update(model.projekt);
+                novi=_db.Projekti.Where(x=>x.ProjektID==model.projekt.ProjektID).FirstOrDefault();
+                int clan = novi.ClanUpraveID;
+                novi = model.projekt;
+                novi.ClanUpraveID = clan;
                 _db.SaveChanges();
             }
             LogiranjeAktivnosti logiranje = new LogiranjeAktivnosti(_db);
