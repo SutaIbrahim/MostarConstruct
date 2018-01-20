@@ -37,10 +37,25 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
 
         public IActionResult Index()
         {
+            IzvjestajIndexViewModel model = new IzvjestajIndexViewModel();
 
+            model.izvjestaji = db.Izvjestaji.Include(x => x.Korisnik).ThenInclude(y => y.Osoba).Include(p => p.Projekt).ToList();
 
-            return View();
+            return View(model);
         }
+        public IActionResult Pretraga(string srchTxt)
+        {
+            if (srchTxt == null)
+                return RedirectToAction(nameof(Index));
+
+
+            IzvjestajIndexViewModel model = new IzvjestajIndexViewModel();
+            model.izvjestaji = db.Izvjestaji.Include(x => x.Korisnik).ThenInclude(y => y.Osoba).Include(p => p.Projekt).Where(y => y.Projekt.Naziv.StartsWith(srchTxt)).ToList();
+            model.srchTxt = srchTxt;
+
+            return View("Index", model);
+        }
+
 
         public IActionResult Dodaj()
         {
@@ -63,25 +78,59 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
         [HttpPost]
         public IActionResult Kreiraj(IzvjestajDodajVIewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                IzvjestajDodajVIewModel mdl = new IzvjestajDodajVIewModel()
+                {
+
+                    projekti = db.Projekti.Select(x => new SelectListItem
+                    {
+                        Value = x.ProjektID.ToString(),
+                        Text = x.Naziv
+
+                    }).ToList(),
+
+                    izvjestaj = model.izvjestaj
+                };
+
+
+                return View("Dodaj", mdl);
+            }
 
             Izvjestaj novi = model.izvjestaj;
+
+            Korisnik korisnik = httpContext.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
+
+            novi.KorisnikID = korisnik.KorisnikID;
 
             db.Izvjestaji.Add(novi);
 
             db.SaveChanges();
-
-
-
-
-
-            Korisnik korisnik = httpContext.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
 
             LogiranjeAktivnosti logiranje = new LogiranjeAktivnosti(db);
             Korisnik k = httpContext.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
             logiranje.Logiraj(korisnik.KorisnikID, DateTime.Now, httpContext.HttpContext.Connection.RemoteIpAddress.ToString(), httpContext.HttpContext.Request.Headers["User-Agent"].ToString().Substring(0, 100), "Dodavanje izvjestaja", "Izvjestaji");
 
 
-            return View();
+            return RedirectToAction("Prikazi", new { id = novi.IzvjestajID });
+        }
+
+
+        public IActionResult Prikazi(int id)
+        {
+            IzvjestajPrikaziViewModel model = new IzvjestajPrikaziViewModel();
+
+            Izvjestaj izv = db.Izvjestaji.Include(p => p.Projekt).Where(x => x.IzvjestajID == id).FirstOrDefault();
+            model.izvjestaj = izv;
+
+            model.radilista = db.Radilista.Include(g => g.Grad).Where(x => x.ProjektID == izv.ProjektID).ToList();
+
+            model.uplate = db.Uplate.Include(k => k.Klijent).Where(x => x.ProjektID == izv.ProjektID).ToList();
+
+            model.BrojNaloga = db.RadniNalozi.Where(x => x.Radiliste.ProjektID == izv.ProjektID).Count();
+
+
+            return View(model);
         }
 
 

@@ -22,6 +22,14 @@
         <link href="~/css/style.css" rel="stylesheet">
         <link href="~/css/style-responsive.css" rel="stylesheet" />
 }
+<script>
+    function toggle() {
+        var e = document.getElementById('print');
+        e.style.display = 'none';
+    }
+</script>
+
+
 
 
 
@@ -80,6 +88,6 @@
 
                     </tbody>
                 </table>
-                <a id="print" href="javascript:window.print()"><i class="fa fa-print"></i> Print</a>&nbsp;<br />
+                <a id="print" href="javascript:window.print()" onclick="toggle()"><i class="fa fa-print"></i> Print</a>&nbsp;<br />
 
             </div>

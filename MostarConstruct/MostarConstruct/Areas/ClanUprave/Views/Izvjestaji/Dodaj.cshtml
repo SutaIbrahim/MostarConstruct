@@ -1,6 +1,24 @@
 ﻿
 @{
     ViewData["Title"] = "Dodaj";
+    Layout = null;
+
+    <script src="~/js/jquery.js"></script>
+
+    <link href="~/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/css/bootstrap-reset.css" rel="stylesheet">
+    <!--external css-->
+    <link href="~/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/css/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen" />
+    <link rel="stylesheet" href="~/css/owl.carousel.css" type="text/css">
+
+    <!--right slidebar-->
+    <link href="~/css/slidebars.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+
+    <link href="~/css/style.css" rel="stylesheet">
+    <link href="~/css/style-responsive.css" rel="stylesheet" />
 }
 @model IzvjestajDodajVIewModel
 
@@ -13,10 +31,15 @@
                 <h2>Kreiraj novi izvještaj</h2>
 
             </header>
-            <div class="panel-body">
+            <div class="panel-body pull-left">
 
                 <form asp-action="Kreiraj" method="post">
 
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div asp-validation-summary="All" class="alert alert-danger"></div>
+
+                    }
 
                     <div class="row">
                         <div class="col-md-4">
@@ -37,7 +60,7 @@
                         </div>
                     </div>
 
-                 
+
                     <div class="row">
 
                         <div class="col-md-4">
@@ -54,27 +77,28 @@
                                 <input asp-for="izvjestaj.Svrha" class="form-control" />
                             </div>
                         </div>
-                        </div>
+                    </div>
 
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label asp-for="izvjestaj.Napomena">Napomena:</label>
-                                <textarea asp-for="izvjestaj.Napomena" class="form-control"></textarea>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="izvjestaj.Napomena">Napomena:</label>
+                            <textarea asp-for="izvjestaj.Napomena" class="form-control"></textarea>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="pull-right">
+                                <button type="submit" id="rr" class="btn btn-primary"><i class="fa fa-save"></i> Kreiraj</button>
+                                <a asp-action="Index" class="btn btn-default"><i class="fa fa-times"></i> Odustani</a>
                             </div>
                         </div>
-
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="pull-right">
-                                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Kreiraj</button>
-                                    <a asp-action="Index" class="btn btn-default"><i class="fa fa-times"></i> Odustani</a>
-                                </div>
-                            </div>
-                        </div>
+                    </div>
 
                 </form>
             </div>
         </section>
     </section>
 </section>
+

@@ -1,0 +1,122 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    int brojac = 1;
+}
+
+@model IzvjestajIndexViewModel
+
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+            <header class="panel-heading">
+                <h2>Izdati izvještaji</h2>
+            </header>
+
+            <div class="panel-body">
+
+                <div class="pull-left">
+                    <div class="form-group">
+
+                        <form asp-action="Pretraga" method="post">
+                            <div class="form-inline">
+                                <h7>Pretraga prema nazivu projekta</h7>
+                                <input asp-for="srchTxt" class="form-control" placeholder="Naziv projekta" value="@Model.srchTxt" />
+
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Trazi</button>
+
+                                @if (Model.srchTxt != null)
+                                {
+                                    <a asp-action="Pretraga" class="btn btn-primary">Prikaži sve</a>
+                                }
+                            </div>
+                        </form>
+                    </div>
+
+                    </div>
+
+
+
+                <div class="pull-right">
+                    <div class="form-group">
+                        <br />
+                        <a id="novi" class="btn btn-primary modal-link"><i class="fa fa-plus"></i> Kreiraj novi izvjestaj</a>
+                        <br />
+                    </div>
+                </div>
+
+                <div id="zaDodavanje">
+
+
+
+                </div>
+                
+
+
+                <br />
+                <br />
+                <br />
+
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Redni broj</th>
+                            <th>Broj protokola</th>
+                            <th>Naziv projekta</th>
+                            <th>Datum izdavanja</th>
+                            <th>Svrha</th>
+                            <th>Napomena </th>
+                            <th>Izdao</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var r in Model.izvjestaji)
+                        {
+                            <tr>
+                                <td>@(brojac++)</td>
+                                <td>@r.BrojProtokola</td>
+                                <td>@r.Projekt.Naziv</td>
+                                <td>@r.DatumIzdavanja</td>
+                                <td>@r.Svrha</td>
+                                <td>@r.Napomena</td>
+                                <td>
+                                    @r.Korisnik.Osoba.Ime    &nbsp; @r.Korisnik.Osoba.Prezime
+                                    &nbsp;
+                                    <b>[Clan uprave]</b>
+                                </td>
+
+                                <td class="text-center">
+                                    <a asp-action="Prikazi" asp-route-id="@r.IzvjestajID" class="btn btn-danger" target="_blank">Prikazi</a> @*O
+                                        tvori u novom tabu*@
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+
+
+
+            </div>
+
+        </section>
+    </section>
+</section>
+
+
+
+<script>
+    $("#novi").click(function () {
+        $.ajax({
+            url: "/ClanUprave/Izvjestaji/Dodaj",
+            type: "GET",
+            success: (function (data) {
+                $("#zaDodavanje").html(data);
+            })
+        });
+    });
+
+
+
+</script>

@@ -17,7 +17,7 @@
 
                 <form asp-action="Uredi" method="post">
 
-                    <input asp-for="@Model.Radiliste.RadilisteID" />
+                    <input asp-for="@Model.Radiliste.RadilisteID"  hidden/>
 
                     @if (!ViewData.ModelState.IsValid)
             {

@@ -1,0 +1,205 @@
+﻿
+@{
+    ViewData["Title"] = "Prikazi";
+
+    Layout = null;
+
+    <script src="~/js/jquery.js"></script>
+
+    <link href="~/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/css/bootstrap-reset.css" rel="stylesheet">
+    <!--external css-->
+    <link href="~/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/css/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen" />
+    <link rel="stylesheet" href="~/css/owl.carousel.css" type="text/css">
+
+    <!--right slidebar-->
+    <link href="~/css/slidebars.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+
+    <link href="~/css/style.css" rel="stylesheet">
+    <link href="~/css/style-responsive.css" rel="stylesheet" />
+
+}
+<script>
+        function toggle() {
+            var e = document.getElementById('print');
+            e.style.display = 'none';
+        }
+</script>
+
+@model IzvjestajPrikaziViewModel
+
+<header class="panel-heading">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group">
+                Broj protokola: @Model.izvjestaj.BrojProtokola
+            </div>
+        </div>
+    </div>
+
+
+
+                <h2>Izvještaj o projektu: @Model.izvjestaj.Projekt.Naziv | ID: @Model.izvjestaj.ProjektID</h2>
+                <br />
+</header>
+
+<div class="panel-body">
+
+
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group">
+
+
+
+                @{if (Model.izvjestaj.Projekt.StvarniPocetak != null)
+                    {
+                        <label asp-for="izvjestaj.Projekt.StvarniPocetak">Početak rada: </label>
+                        <input asp-for="izvjestaj.Projekt.StvarniPocetak" class="form-control" readonly />
+                    }
+                    else
+                    {
+                        <label asp-for="izvjestaj.Projekt.PredlozeniPocetak">Očekivani početak rada: </label>
+                        <input asp-for="izvjestaj.Projekt.PredlozeniPocetak" class="form-control" readonly />
+
+
+                    }
+                }
+
+            </div>
+        </div>
+
+
+        <div class="col-md-2">
+            <div class="form-group">
+
+                @{if (Model.izvjestaj.Projekt.StvarniZavrsetak != null)
+                    {
+                        <label asp-for="izvjestaj.Projekt.StvarniZavrsetak">Završetak rada: </label>
+                        <input asp-for="izvjestaj.Projekt.StvarniZavrsetak" class="form-control" readonly />
+                    }
+                    else
+                    {
+                        <label asp-for="izvjestaj.Projekt.PredlozeniZavrsetak">Očekivani završetak rada: </label>
+                        <input asp-for="izvjestaj.Projekt.PredlozeniZavrsetak" class="form-control" readonly />
+                    }
+                }
+
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="form-group">
+
+                <label asp-for="izvjestaj.Projekt.Cijena">Vrijednost: </label>
+                <input asp-for="izvjestaj.Projekt.Cijena" class="form-control" readonly />
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+
+                <label asp-for="izvjestaj.Projekt.Opis">Opis: </label>
+                <textarea asp-for="izvjestaj.Projekt.Opis" class="form-control" readonly></textarea>
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+    <h4>Lista radilišta na projektu:</h4>
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Naziv</th>
+                        <th>Grad</th>
+                        <th>Adresa </th>
+                        <th>Početak radova</th>
+                        <th>Završetak radova</th>
+                        <th>Nadzorni organ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var r in Model.radilista)
+                    {
+                        <tr>
+                            <td>@r.Naziv </td>
+                            <td>@r.Grad.Naziv</td>
+                            <td>@r.Adresa</td>
+                            <td>@r.PocetakRadova</td>
+                            <td>@r.ZavrsetakRadova</td>
+                            <td>@r.NadzorniOrgan</td>
+
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+    <h4>Lista uplata za projekat:</h4>
+
+    <div class="row">
+        <div class="col-md-6">
+
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Broj uplate</th>
+                        <th>Datum uplate</th>
+                        <th>Iznos</th>
+                        <th>Uplatio</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var r in Model.uplate)
+                    {
+                        <tr>
+                            <td><center><b>@(r.UplataID)</b></center></td>
+                            <td>@r.DatumUplate</td>
+                            <td>@r.Iznos</td>
+                            <td>@r.Klijent.KontaktOsoba</td>
+
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <h3>Ukupan broj izdatih naloga: @Model.BrojNaloga</h3>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+        </div>
+    </div>
+
+
+
+    <a id="print" href="javascript:window.print()" onclick="toggle()" ><i class="fa fa-print"></i> Print</a>&nbsp;<br />
+
+</div>
+
+
