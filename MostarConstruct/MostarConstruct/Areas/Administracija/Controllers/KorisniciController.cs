@@ -161,6 +161,24 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
 
         #endregion
 
+        #region Aktiviraj
+        public IActionResult ChangeStatus(int id)
+        {
+            Korisnik user = db.Korisnici.First(x => x.KorisnikID == id);
+            if (user.Aktivan)
+                user.Aktivan = false;
+            else
+                user.Aktivan = true;
+
+            db.Korisnici.Update(user);
+            db.SaveChanges();
+
+            string status = user.Aktivan ? "aktivan" : "neaktivan";
+
+            return Json(new { success = true, status});
+        }
+        #endregion
+
         #region Helpers
         private KorisniciDodajViewModel GetDefaultViewModel(KorisniciDodajViewModel model)
         {

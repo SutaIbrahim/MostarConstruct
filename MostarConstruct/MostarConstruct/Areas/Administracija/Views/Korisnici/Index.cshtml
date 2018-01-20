@@ -7,47 +7,94 @@
 <section id="main-content">
     <section class="wrapper">
 
-        <h2>Lista korisnika</h2>
+        <section class="panel">
+            <section class="panel-heading">
+                <h2>Lista korisnika</h2>
 
-        <hr />
+            </section>
 
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Redni broj</th>
-                    <th>Ime</th>
-                    <th>Prezime</th>
-                    <th>Korisnicko ime</th>
-                    <th>Email</th>
-                    <th>Datum registracije</th>
-                    <th>Aktivan</th>
-                    <th>Akcije</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var k in Model.Rows)
-                {
-                <tr>
-                    <td>@(brojac++)</td>
-                    <td>@k.Ime</td>
-                    <td>@k.Prezime</td>
-                    <td>@k.KorisnickoIme</td>
-                    <td>@k.Email</td>
-                    <td>@k.DatumRegistracije</td>
-                    <td>@k.Aktivan</td>
-                    <td>
-                        <form asp-action="Obrisi" method="post">
-                            <input name="KorisnikID" value="@k.KorisnikID" type="hidden" />
-                            <a asp-action="Uredi" asp-route-korisnikID="@k.KorisnikID" class="btn btn-info">Uredi</a>
-                            <button type="submit" class="btn btn-danger">Obrisi</button>
-                        </form>
-                    </td>
-                </tr>
-                }
-            </tbody>
-        </table>
 
+            <section class="panel-body">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Redni broj</th>
+                            <th>Ime</th>
+                            <th>Prezime</th>
+                            <th>Korisnicko ime</th>
+                            <th>Email</th>
+                            <th>Datum registracije</th>
+                            <th>Aktivan</th>
+                            <th class="text-center">Akcije</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var k in Model.Rows)
+                        {
+                            <tr>
+                                <td>@(brojac++)</td>
+                                <td>@k.Ime</td>
+                                <td>@k.Prezime</td>
+                                <td>@k.KorisnickoIme</td>
+                                <td>@k.Email</td>
+                                <td>@k.DatumRegistracije</td>
+                                <td><span class="replace_@k.KorisnikID">@k.Aktivan</span></td>
+                                <td>
+                                    <form asp-action="Obrisi" method="post">
+                                        <input name="KorisnikID" value="@k.KorisnikID" type="hidden" />
+                                        <a asp-action="Uredi" asp-route-korisnikID="@k.KorisnikID" class="btn btn-info btn-sm">Uredi</a>
+                                        <button type="submit" class="btn btn-danger btn-sm">Obrisi</button>
+                                        <button type="button" class="btn btn-success btnActivate btn-sm" idValue="@k.KorisnikID">
+                                            <span class="btnText_@k.KorisnikID">
+                                                @if(k.Aktivan == "Da")
+                                                {
+                                                    @:Deaktiviraj
+                                                }
+                                                else
+                                                {
+                                                    @:Aktiviraj
+                                                }
+                                            </span>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </section>
+        </section>
     </section>
 </section>
 
+<script>
+
+
+
+
+    $(".btnActivate").click(function () {
+        var btn = $(this);
+        var id = btn.attr("idValue");
+
+        $.ajax({
+            url: "@Url.Action("ChangeStatus", "Korisnici")",
+            type: "GET",
+            data: { id: id },
+            success: function (data) {
+                if (data.success) {
+                    if (data.status === "aktivan") {
+                        $(".replace_" + id).html("Da");      
+                        $(".btnText_" + id).html("Deaktiviraj");
+                    }
+                    else {
+                        $(".replace_" + id).html("Ne");
+                        $(".btnText_" + id).html("Aktiviraj");
+                    }
+                }
+            }
+        });
+    });
+
+
+</script>
 

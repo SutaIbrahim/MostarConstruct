@@ -13,12 +13,14 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
     [Autorizacija(false, TipKorisnika.Administrator)]
     public class DrzaveController : Controller
     {
+        #region DI
         private DatabaseContext db;
 
         public DrzaveController(DatabaseContext db)
         {
             this.db = db;
         }
+        #endregion
 
         #region Index
         public IActionResult Index() => View(db.Drzave);

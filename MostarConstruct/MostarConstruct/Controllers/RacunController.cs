@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MostarConstruct.Data;
 using MostarConstruct.Models;
 using MostarConstruct.Web.Helper;
@@ -28,16 +29,13 @@ namespace MostarConstruct.Web.Controllers
         #endregion
 
         #region Prijava
-        public IActionResult Prijava()
-        {
-            return View(new LoginViewModel());
-        }
+        public IActionResult Prijava() => View(new LoginViewModel());
 
         [HttpPost]
         public IActionResult Prijava(LoginViewModel vm)
         {
             // provjeriti i za mail!
-            Korisnik korisnik = db.Korisnici.Where(x => x.KorisnickoIme == vm.LoginData).FirstOrDefault();
+            Korisnik korisnik = db.Korisnici.Include(x => x.Osoba).Where(x => x.KorisnickoIme == vm.LoginData || x.Osoba.Email == vm.LoginData).FirstOrDefault();
 
             if (korisnik == null)
                 ModelState.AddModelError("", "Korisnicko ime ili lozinka nisu tacni");
@@ -94,7 +92,6 @@ namespace MostarConstruct.Web.Controllers
         public IActionResult Odjava()
         {
             Autentifikacija.OcistiSesiju(httpContext.HttpContext);
-
             return RedirectToAction(nameof(Prijava));
         }
         #endregion
