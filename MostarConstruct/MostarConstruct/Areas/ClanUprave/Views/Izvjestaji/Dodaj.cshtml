@@ -22,83 +22,75 @@
 }
 @model IzvjestajDodajVIewModel
 
-<section id="main-content">
-    <section class="wrapper">
 
 
-        <section class="panel">
-            <header class="panel-heading">
-                <h2>Kreiraj novi izvještaj</h2>
+    <br /><br />
+<hr />
+    <h2>Kreiraj novi izvještaj</h2>
 
-            </header>
-            <div class="panel-body pull-left">
+    <form asp-action="Kreiraj" method="post">
 
-                <form asp-action="Kreiraj" method="post">
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div asp-validation-summary="All" class="alert alert-danger"></div>
 
-                    @if (!ViewData.ModelState.IsValid)
-                    {
-                        <div asp-validation-summary="All" class="alert alert-danger"></div>
+        }
 
-                    }
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
 
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
+                    <label asp-for="izvjestaj.ProjektID">Izaberi projekt:</label>
+                    <select asp-for="izvjestaj.ProjektID" asp-items="Model.projekti" class="form-control"></select>
 
-                                <label asp-for="izvjestaj.ProjektID">Izaberi projekt:</label>
-                                <select asp-for="izvjestaj.ProjektID" asp-items="Model.projekti" class="form-control"></select>
-
-                            </div>
-                        </div>
-
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label asp-for="izvjestaj.BrojProtokola">Broj protokola:</label>
-                                <input asp-for="izvjestaj.BrojProtokola" class="form-control" />
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="row">
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label asp-for="izvjestaj.DatumIzdavanja">Datum izdavanja:</label>
-                                <input asp-for="izvjestaj.DatumIzdavanja" class="form-control" readonly />
-                            </div>
-                        </div>
-
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label asp-for="izvjestaj.Svrha">Svrha:</label>
-                                <input asp-for="izvjestaj.Svrha" class="form-control" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label asp-for="izvjestaj.Napomena">Napomena:</label>
-                            <textarea asp-for="izvjestaj.Napomena" class="form-control"></textarea>
-                        </div>
-                    </div>
-
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="pull-right">
-                                <button type="submit" id="rr" class="btn btn-primary"><i class="fa fa-save"></i> Kreiraj</button>
-                                <a asp-action="Index" class="btn btn-default"><i class="fa fa-times"></i> Odustani</a>
-                            </div>
-                        </div>
-                    </div>
-
-                </form>
+                </div>
             </div>
-        </section>
-    </section>
-</section>
 
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label asp-for="izvjestaj.BrojProtokola">Broj protokola:</label>
+                    <input asp-for="izvjestaj.BrojProtokola" class="form-control" />
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label asp-for="izvjestaj.DatumIzdavanja">Datum izdavanja:</label>
+                    <input asp-for="izvjestaj.DatumIzdavanja" class="form-control" readonly />
+                </div>
+            </div>
+
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label asp-for="izvjestaj.Svrha">Svrha:</label>
+                    <input asp-for="izvjestaj.Svrha" class="form-control" />
+                </div>
+            </div>
+        </div>
+
+<div class="row">
+
+    <div class="col-md-8">
+        <div class="form-group">
+            <label asp-for="izvjestaj.Napomena">Napomena:</label>
+            <textarea asp-for="izvjestaj.Napomena" class="form-control" rows="5"></textarea>
+        </div>
+    </div>
+</div>
+
+
+<div class="col-md-8">
+    <div class="pull-right">
+        <button type="submit" id="rr" class="btn btn-primary" ><i class="fa fa-save"></i> Kreiraj</button>
+        <a asp-action="Index" class="btn btn-default"><i class="fa fa-times"></i> Odustani</a>
+    </div>
+</div>
+        </form>
+<br />
+<hr />
