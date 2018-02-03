@@ -121,7 +121,7 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
             model.uplata = db.Uplate.Include(k => k.Klijent).Include(p => p.Projekt).Include(c => c.ClanUprave).ThenInclude(o => o.Osoba).Where(i => i.UplataID == UplataID).FirstOrDefault();
 
 
-            return View(model);
+            return PartialView(model);
         }
 
 

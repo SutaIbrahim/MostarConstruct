@@ -1,5 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Dodaj";
+
+    var datum = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss").Replace(' ', 'T');
 }
 
 @model RadniciDodajViewModel
@@ -81,7 +83,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label asp-for="Radnik.DatumZaposlenja">Datum zaposlenja:</label>
-                                <input asp-for="Radnik.DatumZaposlenja" class="form-control" a>
+                                <input asp-for="Radnik.DatumZaposlenja" class="form-control" value="@datum">
                             </div>
                         </div>
                     </div>

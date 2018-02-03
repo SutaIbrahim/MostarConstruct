@@ -1,6 +1,8 @@
 ﻿
 @{
     ViewData["Title"] = "Dodaj";
+    var localDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss").Replace(' ', 'T');
+
 }
 @model MostarConstruct.Web.Areas.ClanUprave.ViewModels.RadilistaDodajViewModel
 
@@ -33,7 +35,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label asp-for="Radiliste.PocetakRadova">Početak radova:</label>
-                                <input asp-for="Radiliste.PocetakRadova" class="form-control" />
+                                <input asp-for="Radiliste.PocetakRadova" class="form-control" value="@localDateTime"/>
                             </div>
                         </div>
 

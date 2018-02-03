@@ -16,7 +16,7 @@
             </header>
 
 
-            <div class="panel-body">
+            <div class="panel-body" id="zaDetalje"> 
                     <div class="pull-left">
                         <form asp-action="Pretraga" method="post">
                             <div class="form-inline">
@@ -70,7 +70,11 @@
                                 <td>@r.Iznos</td>
                                 <td>@r.Klijent.KontaktOsoba</td>
                                 <td class="text-center">
-                                    <a asp-action="Detalji" asp-route-UplataID="@r.UplataID" class="btn btn-info"><i class="fa fa-info-circle"></i> Detalji</a>&nbsp;<br /><br />
+                                   
+                                    @*<a asp-action="Detalji" asp-route-UplataID="@r.UplataID" class="btn btn-info"><i class="fa fa-info-circle"></i> Detalji</a>&nbsp;<br /><br />*@
+
+                                    <a ajax-poziv="da" ajax-rezultat="zaDetalje" href="/ClanUprave/Uplate/Detalji?UplataID=@r.UplataID" class="btn btn-info"><i class="fa fa-info-circle"></i> Detalji</a>&nbsp;<br /><br />
+
                                     <a asp-action="Uredi" asp-route-UplataID="@r.UplataID" class="btn btn-info">Uredi</a>&nbsp;<br /><br />
                                     <a asp-action="Obrisi" asp-route-id="@r.UplataID" class="btn btn-danger">Obriši</a>
                                 </td>
@@ -88,3 +92,4 @@
         </section>
     </section>
 </section>
+

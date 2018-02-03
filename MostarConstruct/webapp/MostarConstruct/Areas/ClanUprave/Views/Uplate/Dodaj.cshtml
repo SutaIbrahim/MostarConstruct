@@ -1,6 +1,8 @@
 ﻿
 @{
     ViewData["Title"] = "Dodaj";
+
+    var localDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss").Replace(' ', 'T');
 }
 
 
@@ -43,10 +45,11 @@
                             </div>
                         </div>
 
+
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label asp-for="Uplata.DatumUplate">Datum uplate</label>
-                                <input asp-for="Uplata.DatumUplate" class="form-control" value=@DateTime.Now />
+                                <input asp-for="Uplata.DatumUplate" class="form-control" value=@localDateTime />
                             </div>
                         </div>
 

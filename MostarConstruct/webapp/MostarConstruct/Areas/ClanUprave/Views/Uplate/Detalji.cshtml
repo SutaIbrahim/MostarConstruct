@@ -1,26 +1,41 @@
 ﻿
 @{
+
+    //AJAX
+
+
     ViewData["Title"] = "Detalji";
+    Layout = null;
+
+    <script src="~/js/jquery.js"></script>
+
+        <link href="~/css/bootstrap.min.css" rel="stylesheet">
+        <link href="~/css/bootstrap-reset.css" rel="stylesheet">
+    <!--external css-->
+        <link href="~/css/font-awesome.css" rel="stylesheet" />
+        <link href="~/css/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen" />
+        <link rel="stylesheet" href="~/css/owl.carousel.css" type="text/css">
+
+    <!--right slidebar-->
+        <link href="~/css/slidebars.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+
+        <link href="~/css/style.css" rel="stylesheet">
+        <link href="~/css/style-responsive.css" rel="stylesheet" />
 }
 
-<h2>Detalji</h2>
 @model UplateDetaljiViewModel
 
-<section id="main-content">
-    <section class="wrapper">
-        <section class="panel">
+
             <header class="panel-heading">
                 <h2>Detalji o uplati broj: @Model.uplata.UplataID</h2>
-
             </header>
-
-
             <div class="panel-body">
-               
+
 
                 <div class="pull-right">
 
-                 
                 </div>
                 <br />
                 <br />
@@ -42,40 +57,35 @@
                         </tr>
                     </thead>
                     <tbody>
-                            <tr>
-                                <td>@Model.uplata.Projekt.Naziv</td>
-                                <td>@Model.uplata.Klijent.KontaktOsoba</td>
-                                <td>@Model.uplata.DatumUplate</td>
-                                <td>@Model.uplata.BrojUplate</td>
-                                <td>@Model.uplata.Iznos</td>
-                                <td>@Model.uplata.Svrha</td>
-                                <td>@Model.uplata.Status</td>
+                        <tr>
+                            <td>@Model.uplata.Projekt.Naziv</td>
+                            <td>@Model.uplata.Klijent.KontaktOsoba</td>
+                            <td>@Model.uplata.DatumUplate</td>
+                            <td>@Model.uplata.BrojUplate</td>
+                            <td>@Model.uplata.Iznos</td>
+                            <td>@Model.uplata.Svrha</td>
+                            <td>@Model.uplata.Status</td>
+
+                            <td>
+                                @Model.uplata.ClanUprave.Osoba.Ime
+                                &nbsp;
+                                @Model.uplata.ClanUprave.Osoba.Prezime
+                                &nbsp;
+                                <b>[Clan uprave] </b>
+                            </td>
 
 
-                                <td>
-                                    @Model.uplata.ClanUprave.Osoba.Ime
-                                    &nbsp;
-                                    @Model.uplata.ClanUprave.Osoba.Prezime
-                                    &nbsp;
-                                    <b>[Clan uprave] </b>
-                                </td>
+                            <td class="text-center">
+                                <a class="btn btn-info" asp-action="Izvjestaj" asp-route-UplataId="@Model.uplata.UplataID" target="_blank"><i class="fa fa-print"></i> Print</a>&nbsp;<br /><br />
+                                <a asp-action="Uredi" asp-route-UplataID="@Model.uplata.UplataID" class="btn btn-info">Uredi</a>&nbsp;<br /><br />
+                                <a asp-action="Obrisi" asp-route-id="@Model.uplata.UplataID" class="btn btn-danger">Obriši</a>
+                            </td>
 
-
-                                <td class="text-center">
-                                    <a class="btn btn-info" asp-action="Izvjestaj" asp-route-UplataId="@Model.uplata.UplataID"  target="_blank"><i class="fa fa-print"></i> Print</a>&nbsp;<br /><br />
-                                    <a asp-action="Uredi" asp-route-UplataID="@Model.uplata.UplataID" class="btn btn-info">Uredi</a>&nbsp;<br /><br />
-                                    <a asp-action="Obrisi" asp-route-id="@Model.uplata.UplataID" class="btn btn-danger">Obriši</a>
-                                </td>
-
-                            </tr>
-
+                        </tr>
                     </tbody>
                 </table>
 
                 <a id="link" href="@Url.Action("Index", "Uplate")" class="btn btn-primary modal-link"><i class="fa fa-backward"></i> Nazad</a>
 
             </div>
-        </section>
-    </section>
-</section>
 
