@@ -51,7 +51,6 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
         }
         #endregion
 
-
         #region Edit
         public IActionResult Uredi(int id)
         {
@@ -59,6 +58,8 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
 
             return PartialView("_Uredi", drzava);
         }
+
+
         #endregion
 
 

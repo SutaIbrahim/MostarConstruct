@@ -1,0 +1,18 @@
+﻿@model List<Regija>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Naziv</th>
+            <th>Oznaka</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td>@r.Naziv</td>
+                <td>@r.Oznaka</td>
+            </tr>
+        }
+    </tbody>
+</table>

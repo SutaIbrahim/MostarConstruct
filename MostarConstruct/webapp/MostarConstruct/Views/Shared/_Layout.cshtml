@@ -60,7 +60,7 @@
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <img alt="" src="img/avatar1_small.jpg">
-                            <span class="username">Test Korisnik</span>
+                            <span class="username">@trenutniKorisnik.KorisnickoIme</span>
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu extended logout">
@@ -69,9 +69,7 @@
                             <li><a href="#"><i class="fa fa-cog"></i> Postavke</a></li>
                             <li><a href="#"><i class="fa fa-bell-o"></i> Notifikacije</a></li>
                             <li>
-                                <form asp-controller="Racun" asp-action="Odjava" method="post">
-                                    <button type="submit"><i class="fa fa-key"></i> Odjava</button>
-                                </form>
+                                <a asp-area="" asp-controller="Racun" asp-action="Odjava"><i class="fa fa-bell-o"></i> Odjava</a>
                             </li>
                         </ul>
                     </li>
@@ -262,7 +260,7 @@
 
                     }
 
-                    
+
                 </ul>
                 <!-- sidebar menu end-->
             </div>
@@ -281,6 +279,7 @@
         <!--footer end-->
     </section>
 
+    
     <!-- js placed at the end of the document so the pages load faster -->
     @*<environment include="Development">*@
     <script src="~/js/bootstrap.min.js"></script>

@@ -88,7 +88,6 @@ namespace MostarConstruct.Web.Controllers
         #endregion
 
         #region Odjava
-        [HttpPost]
         public IActionResult Odjava()
         {
             Autentifikacija.OcistiSesiju(httpContext.HttpContext);

@@ -27,7 +27,7 @@
                             <th>Redni broj</th>
                             <th>Naziv</th>
                             <th>Oznaka</th>
-                            <th>Kantoni</th>
+                            <th>Regije</th>
                             <th class="text-center">Akcije</th>
                         </tr>
                     </thead>
@@ -39,31 +39,57 @@
                                 <td>@d.Naziv</td>
                                 <td>@d.Oznaka</td>
                                 <td>
-
+                                    <div id="regije_@d.DrzavaID" hidden>
+                                        @await Component.InvokeAsync("ListaKantona", new { drzavaId = d.DrzavaID })
+                                    </div>
                                 </td>
                                 <td class="text-center">
                                     <form asp-action="Obrisi" method="post">
                                         <a asp-action="Detalji" asp-route-id="@d.DrzavaID" class="btn btn-info">Detalji</a>
-
+                                        <button type="button" class="btn btn-send btnRegije" idValue="@d.DrzavaID">Prikazi regije</button>
+                                        <button type="button" class="btn btn-warning btnUredi" idValue="@d.DrzavaID">Uredi</button>
                                         <button type="submit" class="btn btn-danger">Obrisi</button>
                                     </form>
                                 </td>
                             </tr>
+                           
                         }
-                    </tbody>
+                    </tbody>                   
                 </table>
 
                 <div id="modalPlace">
 
                 </div>
 
+                <div id="ajaxDiv"></div>
+
             </div>
         </div>
     </section>
 </section>
 
-
 <script>
+
+    $(".btnUredi").click(function () {
+        var btn = $(this);
+        var id = btn.attr("idValue");
+
+        $.ajax({
+            url: "@Url.Action("Uredi", "Drzave")",
+            type: "GET",
+            data: { drzavaId: id },
+            success: function (result) {
+                $("#ajaxDiv").html(result);
+            }
+        });
+    });
+
+    $(".btnRegije").click(function(){
+        var btn = $(this);
+        var id = btn.attr("idValue");
+        $("#regije_" + id).toggle();
+    });
+
     $.ajax({
         url: "@Url.Action("Dodaj", "Drzave")",
         type: "GET",
