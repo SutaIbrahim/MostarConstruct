@@ -1,4 +1,4 @@
-﻿
+﻿@model MostarConstruct.Web.Areas.ClanUprave.ViewModels.UvjerenjaIndexVM
 @{
     ViewData["Title"] = "Index";
 }
@@ -14,7 +14,30 @@
                 <div class="pull-right">
                     <a class="btn btn-primary" href="/ClanUprave/Uvjerenja/Dodaj"><i class="fa fa-plus"></i> Dodaj</a>
                 </div>
+                <table class="table table-borderer table-striped">
+                    <thead>
+                        <tr>
+                            <th>Broj protokola</th>
+                            <th>Datum izdavanja</th>
+                            <th>Radnik</th>
+                            <th>Akcija</th>
 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var uvjerenje in Model.listaUvjerenja)
+                        {
+                           <tr>
+                               <td>@uvjerenje.BrojProtokola</td>
+                               <td>@uvjerenje.DatumIzdavanja.ToShortDateString()</td>
+                               <td>@uvjerenje.Radnik</td>
+                               <td>
+                                   <button class="btn btn-info">Uredi</button>
+                               </td>
+                           </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
         </section>
     </section>
