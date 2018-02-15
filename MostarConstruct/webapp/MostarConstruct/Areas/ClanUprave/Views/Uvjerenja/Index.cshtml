@@ -32,7 +32,8 @@
                                <td>@uvjerenje.DatumIzdavanja.ToShortDateString()</td>
                                <td>@uvjerenje.Radnik</td>
                                <td>
-                                   <button class="btn btn-info">Uredi</button>
+                                   <a href="/ClanUprave/Uvjerenja/Detalji?UvjerenjeId=@uvjerenje.UvjerenjeId" class="btn btn-info"><i class="fa fa-info"></i> Detalji</a>
+                                   <button class="btn btn-danger"><i class="fa fa-times"></i> Obriši</button>
                                </td>
                            </tr>
                         }

@@ -1,0 +1,57 @@
+﻿@model MostarConstruct.Web.Areas.ClanUprave.ViewModels.UvjerenjaDetaljiVM
+@{
+    ViewData["Title"] = "Detalji";
+}
+<section id="main-content">
+    <section class="wrapper">
+        <section class="panel">
+            <header class="panel-heading">
+                <h2>Detalji uvjerenja</h2>
+
+            </header>
+
+            <div class="panel-body">
+                <div class="pull-right">
+                    <a class="btn btn-primary" target="_blank" href="/ClanUprave/Uvjerenja/PrikaziDokument?UvjerenjeId=@Model.uvjerenje.UvjerenjeID"><i class="fa fa-file"></i> Prikazi dokument</a>
+                    <a class="btn btn-danger" href="/ClanUprave/Uvjerenja"><i class="fa fa-times-circle"></i> Odustani</a>
+                </div>
+                <br />
+                <br />
+                <form action="/ClanUprave/Uvjerenja/SnimiUvjerenje">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label asp-for="uvjerenje.DatumIzdavanja">Datum izdavanja: </label>
+                            <input asp-for="uvjerenje.DatumIzdavanja" readonly class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            @Html.HiddenFor(model => model.uvjerenje.UvjerenjeID)
+                            @Html.HiddenFor(model => model.uvjerenje.BrojProtokola)
+                            @Html.HiddenFor(model => model.uvjerenje.ClanUpraveID)
+                            <label asp-for="uvjerenje.RadnikID">Izdato za radnika: </label>
+                            @Html.DropDownListFor(model => model.uvjerenje.RadnikID, Model.listaRadnika, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label asp-for="uvjerenje.Svrha">Svrha: </label>
+                            <textarea class="form-control" asp-for="uvjerenje.Svrha" cols="20" rows="7"></textarea>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="uvjerenje.Napomena">Napomena: </label>
+                            <textarea class="form-control" asp-for="uvjerenje.Napomena" cols="20" rows="7"></textarea>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-success btn-block">Sačuvaj</button>
+                        </div>
+                    </div>
+
+
+
+                </form>
+            </div>
+        </section>
+    </section>
+</section>

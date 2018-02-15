@@ -11,6 +11,7 @@ using MostarConstruct.Web.Areas.ClanUprave.ViewModels;
 using MostarConstruct.Models;
 using Microsoft.AspNetCore.Http;
 using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
+using MostarConstruct.Web.Areas.ClanUprave.Helpers;
 
 namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
 {
@@ -68,6 +69,38 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
             LogiranjeAktivnosti logiranje = new LogiranjeAktivnosti(_db);
             logiranje.Logiraj(korisnik.KorisnikID, DateTime.Now, _context.HttpContext.Connection.RemoteIpAddress.ToString(), _context.HttpContext.Request.Headers["User-Agent"].ToString().Substring(0, 100), "Dodavanje uvjerenja", "Uvjerenja");
             return RedirectToAction("Index");
+        }
+        public IActionResult Detalji(int UvjerenjeId)
+        {
+            UvjerenjaDetaljiVM Model = new UvjerenjaDetaljiVM();
+            Model.uvjerenje = new Uvjerenje();
+            Model.uvjerenje = _db.Uvjerenja.Where(x => x.UvjerenjeID == UvjerenjeId).FirstOrDefault();
+            Model.listaRadnika = new List<SelectListItem>();
+            Model.listaRadnika = _db.Radnici.Select(x => new SelectListItem
+            {
+                Value = x.RadnikID.ToString(),
+                Text = x.Osoba.Ime + " " + x.Osoba.Prezime
+            }).ToList();
+            return View(Model);
+        }
+        public IActionResult SnimiUvjerenje(UvjerenjaDetaljiVM model)
+        {
+            Uvjerenje dbUvjerenje = _db.Uvjerenja.Where(x => x.UvjerenjeID == model.uvjerenje.UvjerenjeID).FirstOrDefault();
+            dbUvjerenje.BrojProtokola = model.uvjerenje.BrojProtokola;
+            dbUvjerenje.ClanUpraveID = model.uvjerenje.ClanUpraveID;
+            dbUvjerenje.DatumIzdavanja = model.uvjerenje.DatumIzdavanja;
+            dbUvjerenje.Napomena = model.uvjerenje.Napomena;
+            dbUvjerenje.RadnikID = model.uvjerenje.RadnikID;
+            dbUvjerenje.Svrha = model.uvjerenje.Svrha;
+            _db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+        public IActionResult PrikaziDokument(int UvjerenjeId)
+        {
+            UvjerenjaReport dokument = new UvjerenjaReport(_db);
+            byte[] dokumentBytes = dokument.PrepareReport(_db.Uvjerenja.Where(x => x.UvjerenjeID == UvjerenjeId).FirstOrDefault());
+            return File(dokumentBytes, "application/pdf");
         }
     }
 }
