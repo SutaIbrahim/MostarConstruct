@@ -44,7 +44,6 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Helpers
 
             this.ReportHeader();
             this.ReportBody();
-            this.ReportFooter();
             _pdfTable.HeaderRows = 2;
             _document.Add(_pdfTable);
 
@@ -121,6 +120,11 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Helpers
             _pdfPCell.ExtraParagraphSpace = 0;
             _pdfTable.AddCell(_pdfPCell);
             _pdfTable.CompleteRow();
+
+
+            _document.AddAuthor("MostarConstruct");
+            _document.AddTitle("Uvjerenje");
+            
         }
         private void ReportBody()
         {
@@ -195,19 +199,23 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Helpers
             _pdfTable.CompleteRow();
 
 
+            
 
-        }
-        private void ReportFooter()
-        {
-            _fontStyle = FontFactory.GetFont("Tahoma", 8f, 1);
 
-            _pdfPCell = new PdfPCell(new Phrase("Broj protokola", _fontStyle));
-            _pdfPCell.HorizontalAlignment = Element.ALIGN_CENTER;
-            _pdfPCell.VerticalAlignment = Element.ALIGN_BOTTOM;
-            _pdfPCell.BackgroundColor = BaseColor.LIGHT_GRAY;
-            _pdfPCell.PaddingBottom = 10f;
+            _pdfPCell = new PdfPCell(new Phrase("Potpis narucioca uvjerenja                                                                                                                                     Potpis i pecat izdavatelja uvjerenja\n\n\n-----------------------------------------                                                                                                                           ---------------------------------------------------", _fontStyle));
+            _pdfPCell.Colspan = _totalColumns;
+            _pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
+            _pdfPCell.Border = 0;
+            _pdfPCell.PaddingTop = 550f;
+            _pdfPCell.BackgroundColor = BaseColor.WHITE;
+            _pdfPCell.ExtraParagraphSpace = 0;
             _pdfTable.AddCell(_pdfPCell);
             _pdfTable.CompleteRow();
+            
+            
+
+
         }
+       
     }
 }
