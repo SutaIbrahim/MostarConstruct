@@ -12,6 +12,7 @@ using MostarConstruct.Models;
 using Microsoft.AspNetCore.Http;
 using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 using MostarConstruct.Web.Areas.ClanUprave.Helpers;
+using Microsoft.EntityFrameworkCore;
 
 namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
 {
@@ -27,10 +28,35 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
             _db = db;
             _context = context;
         }
-        public IActionResult Index()
+        public IActionResult Index(string pretraga)
         {
+            
             UvjerenjaIndexVM Model = new UvjerenjaIndexVM();
             Model.listaUvjerenja = new List<UvjerenjaIndexVM.Row>();
+
+            if (pretraga != null)
+            {
+                Model.listaUvjerenja = _db.Uvjerenja.Where(x=>x.BrojProtokola==pretraga).Select(x => new UvjerenjaIndexVM.Row
+                {
+                    UvjerenjeId = x.UvjerenjeID,
+                    BrojProtokola = x.BrojProtokola,
+                    DatumIzdavanja = x.DatumIzdavanja,
+                    Radnik = x.Radnik.Osoba.Ime + " " + x.Radnik.Osoba.Prezime
+                }).ToList();
+                if (Model.listaUvjerenja.Count == 0)
+                {
+                    Model.listaUvjerenja = _db.Uvjerenja.Include(x=>x.Radnik).ThenInclude(x=>x.Osoba).Where(x => (x.Radnik.Osoba.Ime+" "+x.Radnik.Osoba.Prezime).ToLower() == pretraga.ToLower()).Select(x => new UvjerenjaIndexVM.Row
+                    {
+                        UvjerenjeId = x.UvjerenjeID,
+                        BrojProtokola = x.BrojProtokola,
+                        DatumIzdavanja = x.DatumIzdavanja,
+                        Radnik = x.Radnik.Osoba.Ime + " " + x.Radnik.Osoba.Prezime
+                    }).ToList();
+                }
+                return View(Model);
+                
+            }
+
             Model.listaUvjerenja = _db.Uvjerenja.Select(x => new UvjerenjaIndexVM.Row
             {
                 UvjerenjeId = x.UvjerenjeID,
@@ -38,6 +64,7 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
                 DatumIzdavanja = x.DatumIzdavanja,
                 Radnik = x.Radnik.Osoba.Ime + " " + x.Radnik.Osoba.Prezime
             }).ToList();
+            Model.listaUvjerenja=Model.listaUvjerenja.OrderByDescending(x => x.DatumIzdavanja).ToList();
             return View(Model);
         }
         public IActionResult Dodaj()
@@ -54,6 +81,20 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
         }
         public IActionResult Snimi(UvjerenjaDodajVM model)
         {
+            if (!ModelState.IsValid)
+            {
+                model.listaRadnika = new List<SelectListItem>();
+                model.listaRadnika = _db.Radnici.Select(x => new SelectListItem
+                {
+                    Value = x.RadnikID.ToString(),
+                    Text = x.Osoba.Ime + " " + x.Osoba.Prezime
+                }).ToList();
+                return View("Dodaj", model);
+            }
+            if (model.Napomena == null)
+            {
+                model.Napomena = "-";
+            }
             Korisnik korisnik = _context.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
             Uvjerenje novo = new Uvjerenje
             {
@@ -94,6 +135,12 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
             dbUvjerenje.Svrha = model.uvjerenje.Svrha;
             _db.SaveChanges();
 
+            return RedirectToAction("Index");
+        }
+        public IActionResult Obrisi(int UvjerenjeId)
+        {
+            _db.Uvjerenja.Remove(_db.Uvjerenja.Where(x => x.UvjerenjeID == UvjerenjeId).FirstOrDefault());
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
         public IActionResult PrikaziDokument(int UvjerenjeId)

@@ -13,6 +13,11 @@
 
             <div class="panel-body">
                <form action="/ClanUprave/Uvjerenja/Snimi/">
+                   @if (!ViewData.ModelState.IsValid)
+                   {
+                       <div asp-validation-summary="All" class="alert alert-danger"></div>
+
+                   }
                    <div class="row">
                        <div class="col-md-4">
                            <label asp-for="RadnikId">Odaberite radnika: </label>

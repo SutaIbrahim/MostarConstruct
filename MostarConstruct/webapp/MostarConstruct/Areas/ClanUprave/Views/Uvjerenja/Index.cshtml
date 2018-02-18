@@ -9,8 +9,14 @@
                 <h2>Izdata uvjerenja</h2>
 
             </header>
-
+            
             <div class="panel-body">
+                <form action="/ClanUprave/Uvjerenja/Index" style="width:40%;">
+                    <input name="pretraga" type="text" class="form-control" placeholder="Unesite broj protokola ili ime i prezime uposlenika" />
+                    <br />
+                    <button type="submit" class="btn btn-success"><i class="fa fa-search"> Traži</i></button>
+                </form>
+                <hr />
                 <div class="pull-right">
                     <a class="btn btn-primary" href="/ClanUprave/Uvjerenja/Dodaj"><i class="fa fa-plus"></i> Dodaj</a>
                 </div>
@@ -26,17 +32,17 @@
                     </thead>
                     <tbody>
                         @foreach (var uvjerenje in Model.listaUvjerenja)
-                        {
-                           <tr>
-                               <td>@uvjerenje.BrojProtokola</td>
-                               <td>@uvjerenje.DatumIzdavanja.ToShortDateString()</td>
-                               <td>@uvjerenje.Radnik</td>
-                               <td>
-                                   <a href="/ClanUprave/Uvjerenja/Detalji?UvjerenjeId=@uvjerenje.UvjerenjeId" class="btn btn-info"><i class="fa fa-info"></i> Detalji</a>
-                                   <button class="btn btn-danger"><i class="fa fa-times"></i> Obriši</button>
-                               </td>
-                           </tr>
-                        }
+            {
+                <tr>
+                    <td>@uvjerenje.BrojProtokola</td>
+                    <td>@uvjerenje.DatumIzdavanja.ToShortDateString()</td>
+                    <td>@uvjerenje.Radnik</td>
+                    <td>
+                        <a href="/ClanUprave/Uvjerenja/Detalji?UvjerenjeId=@uvjerenje.UvjerenjeId" class="btn btn-info"><i class="fa fa-info"></i> Detalji</a>
+                        <a href="/ClanUprave/Uvjerenja/Obrisi?UvjerenjeId=@uvjerenje.UvjerenjeId" class="btn btn-danger"><i class="fa fa-times"></i> Obriši</a>
+                    </td>
+                </tr>
+}
                     </tbody>
                 </table>
             </div>
