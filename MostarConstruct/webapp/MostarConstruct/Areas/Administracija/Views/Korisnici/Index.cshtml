@@ -46,14 +46,14 @@
                                         <button type="submit" class="btn btn-danger btn-sm">Obrisi</button>
                                         <button type="button" class="btn btn-success btnActivate btn-sm" idValue="@k.KorisnikID">
                                             <span class="btnText_@k.KorisnikID">
-                                                @if(k.Aktivan == "Da")
+                                                @if (k.Aktivan == "Da")
                                                 {
                                                     @:Deaktiviraj
                                                 }
                                                 else
                                                 {
                                                     @:Aktiviraj
-                                                }
+                                }
                                             </span>
                                         </button>
                                     </form>
@@ -62,6 +62,10 @@
                         }
                     </tbody>
                 </table>
+                <div page-model="@Model.PagingInfo" page-action="Index" page-classes-enabled="true"
+                     page-class="btn" page-class-normal="btn-default"
+                     page-class-selected="btn-primary" class="btn-group pull-right">
+                </div>
             </section>
         </section>
     </section>
@@ -83,7 +87,7 @@
             success: function (data) {
                 if (data.success) {
                     if (data.status === "aktivan") {
-                        $(".replace_" + id).html("Da");      
+                        $(".replace_" + id).html("Da");
                         $(".btnText_" + id).html("Deaktiviraj");
                     }
                     else {

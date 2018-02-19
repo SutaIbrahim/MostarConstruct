@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MostarConstruct.Data;
 using MostarConstruct.Models;
+using MostarConstruct.Web.Areas.Administracija.ViewModels;
 using MostarConstruct.Web.Helper;
 
 namespace MostarConstruct.Web.Areas.Administracija.Controllers
@@ -15,6 +16,7 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
     {
         #region DI
         private DatabaseContext db;
+        public int PageSize = 1;
 
         public DrzaveController(DatabaseContext db)
         {
@@ -23,7 +25,23 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
         #endregion
 
         #region Index
-        public IActionResult Index() => View(db.Drzave);
+        public IActionResult Index(int page = 1)
+        {
+            DrzaveIndexViewModel vm = new DrzaveIndexViewModel()
+            {
+                Drzave = db.Drzave.OrderBy(x => x.DrzavaID)
+                                  .Skip((page - 1) * PageSize)
+                                  .Take(PageSize),
+                PagingInfo = new Web.ViewModels.PagingInfo()
+                {
+                    CurrentPage = page,
+                    ItemsPerPage = PageSize,
+                    TotalItems = db.Drzave.Count()
+                }
+            };
+
+            return View(vm);
+        }
         #endregion
 
         #region Create

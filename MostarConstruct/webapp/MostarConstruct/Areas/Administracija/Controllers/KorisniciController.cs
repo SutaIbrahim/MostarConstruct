@@ -21,6 +21,7 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
         private DatabaseContext db;
         private IDropdown dropdown;
         private IEmailSender emailSender;
+        public int PageSize = 4;
 
         public KorisniciController(DatabaseContext db, IDropdown dropdown, IEmailSender emailSender)
         {
@@ -31,7 +32,7 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
         #endregion
                 
         #region Index
-        public IActionResult Index()
+        public IActionResult Index(int page = 1)
         {
             KorisniciIndexViewModel vm = new KorisniciIndexViewModel()
             {
@@ -44,7 +45,13 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
                     Email = k.Osoba.Email,
                     KorisnickoIme = k.KorisnickoIme,
                     Aktivan = k.Aktivan == true ? "Da" : "Ne"
-                }).ToList()
+                }).OrderBy(x => x.KorisnikID).Skip((page - 1) * PageSize).Take(PageSize).ToList(),
+                PagingInfo = new Web.ViewModels.PagingInfo()
+                {
+                    CurrentPage = page,
+                    ItemsPerPage = PageSize,
+                    TotalItems = db.Korisnici.Count()
+                }
             };
             return View(vm);
         }
