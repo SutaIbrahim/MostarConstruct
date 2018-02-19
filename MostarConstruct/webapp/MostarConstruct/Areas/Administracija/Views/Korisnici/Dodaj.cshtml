@@ -2,108 +2,225 @@
 @{
     ViewData["Title"] = "Dodaj";
 }
+<link href="~/css/bootstrap.min.css" rel="stylesheet">
+<link href="~/css/bootstrap-reset.css" rel="stylesheet">
+<!--external css-->
+<!--right slidebar-->
+<link href="~/css/slidebars.css" rel="stylesheet">
+
+<!--Form Wizard-->
+<link rel="stylesheet" type="text/css" href="~/css/jquery.steps.css" />
+
+<!-- Custom styles for this template -->
+<link href="~/css/style.css" rel="stylesheet">
+<link href="~/css/style-responsive.css" rel="stylesheet" />
+
+
 <section id="main-content">
     <section class="wrapper">
 
-        <section class="panel">
-            <div class="panel-heading">
-                <h2>Novi korisnik</h2>
-            </div>
-            <div class="panel-body">
-                <form asp-action="Dodaj" method="post">
+        <div class="row">
+            <div class="col-lg-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                        Novi korisnik
+                    </header>
+                    <div class="panel-body">
+                        <div class="stepy-tab"><ul id="default-titles" class="stepy-titles clearfix"><li id="default-title-0" class="current-step"><div>Step1</div><span> </span></li><li id="default-title-1" class=""><div>Step 2</div><span> </span></li><li id="default-title-2" class=""><div>Step 3</div><span> </span></li></ul></div>
+                        <form asp-action="Dodaj" method="post" class="form-horizontal" id="default">
 
-                    @if (!ViewData.ModelState.IsValid)
-                    {
+                            @if (!ViewData.ModelState.IsValid)
+    {
                         <div asp-validation-summary="All" class="alert alert-danger"></div>
-                    }
+}
 
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label asp-for="Osoba.Ime">Ime:</label>
-                                <input asp-for="Osoba.Ime" class="form-control" />
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label asp-for="Osoba.Prezime">Prezime:</label>
-                                <input asp-for="Osoba.Prezime" class="form-control" />
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label asp-for="Osoba.DatumRodjenja">Datum rodjenja:</label>
-                                <input asp-for="Osoba.DatumRodjenja" class="form-control" />
-                            </div>
-                        </div>
+                            <fieldset title="Lični podaci" class="step" id="default-step-0" style="display: block;">
+                                <legend> </legend>
+                                <div class="form-group">
+                                    <label asp-for="Osoba.Ime" class="col-lg-2 control-label">Ime</label>
+                                    <div class="col-lg-10">
+                                        <input id="ime" asp-for="Osoba.Ime" placeholder="Ime" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Osoba.Prezime" class="col-lg-2 control-label">Prezime</label>
+                                    <div class="col-lg-10">
+                                        <input id="prezime" asp-for="Osoba.Prezime" placeholder="Prezime" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Osoba.DatumRodjenja" class="col-lg-2 control-label">Datum rodjenja</label>
+                                    <div class="col-lg-10">
+                                        <input id="datum_rodjenja" asp-for="Osoba.DatumRodjenja" class="form-control" placeholder="Datum rodjenja">
+                                    </div>
+                                </div>
 
+                                <div class="form-group">
+                                    <label asp-for="DrzavaID" class="col-lg-2 control-label">Država</label>
+                                    <div class="col-lg-10">
+                                        <select asp-for="DrzavaID" asp-items="Model.Drzave" class="form-control" onchange="FillRegionsByCountryId()"></select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="RegijaID" class="col-lg-2 control-label">Regija</label>
+                                    <div class="col-lg-10">
+                                        <select asp-for="RegijaID" asp-items="Model.Regije" class="form-control" onchange="FillCitiesByRegionId()"></select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Osoba.GradID" class="col-lg-2 control-label">Grad</label>
+                                    <div class="col-lg-10">
+                                        <select asp-for="Osoba.GradID" asp-items="Model.Gradovi" class="form-control"></select>
+                                    </div>
+                                </div>
+                            </fieldset>                      
+                           
+
+                            <fieldset title="Korisnički" class="step" id="default-step-1" style="display: none;">
+                                <legend> </legend>
+                                <div class="form-group">
+                                    <label asp-for="Korisnik.KorisnickoIme" class="col-lg-2 control-label">Korisničko ime</label>
+                                    <div class="col-lg-10">
+                                        <input id="korisnicko_ime" asp-for="Korisnik.KorisnickoIme" class="form-control" placeholder="Korisničko ime" >
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Osoba.Email" class="col-lg-2 control-label">Email</label>
+                                    <div class="col-lg-10">
+                                        <input id="email" asp-for="Osoba.Email" class="form-control" placeholder="Email">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="TipKorisnika" class="col-lg-2 control-label">Uloga</label>
+                                    <div class="col-lg-10">
+                                        <select id="uloga" asp-for="TipKorisnika" class="form-control" asp-items="Model.Uloge"></select>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                            <fieldset title="Potvrda" class="step" id="default-step-2" style="display: none;">
+                                <legend> </legend>
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label">Ime</label>
+                                    <div class="col-lg-10">
+                                        <p id="ime_p" class="form-control-static"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label">Prezime</label>
+                                    <div class="col-lg-10">
+                                        <p id="prezime_p" class="form-control-static"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label">Korisnicko ime</label>
+                                    <div class="col-lg-10">
+                                        <p id="korisnicko_ime_p" class="form-control-static"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label">Email</label>
+                                    <div class="col-lg-10">
+                                        <p id="email_p" class="form-control-static"></p>
+                                    </div>
+                                </div>
+                               
+
+                                <p id="default-buttons-2" class="default-buttons"><input class="finish btn btn-danger" value="Finish" type="submit"></p>
+                            </fieldset>
+
+                        </form>
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label asp-for="DrzavaID">Drzava:</label>
-                                <select asp-for="DrzavaID" asp-items="Model.Drzave" class="form-control" onchange="FillRegionsByCountryId()"></select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label asp-for="RegijaID">Regija:</label>
-                                <select asp-for="RegijaID" asp-items="Model.Regije" class="form-control" onchange="FillCitiesByRegionId()"></select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label asp-for="Osoba.GradID">Grad:</label>
-                                <select asp-for="Osoba.GradID" asp-items="Model.Gradovi" class="form-control"></select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label asp-for="Korisnik.KorisnickoIme">Korisnicko ime:</label>
-                                <input asp-for="Korisnik.KorisnickoIme" class="form-control" />
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label asp-for="Osoba.Email">Email:</label>
-                                <input asp-for="Osoba.Email" class="form-control" />
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label asp-for="TipKorisnika">Uloga:</label>
-                                <select asp-for="TipKorisnika" class="form-control" asp-items="Model.Uloge"></select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <hr />
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="pull-right">
-                                <button type="submit" class="btn btn-primary">Dodaj</button>
-                                <a asp-action="Index" class="btn btn-default">Odustani</a>
-                            </div>
-                        </div>
-                    </div>
-
-                </form>
+                </section>
             </div>
-        </section>
+        </div>
+
 
     </section>
 </section>
+
+
+<script src="~/js/jquery.js"></script>
+<script src="~/js/bootstrap.min.js"></script>
+<script class="include" type="text/javascript" src="~/js/jquery.dcjqaccordion.2.7.js"></script>
+<script src="~/js/jquery.scrollTo.min.js"></script>
+<script src="~/js/jquery.nicescroll.js" type="text/javascript"></script>
+<script src="~/js/respond.min.js"></script>
+
+<!--right slidebar-->
+<script src="~/js/slidebars.min.js"></script>
+
+
+<!--Form Validation-->
+<script src="~/js/bootstrap-validator.min.js" type="text/javascript"></script>
+
+<!--Form Wizard-->
+<script src="~/js/jquery.steps.min.js" type="text/javascript"></script>
+<script src="~/js/jquery.validate.min.js" type="text/javascript"></script>
+
+
+<!--common script for all pages-->
+<script src="~/js/common-scripts.js"></script>
+
+<!--script for this page-->
+<script src="~/js/jquery.stepy.js"></script>
+
+
 <script>
+
+    var Timer;
+
+    function Start() {
+        $('#ime').keyup(function () {
+            clearTimeout(Timer);
+            Timer = setTimeout(SendRequest, 1000);
+        });
+        $('#prezime').keyup(function () {
+            clearTimeout(Timer);
+            Timer = setTimeout(SendRequest, 1000);
+        });
+        $('#email').keyup(function () {
+            clearTimeout(Timer);
+            Timer = setTimeout(SendRequest, 1000);
+        });
+        $('#korisnicko_ime').keyup(function () {
+            clearTimeout(Timer);
+            Timer = setTimeout(SendRequest, 1000);
+        });
+       
+    }
+
+    function SendRequest() {
+        var ime = $("#ime").val();
+        var prezime = $("#prezime").val();
+        var email = $("#email").val();
+        var ki = $("#korisnicko_ime").val();
+        $("#ime_p").text(ime);
+        $("#prezime_p").text(prezime);
+        $("#email_p").text(email);
+        $("#korisnicko_ime_p").text(ki);
+    }
+
+    $(Start);
+
+    //step wizard
+
     $(function () {
-        $("#Osoba_DatumRodjenja").val("");     
+
         OcistiListe();
+        $("#datum_rodjenja").val("");
+
+        $('#default').stepy({
+            backLabel: 'Previous',
+            block: true,
+            nextLabel: 'Next',
+            titleClick: true,
+            titleTarget: '.stepy-tab'
+        });
     });
+
 
     function FillRegionsByCountryId() {
         if ($("#DrzavaID").prop("selectedIndex") == 0) {
@@ -165,3 +282,80 @@
     }
 </script>
 
+@*<div class="panel-body">
+    <form asp-action="Dodaj" method="post">
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div asp-validation-summary="All" class="alert alert-danger"></div>
+        }
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label asp-for="Osoba.Ime">Ime:</label>
+                    <input asp-for="Osoba.Ime" class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label asp-for="Osoba.Prezime">Prezime:</label>
+                    <input asp-for="Osoba.Prezime" class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label asp-for="Osoba.DatumRodjenja">Datum rodjenja:</label>
+                    <input asp-for="Osoba.DatumRodjenja" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label asp-for="DrzavaID">Drzava:</label>
+                    <select asp-for="DrzavaID" asp-items="Model.Drzave" class="form-control" onchange="FillRegionsByCountryId()"></select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label asp-for="RegijaID">Regija:</label>
+                    <select asp-for="RegijaID" asp-items="Model.Regije" class="form-control" onchange="FillCitiesByRegionId()"></select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label asp-for="Osoba.GradID">Grad:</label>
+                    <select asp-for="Osoba.GradID" asp-items="Model.Gradovi" class="form-control"></select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label asp-for="Korisnik.KorisnickoIme">Korisnicko ime:</label>
+                    <input asp-for="Korisnik.KorisnickoIme" class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label asp-for="Osoba.Email">Email:</label>
+                    <input asp-for="Osoba.Email" class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label asp-for="TipKorisnika">Uloga:</label>
+                    <select asp-for="TipKorisnika" class="form-control" asp-items="Model.Uloge"></select>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-12">
+                <div class="pull-right">
+                    <button type="submit" class="btn btn-primary">Dodaj</button>
+                    <a asp-action="Index" class="btn btn-default">Odustani</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>*@

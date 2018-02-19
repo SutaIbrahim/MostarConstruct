@@ -1,7 +1,6 @@
 ﻿@model InventarIndexViewModel
 @{
     ViewData["Title"] = "Index";
-    int brojac = 1;
 }
 <section id="main-content">
     <section class="wrapper">
@@ -22,7 +21,6 @@
                 <table class="table table-borderer table-striped">
                     <thead>
                         <tr>
-                            <th>Redni broj</th>
                             <th>Naziv</th>
                             <th>Serijski broj</th>
                             <th>Kategorija</th>
@@ -36,7 +34,6 @@
                         @foreach (var i in Model.Rows)
                         {
                             <tr>
-                                <td>@(brojac++)</td>
                                 <td>@i.Naziv</td>
                                 <td>@i.SerijskiBroj</td>
                                 <td>@i.Kategorija</td>
@@ -54,6 +51,11 @@
                         }
                     </tbody>
                 </table>
+
+                <div page-model="@Model.PagingInfo" page-action="Index" page-classes-enabled="true"
+                     page-class="btn" page-class-normal="btn-default"
+                     page-class-selected="btn-primary" class="btn-group pull-right">
+                </div>
             </div>
         </section>
 

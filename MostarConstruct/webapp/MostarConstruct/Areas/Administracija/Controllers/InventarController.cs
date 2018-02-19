@@ -18,6 +18,7 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
     {
         private DatabaseContext db;
         private IDropdown dropdown;
+        public int PageSize = 4;
 
         public InventarController(DatabaseContext db, IDropdown dropdown)
         {
@@ -31,7 +32,7 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
         }
 
         #region Index
-        public IActionResult Index()
+        public IActionResult Index(int page = 1)
         {
             InventarIndexViewModel vm = new InventarIndexViewModel()
             {
@@ -44,7 +45,13 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
                     Kategorija = x.Kategorija.Naziv,
                     Naziv = x.Naziv,
                     SerijskiBroj = x.SerijskiBroj
-                }).ToList()
+                }).OrderBy(x => x.InventarID).Skip((page - 1) * PageSize).Take(PageSize).ToList(),
+                PagingInfo = new Web.ViewModels.PagingInfo()
+                {
+                    CurrentPage = page,
+                    ItemsPerPage = PageSize,
+                    TotalItems = db.Inventar.Count()
+                }
             };
 
             return View(vm);
