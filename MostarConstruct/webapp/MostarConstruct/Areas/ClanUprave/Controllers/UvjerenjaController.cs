@@ -36,7 +36,7 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
 
             if (pretraga != null)
             {
-                Model.listaUvjerenja = _db.Uvjerenja.Where(x=>x.BrojProtokola==pretraga).Select(x => new UvjerenjaIndexVM.Row
+                Model.listaUvjerenja = _db.Uvjerenja.Where(x=>x.BrojProtokola.StartsWith(pretraga)).Select(x => new UvjerenjaIndexVM.Row
                 {
                     UvjerenjeId = x.UvjerenjeID,
                     BrojProtokola = x.BrojProtokola,
@@ -45,7 +45,7 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
                 }).ToList();
                 if (Model.listaUvjerenja.Count == 0)
                 {
-                    Model.listaUvjerenja = _db.Uvjerenja.Include(x=>x.Radnik).ThenInclude(x=>x.Osoba).Where(x => (x.Radnik.Osoba.Ime+" "+x.Radnik.Osoba.Prezime).ToLower() == pretraga.ToLower()).Select(x => new UvjerenjaIndexVM.Row
+                    Model.listaUvjerenja = _db.Uvjerenja.Include(x=>x.Radnik).ThenInclude(x=>x.Osoba).Where(x => (x.Radnik.Osoba.Ime+" "+x.Radnik.Osoba.Prezime).ToLower().StartsWith(pretraga.ToLower()) || (x.Radnik.Osoba.Prezime + " " + x.Radnik.Osoba.Ime).ToLower().StartsWith(pretraga.ToLower())).Select(x => new UvjerenjaIndexVM.Row
                     {
                         UvjerenjeId = x.UvjerenjeID,
                         BrojProtokola = x.BrojProtokola,
