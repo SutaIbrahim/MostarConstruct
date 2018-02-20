@@ -22,25 +22,67 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
             this.context = context;
             _db = db;
         }
-        public IActionResult Index()
+        public IActionResult Index(string pretraga)
         {
+
             VozilaIndexViewModel Model = new VozilaIndexViewModel();
             Model.listaVozila = new List<VozilaIndexViewModel.Row>();
-            Model.listaVozila = _db.Vozila.Select(x => new VozilaIndexViewModel.Row
+            if (pretraga != null)
             {
-                Id = x.VoziloID,
-                CijenaPoSatu = x.CijenaPoSatu.ToString(),
-                DatumRegistracije = x.DatumRegistracije,
-                GodinaProizvodnje = x.GodinaProizvodnje.ToString(),
-                Nosivost = x.Nosivost.ToString(),
-                Proizvodjac = x.Proizvodjac.ToString(),
-                RegistarskaOznaka = x.RegistarskaOznaka.ToString(),
-                VozackaKategorija = x.VozackaKategorija.Naziv.ToString(),
-                VrstaVozila = x.VrstaVozila.Naziv.ToString(),
-                Zauzeto = x.Zauzeto ? "DA" : "NE"
-            }).ToList();
-            return View(Model);
-        }
+                if (_db.Vozila.Where(x => x.RegistarskaOznaka.ToLower().StartsWith(pretraga.ToLower())).ToList().Count != 0)
+                {
+                    Model.listaVozila = _db.Vozila.Where(x => x.RegistarskaOznaka.ToLower().StartsWith(pretraga.ToLower())).Select(x => new VozilaIndexViewModel.Row
+                    {
+                        Id = x.VoziloID,
+                        CijenaPoSatu = x.CijenaPoSatu.ToString(),
+                        DatumRegistracije = x.DatumRegistracije,
+                        GodinaProizvodnje = x.GodinaProizvodnje.ToString(),
+                        Nosivost = x.Nosivost.ToString(),
+                        Proizvodjac = x.Proizvodjac.ToString(),
+                        RegistarskaOznaka = x.RegistarskaOznaka.ToString(),
+                        VozackaKategorija = x.VozackaKategorija.Naziv.ToString(),
+                        VrstaVozila = x.VrstaVozila.Naziv.ToString(),
+                        Zauzeto = x.Zauzeto ? "DA" : "NE"
+                    }).ToList();
+                    return View(Model);
+                }
+                else
+                {
+                    if (_db.Vozila.Where(x => x.Proizvodjac.ToLower().StartsWith(pretraga.ToLower())).ToList() != null)
+                    {
+                        Model.listaVozila = _db.Vozila.Where(x => x.Proizvodjac.ToLower().StartsWith(pretraga.ToLower())).Select(x => new VozilaIndexViewModel.Row
+                        {
+                            Id = x.VoziloID,
+                            CijenaPoSatu = x.CijenaPoSatu.ToString(),
+                            DatumRegistracije = x.DatumRegistracije,
+                            GodinaProizvodnje = x.GodinaProizvodnje.ToString(),
+                            Nosivost = x.Nosivost.ToString(),
+                            Proizvodjac = x.Proizvodjac.ToString(),
+                            RegistarskaOznaka = x.RegistarskaOznaka.ToString(),
+                            VozackaKategorija = x.VozackaKategorija.Naziv.ToString(),
+                            VrstaVozila = x.VrstaVozila.Naziv.ToString(),
+                            Zauzeto = x.Zauzeto ? "DA" : "NE"
+                        }).ToList();
+                        return View(Model);
+                    }
+                }
+            }
+                Model.listaVozila = _db.Vozila.Select(x => new VozilaIndexViewModel.Row
+                {
+                    Id = x.VoziloID,
+                    CijenaPoSatu = x.CijenaPoSatu.ToString(),
+                    DatumRegistracije = x.DatumRegistracije,
+                    GodinaProizvodnje = x.GodinaProizvodnje.ToString(),
+                    Nosivost = x.Nosivost.ToString(),
+                    Proizvodjac = x.Proizvodjac.ToString(),
+                    RegistarskaOznaka = x.RegistarskaOznaka.ToString(),
+                    VozackaKategorija = x.VozackaKategorija.Naziv.ToString(),
+                    VrstaVozila = x.VrstaVozila.Naziv.ToString(),
+                    Zauzeto = x.Zauzeto ? "DA" : "NE"
+                }).ToList();
+                return View(Model);
+            }
+        
         public IActionResult Dodaj()
         {
             VozilaDodajViewModel Model = new VozilaDodajViewModel();
