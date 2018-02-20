@@ -8,17 +8,19 @@ using Microsoft.AspNetCore.Mvc;
 using MostarConstruct.Data;
 using MostarConstruct.Models;
 using MostarConstruct.Web.Helper;
+using MostarConstruct.Web.ViewModels;
+using static MostarConstruct.Web.ViewModels.HomeIndexViewModel;
 
 namespace MostarConstruct.Controllers
 {
     [Autorizacija(true)]
     public class HomeController : Controller
     {
-        private DatabaseContext context;
+        private DatabaseContext db;
         private IHttpContextAccessor httpContextAccessor;
         public HomeController(DatabaseContext context, IHttpContextAccessor httpContextAccessor)
         {
-            this.context = context;
+            this.db = context;
             this.httpContextAccessor = httpContextAccessor;
         }
 
@@ -47,13 +49,39 @@ namespace MostarConstruct.Controllers
         }
         public IActionResult Testirajlogiranje()
         {
-            LogiranjeAktivnosti logiranje = new LogiranjeAktivnosti(context);
+            LogiranjeAktivnosti logiranje = new LogiranjeAktivnosti(db);
             logiranje.Logiraj(2, DateTime.Now.ToLocalTime(), Request.HttpContext.Connection.RemoteIpAddress.ToString(), Request.Headers["User-Agent"].ToString().Substring(0,100), "Dodavanje", "Korisnici");
             return View("Index");
         }
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult GetDataForCalendar()
+        {
+            HomeIndexViewModel vm = new HomeIndexViewModel()
+            {
+                Projects = this.LoadData()
+            };
+
+            return Json(vm.Projects);
+        }
+
+        private List<ProjectEvent> LoadData()
+        {
+            List<ProjectEvent> projectEvents = new List<ProjectEvent>();
+
+            projectEvents = db.Projekti.Select(x => new ProjectEvent()
+            {
+                Desc = x.Opis,
+                Start_Date = x.StvarniPocetak.Value.ToShortDateString(),
+                End_Date = x.StvarniZavrsetak.Value.ToShortDateString(),
+                Sr = x.ProjektID,
+                Title = x.Naziv,
+            }).ToList();
+
+            return projectEvents;
         }
     }
 }
