@@ -58,7 +58,7 @@ namespace MostarConstruct.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult GetDataForCalendar()
+        public JsonResult GetCalendarData()
         {
             HomeIndexViewModel vm = new HomeIndexViewModel()
             {
@@ -75,8 +75,8 @@ namespace MostarConstruct.Controllers
             projectEvents = db.Projekti.Select(x => new ProjectEvent()
             {
                 Desc = x.Opis,
-                Start_Date = x.StvarniPocetak.Value.ToShortDateString(),
-                End_Date = x.StvarniZavrsetak.Value.ToShortDateString(),
+                Start_Date = "hehe",
+                End_Date = "hehe",
                 Sr = x.ProjektID,
                 Title = x.Naziv,
             }).ToList();
