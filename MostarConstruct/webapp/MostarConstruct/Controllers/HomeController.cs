@@ -75,8 +75,8 @@ namespace MostarConstruct.Controllers
             projectEvents = db.Projekti.Select(x => new ProjectEvent()
             {
                 Desc = x.Opis,
-                Start_Date = "hehe",
-                End_Date = "hehe",
+                Start_Date = x.PredlozeniPocetak.ToString("yyyy-MM-dd"),
+                End_Date = x.PredlozeniZavrsetak.ToString("yyyy-MM-dd"),
                 Sr = x.ProjektID,
                 Title = x.Naziv,
             }).ToList();

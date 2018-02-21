@@ -1,55 +1,73 @@
 ﻿
 <section id="main-content">
     <section class="wrapper">
+        <div class="panel">
+            <div class="panel-heading">
+                <h3><i class="fa fa-info-circle"></i> Opće informacije</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row state-overview">
+                    <div class="col-lg-3 col-sm-6">
+                        <section class="panel">
+                            <div class="symbol terques">
+                                <i class="fa fa-briefcase"></i>
+                            </div>
+                            <div class="value">
+                                <h1 class="count">495</h1>
+                                <p>Projekti</p>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <section class="panel">
+                            <div class="symbol red">
+                                <i class="fa fa-tags"></i>
+                            </div>
+                            <div class="value">
+                                <h1 class=" count2">947</h1>
+                                <p>Radni nalozi</p>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <section class="panel">
+                            <div class="symbol yellow">
+                                <i class="fa fa-user"></i>
+                            </div>
+                            <div class="value">
+                                <h1 class=" count3">328</h1>
+                                <p>Radnici</p>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <section class="panel">
+                            <div class="symbol blue">
+                                <i class="fa fa-money"></i>
+                            </div>
+                            <div class="value">
+                                <h1 class=" count4">10328</h1>
+                                <p>Ukupna zarada</p>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
 
-        <div class="row state-overview">
-            <div class="col-lg-3 col-sm-6">
-                <section class="panel">
-                    <div class="symbol terques">
-                        <i class="fa fa-briefcase"></i>
-                    </div>
-                    <div class="value">
-                        <h1 class="count">495</h1>
-                        <p>Projekti</p>
-                    </div>
-                </section>
+        <div class="panel">
+            <div class="panel-heading">
+                <h3><i class="fa fa-calendar"></i> Kalendar projekata</h3>
             </div>
-            <div class="col-lg-3 col-sm-6">
-                <section class="panel">
-                    <div class="symbol red">
-                        <i class="fa fa-tags"></i>
-                    </div>
-                    <div class="value">
-                        <h1 class=" count2">947</h1>
-                        <p>Radni nalozi</p>
-                    </div>
-                </section>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <section class="panel">
-                    <div class="symbol yellow">
-                        <i class="fa fa-user"></i>
-                    </div>
-                    <div class="value">
-                        <h1 class=" count3">328</h1>
-                        <p>Radnici</p>
-                    </div>
-                </section>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <section class="panel">
-                    <div class="symbol blue">
-                        <i class="fa fa-money"></i>
-                    </div>
-                    <div class="value">
-                        <h1 class=" count4">10328</h1>
-                        <p>Ukupna zarada</p>
-                    </div>
-                </section>
+            <div class="panel-body">
+                <div id='calendar'></div>
             </div>
         </div>
 
-        <div class="row">
+        
+
+        @*<div class="row">
             <div class="panel-heading">
                 <div class="col-md-8  custom-heading3">
                     <h3>
@@ -64,7 +82,9 @@
             <section class="col-md-12 col-md-push-0">
                 @Html.Partial("_CalendarPartial")
             </section>
-        </div>
+        </div>*@
+
+        
 
     </section>
 </section>

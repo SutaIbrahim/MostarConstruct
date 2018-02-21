@@ -1,6 +1,8 @@
 ﻿
 $(document).ready(function () {
 
+    alert("U EXTERNOM SAM FAJLU!");
+
     $('#calendar').fullCalendar({
         header:
         {
@@ -19,22 +21,26 @@ $(document).ready(function () {
             $.ajax({
                 url: '/Home/GetCalendarData',
                 type: "GET",
-                dataType: "JSON",
-
+                dataType: "JSON",            
                 success: function (result) {
                     var events = [];
-                                        
+
+                    alert("U AJAXU");
+
                     $.each(result, function (i, data) {
+
+                        alert(data.Title);
                         events.push(
                             {
                                 title: data.Title,
                                 description: data.Desc,
-                                start: "2012-12-12",//moment(data.Start_Date).format('YYYY-MM-DD'),
-                                end: "2012-12-12", // moment(data.End_Date).format('YYYY-MM-DD'),
+                                start: moment(data.Start_Date).format('YYYY-MM-DD'),
+                                end: moment(data.End_Date).format('YYYY-MM-DD'),
                                 backgroundColor: "#9501fc",
                                 borderColor: "#fc0101"
                             });
                     });
+
 
                     callback(events);
                 }

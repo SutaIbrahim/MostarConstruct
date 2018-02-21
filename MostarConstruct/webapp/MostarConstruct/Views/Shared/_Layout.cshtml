@@ -15,10 +15,16 @@
 
     <title>MostarConstruct</title>
     <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.2/fullcalendar.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.2/fullcalendar.print.css" media="print" />
     <script src="~/js/jquery.js"></script>
-
-
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="~/js/moment.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.2/fullcalendar.min.js"></script>
+    @*<script src="~/js/script-custom-calendar.js"></script>*@
+   
     <link href="~/css/bootstrap.min.css" rel="stylesheet">
+    <link href=" https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="~/css/bootstrap-reset.css" rel="stylesheet">
     <!--external css-->
     <link href="~/css/font-awesome.css" rel="stylesheet" />
@@ -37,11 +43,52 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/jquery.qtip.min.css" />
 
     <!-- Full Calendar -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.2/fullcalendar.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.2/fullcalendar.print.css" media="print" />
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.2/fullcalendar.min.js"></script>
-    <script src="~/js/script-custom-calendar.js"></script>
+    <script>
+        $(function () {
+            $('#calendar').fullCalendar({
+                header:
+                {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                buttonText: {
+                    today: 'today',
+                    month: 'month',
+                    week: 'week',
+                    day: 'day'
+                },
+                events: function (start, end, timezone, callback) {
+                    $.ajax({
+                        url: '/Home/GetCalendarData',
+                        type: "GET",
+                        dataType: "JSON",
+                        success: function (result) {
+                            var events = [];
+
+                            $.each(result, function (i, data) {                               
+                                events.push(
+                                    {
+                                        title: data.title,
+                                        description: data.desc,
+                                        start: data.start_Date, //"2018-01-01", //moment(data.Start_Date).format('YYYY-MM-DD'),
+                                        end: data.end_Date, //"2018-01-08", //moment(data.End_Date).format('YYYY-MM-DD'),
+                                        backgroundColor: "#9501fc",
+                                        borderColor: "#fc0101"
+                                    });
+                            });
+
+
+                            callback(events);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+
 </head>
 
 <body>
@@ -296,8 +343,7 @@
     <script src="~/js/respond.min.js"></script>
     <!--right slidebar-->
     <script src="~/js/slidebars.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.2/fullcalendar.min.js"></script>
-    <script src="~/js/script-custom-calendar.js"></script>
+   
     <!--common script for all pages-->
     <script src="~/js/common-scripts.js"></script>
 
@@ -309,14 +355,17 @@
 
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.2/fullcalendar.min.js"></script>
-    <script src="~/js/script-custom-calendar.js"></script>
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.2/fullcalendar.min.js"></script>
+    <script src="~/js/script-custom-calendar.js"></script>*@
 
     <script>
 
         //owl carousel
 
         $(document).ready(function () {
+           
+
+
             $("#owl-demo").owlCarousel({
                 navigation: true,
                 slideSpeed: 300,
@@ -325,6 +374,8 @@
                 autoPlay: true
 
             });
+
+
         });
 
         //custom select box
