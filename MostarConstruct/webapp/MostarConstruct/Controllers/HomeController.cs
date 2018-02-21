@@ -9,13 +9,14 @@ using MostarConstruct.Data;
 using MostarConstruct.Models;
 using MostarConstruct.Web.Helper;
 using MostarConstruct.Web.ViewModels;
-using static MostarConstruct.Web.ViewModels.HomeIndexViewModel;
+using static MostarConstruct.Web.ViewModels.ProjectEventsViewModel;
 
 namespace MostarConstruct.Controllers
 {
     [Autorizacija(true)]
     public class HomeController : Controller
     {
+        #region DI
         private DatabaseContext db;
         private IHttpContextAccessor httpContextAccessor;
         public HomeController(DatabaseContext context, IHttpContextAccessor httpContextAccessor)
@@ -23,14 +24,29 @@ namespace MostarConstruct.Controllers
             this.db = context;
             this.httpContextAccessor = httpContextAccessor;
         }
+        #endregion
 
+        #region Index
         public IActionResult Index()
         {
             ViewData[Konfiguracija.LogiraniKorisnik] = httpContextAccessor.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
-            return View();
-            
-        }
 
+            HomeIndexViewModel vm = new HomeIndexViewModel()
+            {
+                Informacije = new HomeIndexViewModel.Detalji()
+                {
+                    UkupnoProjekata = db.Projekti.Count(),
+                    UkupnaZarada = db.Uplate.Sum(x => x.Iznos),
+                    UkupnoRadnihNaloga = db.RadniNalozi.Count(),
+                    UkupnoRadnika = db.Radnici.Count()
+                }
+            };
+
+            return View(vm);
+        }
+        #endregion
+
+        
         public IActionResult About()
         {
             ViewData["Message"] = "Your aplication description page.";
@@ -58,19 +74,21 @@ namespace MostarConstruct.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        #region FullCalendar       
         public JsonResult GetCalendarData()
         {
-            HomeIndexViewModel vm = new HomeIndexViewModel()
+            ProjectEventsViewModel vm = new ProjectEventsViewModel()
             {
                 Projects = this.LoadData()
             };
-
+                        
             return Json(vm.Projects);
         }
 
         private List<ProjectEvent> LoadData()
         {
             List<ProjectEvent> projectEvents = new List<ProjectEvent>();
+            var dostupneBoje = Konfiguracija.Boje;
 
             projectEvents = db.Projekti.Select(x => new ProjectEvent()
             {
@@ -79,9 +97,11 @@ namespace MostarConstruct.Controllers
                 End_Date = x.PredlozeniZavrsetak.ToString("yyyy-MM-dd"),
                 Sr = x.ProjektID,
                 Title = x.Naziv,
-            }).ToList();
+                Color = x.Boja
+            }).ToList();            
 
             return projectEvents;
         }
+        #endregion
     }
 }

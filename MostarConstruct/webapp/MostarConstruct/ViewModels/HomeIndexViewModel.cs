@@ -7,15 +7,14 @@ namespace MostarConstruct.Web.ViewModels
 {
     public class HomeIndexViewModel
     {
-        public List<ProjectEvent> Projects { get; set; }        
+        public Detalji Informacije { get; set; }
 
-        public class ProjectEvent
+        public class Detalji
         {
-            public int Sr { get; set; }
-            public string Title { get; set; }
-            public string Desc { get; set; }
-            public string Start_Date { get; set; }
-            public string End_Date { get; set; }
+            public int UkupnoProjekata { get; set; }
+            public int UkupnoRadnihNaloga { get; set; }
+            public int UkupnoRadnika { get; set; }
+            public decimal UkupnaZarada { get; set; }
         }
     }
 }

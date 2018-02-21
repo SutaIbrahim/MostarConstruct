@@ -1,4 +1,5 @@
-﻿
+﻿@model HomeIndexViewModel
+
 <section id="main-content">
     <section class="wrapper">
         <div class="panel">
@@ -13,8 +14,8 @@
                                 <i class="fa fa-briefcase"></i>
                             </div>
                             <div class="value">
-                                <h1 class="count">495</h1>
-                                <p>Projekti</p>
+                                <h1 class="">@Model.Informacije.UkupnoProjekata</h1>
+                                <p>projekata</p>
                             </div>
                         </section>
                     </div>
@@ -24,8 +25,8 @@
                                 <i class="fa fa-tags"></i>
                             </div>
                             <div class="value">
-                                <h1 class=" count2">947</h1>
-                                <p>Radni nalozi</p>
+                                <h1 class="">@Model.Informacije.UkupnoRadnihNaloga</h1>
+                                <p>radnih naloga</p>
                             </div>
                         </section>
                     </div>
@@ -35,8 +36,8 @@
                                 <i class="fa fa-user"></i>
                             </div>
                             <div class="value">
-                                <h1 class=" count3">328</h1>
-                                <p>Radnici</p>
+                                <h1 class="">@Model.Informacije.UkupnoRadnika</h1>
+                                <p>radnika</p>
                             </div>
                         </section>
                     </div>
@@ -46,8 +47,8 @@
                                 <i class="fa fa-money"></i>
                             </div>
                             <div class="value">
-                                <h1 class=" count4">10328</h1>
-                                <p>Ukupna zarada</p>
+                                <h1 class="">@Model.Informacije.UkupnaZarada</h1>
+                                <p>zarada</p>
                             </div>
                         </section>
                     </div>
@@ -63,28 +64,7 @@
             <div class="panel-body">
                 <div id='calendar'></div>
             </div>
-        </div>
-
-        
-
-        @*<div class="row">
-            <div class="panel-heading">
-                <div class="col-md-8  custom-heading3">
-                    <h3>
-                        <i class="fa fa-calendar"></i>
-                        <span>ASP.NET MVC5 - Full Calendar JQuery Plugin</span>
-                    </h3>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <section class="col-md-12 col-md-push-0">
-                @Html.Partial("_CalendarPartial")
-            </section>
-        </div>*@
-
-        
+        </div>        
 
     </section>
 </section>

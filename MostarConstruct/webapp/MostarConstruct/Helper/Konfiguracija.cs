@@ -15,5 +15,14 @@ namespace MostarConstruct.Web.Helper
         public static string Sesija1 = "sesija_1";
         public static string Sesija2 = "sesija_2";
         public static string Sesija3 = "sesija_3";
+
+        #region Boje
+        public static string[] Boje = typeof(System.Drawing.Color)
+        .GetProperties()
+        .Where(x => x.PropertyType == typeof(System.Drawing.Color))
+        .Select(x => x.Name.ToLower())
+        .ToArray();
+
+        #endregion
     }
 }

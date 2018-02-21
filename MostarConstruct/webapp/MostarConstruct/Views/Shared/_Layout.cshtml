@@ -22,7 +22,7 @@
     <script src="~/js/moment.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.2/fullcalendar.min.js"></script>
     @*<script src="~/js/script-custom-calendar.js"></script>*@
-   
+
     <link href="~/css/bootstrap.min.css" rel="stylesheet">
     <link href=" https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="~/css/bootstrap-reset.css" rel="stylesheet">
@@ -33,6 +33,10 @@
 
     <!--right slidebar-->
     <link href="~/css/slidebars.css" rel="stylesheet">
+
+    @*qtip*@
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/basic/jquery.qtip.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/basic/jquery.qtip.min.js"></script>
 
     <!-- Custom styles for this template -->
 
@@ -67,15 +71,17 @@
                         success: function (result) {
                             var events = [];
 
-                            $.each(result, function (i, data) {                               
+
+                            $.each(result, function (i, data) {
+
                                 events.push(
                                     {
                                         title: data.title,
                                         description: data.desc,
                                         start: data.start_Date, //"2018-01-01", //moment(data.Start_Date).format('YYYY-MM-DD'),
                                         end: data.end_Date, //"2018-01-08", //moment(data.End_Date).format('YYYY-MM-DD'),
-                                        backgroundColor: "#9501fc",
-                                        borderColor: "#fc0101"
+                                        backgroundColor: data.color,
+                                        borderColor: "black"
                                     });
                             });
 
@@ -83,7 +89,13 @@
                             callback(events);
                         }
                     });
-                }
+                },
+                eventRender: function (event, element) {
+                    element.qtip(
+                        {
+                            content: event.description
+                        });
+                },
             });
         });
     </script>
@@ -363,8 +375,7 @@
         //owl carousel
 
         $(document).ready(function () {
-           
-
+                       
 
             $("#owl-demo").owlCarousel({
                 navigation: true,

@@ -36,5 +36,6 @@ namespace MostarConstruct.Models
         public bool Zavrsen { get; set; }
         [Required]
         public string Opis { get; set; }
+        public string Boja { get; set; }
     }
 }

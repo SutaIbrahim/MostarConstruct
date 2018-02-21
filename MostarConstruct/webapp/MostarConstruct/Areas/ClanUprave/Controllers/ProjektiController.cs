@@ -68,6 +68,7 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
                 novi.ClanUprave = new Korisnik();
                 novi = model.projekt;
                 novi.ClanUpraveID = korisnik.KorisnikID;
+                novi.Boja = Konfiguracija.Boje.OrderBy(x => Guid.NewGuid()).FirstOrDefault();
                 _db.Projekti.Add(novi);
                 _db.SaveChanges();
             }
