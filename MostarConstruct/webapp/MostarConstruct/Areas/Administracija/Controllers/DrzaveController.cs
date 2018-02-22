@@ -16,7 +16,7 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
     {
         #region DI
         private DatabaseContext db;
-        public int PageSize = 1;
+        public int PageSize = 4;
 
         public DrzaveController(DatabaseContext db)
         {
@@ -60,7 +60,7 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
                 //return Json(new { success = false, errors = messages });
             }
 
-            return View(drzava);
+            //return View(drzava);
 
             db.Drzave.Add(drzava);
             db.SaveChanges();
@@ -77,12 +77,25 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
             return PartialView("_Uredi", drzava);
         }
 
+        [HttpPost]
+        public IActionResult Uredi(Drzava drzava)
+        {
+            db.Drzave.Update(drzava);
+            db.SaveChanges();
+
+            return Json(new { success = true });
+        }
 
         #endregion
 
-
         #region Delete
-
+        [HttpPost]
+        public IActionResult Obrisi(int id)
+        {
+            db.Drzave.Remove(db.Drzave.Find(id));
+            db.SaveChanges();
+            return RedirectToAction(nameof(Index), new { page = 1 });
+        }
         #endregion
     }
 }

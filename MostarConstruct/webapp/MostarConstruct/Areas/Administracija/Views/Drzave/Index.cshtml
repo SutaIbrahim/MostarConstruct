@@ -1,7 +1,6 @@
 ﻿@model DrzaveIndexViewModel
 @{
     ViewData["Title"] = "Index";
-    int brojac = 1;
 }
 <section id="main-content">
     <section class="wrapper">
@@ -24,7 +23,6 @@
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th>Redni broj</th>
                             <th>Naziv</th>
                             <th>Oznaka</th>
                             <th>Regije</th>
@@ -35,7 +33,6 @@
                         @foreach (var d in Model.Drzave)
                         {
                             <tr>
-                                <td>@(brojac++)</td>
                                 <td>@d.Naziv</td>
                                 <td>@d.Oznaka</td>
                                 <td>
@@ -48,6 +45,7 @@
                                         <a asp-action="Detalji" asp-route-id="@d.DrzavaID" class="btn btn-info">Detalji</a>
                                         <button type="button" class="btn btn-send btnRegije" idValue="@d.DrzavaID">Prikazi regije</button>
                                         <button type="button" class="btn btn-warning btnUredi" idValue="@d.DrzavaID">Uredi</button>
+                                        <input name="id" value="@d.DrzavaID" hidden/>
                                         <button type="submit" class="btn btn-danger">Obrisi</button>
                                     </form>
                                 </td>
@@ -57,10 +55,16 @@
                     </tbody>
                 </table>
 
-                <div page-model="@Model.PagingInfo" page-action="Index" page-classes-enabled="true"
-                     page-class="btn" page-class-normal="btn-default"
-                     page-class-selected="btn-primary" class="btn-group pull-right">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div page-model="@Model.PagingInfo" page-action="Index" page-classes-enabled="true"
+                             page-class="btn" page-class-normal="btn-default"
+                             page-class-selected="btn-primary" class="btn-group pull-right">
+                        </div>
+                    </div>
                 </div>
+
+                <hr />
 
                 <div id="modalPlace">
 
@@ -82,7 +86,7 @@
         $.ajax({
             url: "@Url.Action("Uredi", "Drzave")",
             type: "GET",
-            data: { drzavaId: id },
+            data: { id: id },
             success: function (result) {
                 $("#ajaxDiv").html(result);
             }
