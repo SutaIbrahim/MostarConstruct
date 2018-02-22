@@ -14,6 +14,7 @@ using Microsoft.Extensions.FileProviders;
 using MostarConstruct.Data;
 using MostarConstruct.Web.Helper;
 using MostarConstruct.Web.Helper.IHelper;
+using DNTCaptcha.Core;
 
 namespace MostarConstruct
 {
@@ -40,7 +41,8 @@ namespace MostarConstruct
 
             services.AddMemoryCache();
             services.AddSession();
-           
+            services.AddDNTCaptcha();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

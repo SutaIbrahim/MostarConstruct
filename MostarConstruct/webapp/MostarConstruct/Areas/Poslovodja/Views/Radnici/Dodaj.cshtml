@@ -121,18 +121,37 @@
                         </div>
                     </div>
 
-
+                
 
 
                     <div class="row">
                         <div class="col-md-12">
                             <div class="pull-right">
+                                <div class="form-group">
+                                    <div class="controls col col-md-10">
+                                       <h3><b>Security code:</b></></h3>
+
+                                        <dnt-captcha asp-captcha-generator-max="9000"
+                                                     asp-captcha-generator-min="1"
+                                                     asp-captcha-generator-language="English"
+                                                     asp-placeholder="Security code as a number"
+                                                     asp-validation-error-message="Please enter the security code as a number."
+                                                     asp-font-name="Tahoma"
+                                                     asp-font-size="20"
+                                                     asp-fore-color="#333333"
+                                                     asp-back-color="#ccc"
+                                                     asp-text-box-class="text-box single-line form-control col-md-4"
+                                                     asp-text-box-template="<div class='input-group col-md-4'><span class='input-group-addon'><span class='glyphicon glyphicon-lock'></span></span>{0}</div>"
+                                                     asp-validation-message-class="text-danger"
+                                                     asp-refresh-button-class="glyphicon glyphicon-refresh btn-sm" />
+                                    </div>
+                                </div>
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Dodaj</button>
                                 <a asp-action="Index" class="btn btn-default"><i class="fa fa-times"></i> Odustani</a>
                             </div>
                         </div>
                     </div>
-
+                    
                 </form>
 
                 </div>

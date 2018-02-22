@@ -14,6 +14,8 @@ using System.Text.RegularExpressions;
 using System.IO;
 using static System.Net.Mime.MediaTypeNames;
 using Microsoft.AspNetCore.Http;
+using DNTCaptcha.Core;
+using DNTCaptcha.Core.Providers;
 
 namespace MostarConstruct.Web.Areas.Poslovodja.Controllers
 {
@@ -74,6 +76,9 @@ namespace MostarConstruct.Web.Areas.Poslovodja.Controllers
         }
 
         [HttpPost]
+        [ValidateDNTCaptcha(ErrorMessage = "Please enter the security code as a number.",
+                            IsNumericErrorMessage = "The input value should be a number.",
+                            CaptchaGeneratorLanguage = Language.English)]
         public IActionResult Dodaj(RadniciDodajViewModel model)
         {
             if (!ModelState.IsValid)
