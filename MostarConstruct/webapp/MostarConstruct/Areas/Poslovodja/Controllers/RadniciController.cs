@@ -76,8 +76,8 @@ namespace MostarConstruct.Web.Areas.Poslovodja.Controllers
         }
 
         [HttpPost]
-        [ValidateDNTCaptcha(ErrorMessage = "Please enter the security code as a number.",
-                            IsNumericErrorMessage = "The input value should be a number.",
+        [ValidateDNTCaptcha(ErrorMessage = "Unesite broj sa slike",
+                            IsNumericErrorMessage = "Unesite u obliku brojeva",
                             CaptchaGeneratorLanguage = Language.English)]
         public IActionResult Dodaj(RadniciDodajViewModel model)
         {

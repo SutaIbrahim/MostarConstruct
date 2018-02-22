@@ -111,7 +111,7 @@
                 <i class="fa fa-bars"></i>
             </div>
             <!--logo start-->
-            <a href="index.html" class="logo">Mostar<span>Construct</span></a>
+            <a href="/home/index" class="logo">Mostar<span>Construct</span></a>
             <!--logo end-->
             <div class="nav notify-row" id="top_menu">
                 <!--  notification start  -->
@@ -186,7 +186,7 @@
 
                         <li class="sub-menu">
                             <a href="javascript:;">
-                                <i class="fa fa-drivers-license-o"></i>
+                                <i class="fa fa-truck"></i>
                                 <span>Vozni park</span>
                             </a>
                             <ul class="sub">
@@ -196,7 +196,7 @@
                         </li>
                         <li class="sub-menu">
                             <a href="javascript:;">
-                                <i class="fa fa-usb"></i>
+                                <i class="fa fa-columns"></i>
                                 <span>Inventar</span>
                             </a>
                             <ul class="sub">
@@ -206,12 +206,12 @@
                         </li>
                         <li class="sub-menu">
                             <a asp-area="Administracija" asp-controller="Inventar" asp-action="Index">
-                                <i class="fa fa-user"></i>
+                                <i class="fa fa-list-ol"></i>
                                 <span>Aktivnosti</span>
                             </a>
                             @*<ul class="sub">
-                                    <li><a asp-area="Administracija" asp-controller="Inventar" asp-action="Index">Prikaz</a></li>
-                                </ul>*@
+                        <li><a asp-area="Administracija" asp-controller="Inventar" asp-action="Index">Prikaz</a></li>
+                    </ul>*@
                         </li>
 
                     }
@@ -220,62 +220,26 @@
                         <li class="sub-menu">
                             <a href="javascript:;">
                                 <i class="fa fa-user"></i>
-                                <span>Korisnici</span>
+                                <span>Radnici</span>
                             </a>
                             <ul class="sub">
-                                <li><a asp-area="Administracija" asp-controller="Korisnici" asp-action="Index">Prikaz</a></li>
-                                <li><a asp-area="Administracija" asp-controller="Korisnici" asp-action="Dodaj">Dodaj</a></li>
+                                <li><a asp-area="Poslovodja" asp-controller="Radnici" asp-action="Index">Prikaz</a></li>
+                                <li><a asp-area="Poslovodja" asp-controller="Radnici" asp-action="Dodaj">Dodaj</a></li>
                             </ul>
                         </li>
 
                         <li class="sub-menu">
-                            <a href="javascript:;">
-                                <i class="fa fa-location-arrow"></i>
-                                <span>Lokacije</span>
-                            </a>
-                            <ul class="sub">
-                                <li><a asp-area="Administracija" asp-controller="Drzave" asp-action="Index">Drzave</a></li>
-                                <li><a asp-area="Administracija" asp-controller="Regije" asp-action="Index">Regije</a></li>
-                                <li><a asp-area="Administracija" asp-controller="Gradovi" asp-action="Index">Gradovi</a></li>
-                            </ul>
+                            <a asp-area="Poslovodja" asp-controller="OrganizacijaRadilista" asp-action="Index"><i class="fa fa-hand-o-right"></i> Organizacija radilista</a>
                         </li>
 
-                        <li class="sub-menu">
-                            <a href="javascript:;">
-                                <i class="fa fa-drivers-license-o"></i>
-                                <span>Vozni park</span>
-                            </a>
-                            <ul class="sub">
-                                <li><a asp-area="Administracija" asp-controller="Vozila" asp-action="Index">Prikaz</a></li>
-                                <li><a asp-area="Administracija" asp-controller="Vozila" asp-action="Dodaj">Dodaj</a></li>
-                            </ul>
-                        </li>
-                        <li class="sub-menu">
-                            <a href="javascript:;">
-                                <i class="fa fa-usb"></i>
-                                <span>Inventar</span>
-                            </a>
-                            <ul class="sub">
-                                <li><a asp-area="Administracija" asp-controller="Inventar" asp-action="Index">Prikaz</a></li>
-                                <li><a asp-area="Administracija" asp-controller="Inventar" asp-action="Dodaj">Dodaj</a></li>
-                            </ul>
-                        </li>
-                        <li class="sub-menu">
-                            <a asp-area="Administracija" asp-controller="Inventar" asp-action="Index">
-                                <i class="fa fa-user"></i>
-                                <span>Aktivnosti</span>
-                            </a>
-                            @*<ul class="sub">
-                                    <li><a asp-area="Administracija" asp-controller="Inventar" asp-action="Index">Prikaz</a></li>
-                                </ul>*@
-                        </li>
+                       
 
                     }
                     else
                     {
                         <li class="sub-menu">
                             <a href="javascript:;">
-                                <i class="fa fa-user"></i>
+                                <i class="fa fa-paste"></i>
                                 <span>Projekti</span>
                             </a>
                             <ul class="sub">
@@ -285,7 +249,7 @@
                         </li>
                         <li class="sub-menu">
                             <a href="javascript:;">
-                                <i class="fa fa-user"></i>
+                                <i class="fa fa-bookmark"></i>
                                 <span>Radilišta</span>
                             </a>
                             <ul class="sub">
@@ -296,7 +260,7 @@
 
                         <li class="sub-menu">
                             <a href="javascript:;">
-                                <i class="fa fa-money"></i>
+                                <i class="fa fa-euro"></i>
                                 <span>Uplate</span>
                             </a>
                             <ul class="sub">
@@ -316,12 +280,18 @@
                         </li>
                         <li class="sub-menu">
                             <a href="javascript:;">
-                                <i class="fa fa-usb"></i>
-                                <span>Izvještaji</span>
+                                <i class="fa fa-paperclip"></i>
+                                <span>Uvjerenja</span>
                             </a>
                             <ul class="sub">
-                                <li><a asp-area="ClanUprave" asp-controller="Izvjestaj" asp-action="Dodaj">Izdaj izvještaj</a></li>
+                                <li><a asp-area="ClanUprave" asp-controller="Uvjerenja" asp-action="Index">Prikaz</a></li>
+                                <li><a asp-area="ClanUprave" asp-controller="Uvjerenja" asp-action="Dodaj">Dodaj</a></li>
                             </ul>
+                        </li>
+
+                        <li class="sub-menu">
+                              <a asp-area="ClanUprave" asp-controller="Izvjestaji" asp-action="Index"><i class="fa fa-reply-all"></i>Izvještaji</a>
+
                         </li>
                     }
                 </ul>

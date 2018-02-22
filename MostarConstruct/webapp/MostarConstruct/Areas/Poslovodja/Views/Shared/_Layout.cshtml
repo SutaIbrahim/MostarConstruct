@@ -48,7 +48,7 @@
                 <i class="fa fa-bars"></i>
             </div>
             <!--logo start-->
-            <a href="index.html" class="logo">Mostar<span>Construct</span></a>
+            <a href="/home/index" class="logo">Mostar<span>Construct</span></a>
             <!--logo end-->
             <div class="nav notify-row" id="top_menu">
                 <!--  notification start  -->
@@ -88,66 +88,28 @@
                 <!-- sidebar menu start-->
                 <ul class="sidebar-menu" id="nav-accordion">
                     <li>
-                        <a class="active" asp-controller="Home" asp-action="Index">
+                        <a asp-area=""  asp-controller="Home" asp-action="Index">
                             <i class="fa fa-dashboard"></i>
-                            <span>Pocetna</span>
+                            <span>Početna stranica</span>
                         </a>
                     </li>
 
                     <li class="sub-menu">
                         <a href="javascript:;">
                             <i class="fa fa-user"></i>
-                            <span>Korisnici</span>
+                            <span>Radnici</span>
                         </a>
                         <ul class="sub">
-                            <li><a asp-area="Administracija" asp-controller="Korisnici" asp-action="Index">Prikaz</a></li>
-                            <li><a asp-area="Administracija" asp-controller="Korisnici" asp-action="Dodaj">Dodaj</a></li>
-
+                            <li><a asp-area="Poslovodja" asp-controller="Radnici" asp-action="Index">Prikaz</a></li>
+                            <li><a asp-area="Poslovodja" asp-controller="Radnici" asp-action="Dodaj">Dodaj</a></li>
                         </ul>
                     </li>
 
                     <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class="fa fa-location-arrow"></i>
-                            <span>Lokacije</span>
-                        </a>
-                        <ul class="sub">
-                            <li><a asp-area="Administracija" asp-controller="Drzave" asp-action="Index">Drzave</a></li>
-                            <li><a asp-area="Administracija" asp-controller="Regije" asp-action="Index">Regije</a></li>
-                            <li><a asp-area="Administracija" asp-controller="Gradovi" asp-action="Index">Gradovi</a></li>
-                        </ul>
+                        <a asp-area="Poslovodja" asp-controller="OrganizacijaRadilista" asp-action="Index"><i class="fa fa-hand-o-right"></i> Organizacija radilista</a>
                     </li>
 
-                    <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class="fa fa-drivers-license-o"></i>
-                            <span>Vozni park</span>
-                        </a>
-                        <ul class="sub">
-                            <li><a asp-area="Administracija" asp-controller="Vozila" asp-action="Index">Prikaz</a></li>
-                            <li><a asp-area="Administracija" asp-controller="Vozila" asp-action="Dodaj">Dodaj</a></li>
-                        </ul>
-                    </li>
-                    <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class="fa fa-usb"></i>
-                            <span>Inventar</span>
-                        </a>
-                        <ul class="sub">
-                            <li><a asp-area="Administracija" asp-controller="Inventar" asp-action="Index">Prikaz</a></li>
-                            <li><a asp-area="Administracija" asp-controller="Inventar" asp-action="Dodaj">Dodaj</a></li>
-                        </ul>
-                    </li>
-                    <li class="sub-menu">
-                        <a asp-area="Administracija" asp-controller="Inventar" asp-action="Index">
-                            <i class="fa fa-user"></i>
-                            <span>Aktivnosti</span>
-                        </a>
-                        @*<ul class="sub">
-                                <li><a asp-area="Administracija" asp-controller="Inventar" asp-action="Index">Prikaz</a></li>
 
-                            </ul>*@
-                    </li>
                     @*<li class="sub-menu">
                             <a href="javascript:;">
                                 <i class=" fa fa-envelope"></i>
