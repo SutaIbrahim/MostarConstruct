@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using MostarConstruct.Web.Areas.ClanUprave.ViewModels;
 using MostarConstruct.Web.Helper.IHelper;
 using Microsoft.AspNetCore.Http;
+using MostarConstruct.Web.ViewModels;
 
 namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
 {
@@ -24,6 +25,7 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
 
         private DatabaseContext db;
         IHttpContextAccessor httpContext;
+        public int PageSize = 10;
 
 
         public IzvjestajiController(DatabaseContext db, IHttpContextAccessor httpContext)
@@ -35,11 +37,19 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
 
 
 
-        public IActionResult Index()
+        public IActionResult Index(int page = 1)
         {
             IzvjestajIndexViewModel model = new IzvjestajIndexViewModel();
 
-            model.izvjestaji = db.Izvjestaji.Include(x => x.Korisnik).ThenInclude(y => y.Osoba).Include(p => p.Projekt).ToList();
+            model.izvjestaji = db.Izvjestaji.Include(x => x.Korisnik).ThenInclude(y => y.Osoba).Include(p => p.Projekt).Skip((page-1)*PageSize).Take(PageSize).ToList();
+
+            model.PagingInfo = new Web.ViewModels.PagingInfo()
+            {
+                CurrentPage = page,
+                ItemsPerPage = PageSize,
+                TotalItems = db.Izvjestaji.Count()
+            };
+
 
             return View(model);
         }

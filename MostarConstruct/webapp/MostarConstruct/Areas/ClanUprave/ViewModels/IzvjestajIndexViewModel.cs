@@ -1,4 +1,5 @@
 ﻿using MostarConstruct.Models;
+using MostarConstruct.Web.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace MostarConstruct.Web.Areas.ClanUprave.ViewModels
     {
         public List<Izvjestaj> izvjestaji { get; set; }
         public string srchTxt { get; set; }
+        public PagingInfo PagingInfo { get; set; }
 
 
     }
