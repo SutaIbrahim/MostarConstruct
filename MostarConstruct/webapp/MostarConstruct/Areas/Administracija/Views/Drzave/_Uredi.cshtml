@@ -37,8 +37,6 @@
     $(".btnSubmit").click(function () {
         var forma = $("#forma");
 
-        alert("CLIC");
-
         $.ajax({
             url: "@Url.Action("Uredi", "Drzave")",
             type: "POST",

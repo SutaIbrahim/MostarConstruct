@@ -55,13 +55,8 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
                                         .Select(x => x.ErrorMessage));
 
             if (!ModelState.IsValid)
-            {
                 return View(drzava);
-                //return Json(new { success = false, errors = messages });
-            }
-
-            //return View(drzava);
-
+            
             db.Drzave.Add(drzava);
             db.SaveChanges();
 

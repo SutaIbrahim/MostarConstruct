@@ -42,7 +42,6 @@
                                 </td>
                                 <td class="text-center">
                                     <form asp-action="Obrisi" method="post">
-                                        <a asp-action="Detalji" asp-route-id="@d.DrzavaID" class="btn btn-info">Detalji</a>
                                         <button type="button" class="btn btn-send btnRegije" idValue="@d.DrzavaID">Prikazi regije</button>
                                         <button type="button" class="btn btn-warning btnUredi" idValue="@d.DrzavaID">Uredi</button>
                                         <input name="id" value="@d.DrzavaID" hidden/>
