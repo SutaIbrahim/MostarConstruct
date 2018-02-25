@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MostarConstruct.Data;
@@ -18,12 +19,14 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
     {
         private DatabaseContext db;
         private IDropdown dropdown;
+        private IHttpContextAccessor http;
         public int PageSize = 4;
 
-        public InventarController(DatabaseContext db, IDropdown dropdown)
+        public InventarController(DatabaseContext db, IDropdown dropdown, IHttpContextAccessor http)
         {
             this.db = db;
             this.dropdown = dropdown;
+            this.http = http;
         }
 
         public IActionResult Kategorije()
@@ -31,31 +34,66 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
             return View(db.Kategorije.ToList());
         }
 
-        #region Index
-        public IActionResult Index(int page = 1)
+        private InventarIndexViewModel InventarTemp
         {
-            InventarIndexViewModel vm = new InventarIndexViewModel()
-            {
-                Rows = db.Inventar.Include(x => x.Kategorija).Select(x => new InventarIndexViewModel.Row()
-                {
-                    InventarID = x.InventarID,
-                    DatumKupovine = x.DatumKupovine,
-                    Ispravan = x.Ispravno == true ? "Da" : "Ne",
-                    Zauzet = x.Zauzeto == true ? "Da" : "Ne",
-                    Kategorija = x.Kategorija.Naziv,
-                    Naziv = x.Naziv,
-                    SerijskiBroj = x.SerijskiBroj
-                }).OrderBy(x => x.InventarID).Skip((page - 1) * PageSize).Take(PageSize).ToList(),
-                PagingInfo = new Web.ViewModels.PagingInfo()
-                {
-                    CurrentPage = page,
-                    ItemsPerPage = PageSize,
-                    TotalItems = db.Inventar.Count()
-                }
-            };
-
-            return View(vm);
+            get { return http.HttpContext.Session.GetJson<InventarIndexViewModel>(Konfiguracija.Sesija1); }
+            set { http.HttpContext.Session.SetJson(Konfiguracija.Sesija1, value); }
         }
+
+        #region Index
+        public IActionResult Index(int page = 1, string searchString = null)
+        {
+            if (string.IsNullOrEmpty(searchString))
+            {
+                InventarIndexViewModel vm = new InventarIndexViewModel()
+                {
+                    Rows = db.Inventar.Include(x => x.Kategorija).Select(x => new InventarIndexViewModel.Row()
+                    {
+                        InventarID = x.InventarID,
+                        DatumKupovine = x.DatumKupovine,
+                        Ispravan = x.Ispravno == true ? "Da" : "Ne",
+                        Zauzet = x.Zauzeto == true ? "Da" : "Ne",
+                        Kategorija = x.Kategorija.Naziv,
+                        Naziv = x.Naziv,
+                        SerijskiBroj = x.SerijskiBroj
+                    }).OrderBy(x => x.InventarID).Skip((page - 1) * PageSize).Take(PageSize).ToList(),
+                    PagingInfo = new Web.ViewModels.PagingInfo()
+                    {
+                        CurrentPage = page,
+                        ItemsPerPage = PageSize,
+                        TotalItems = db.Inventar.Count()
+                    }
+                };
+
+                return View(vm);
+
+            }
+            else
+            {
+                InventarIndexViewModel vm = new InventarIndexViewModel()
+                {
+                    Rows = db.Inventar.Include(x => x.Kategorija).Select(x => new InventarIndexViewModel.Row()
+                    {
+                        InventarID = x.InventarID,
+                        DatumKupovine = x.DatumKupovine,
+                        Ispravan = x.Ispravno == true ? "Da" : "Ne",
+                        Zauzet = x.Zauzeto == true ? "Da" : "Ne",
+                        Kategorija = x.Kategorija.Naziv,
+                        Naziv = x.Naziv,
+                        SerijskiBroj = x.SerijskiBroj
+                    }).Where(x => x.Naziv.Contains(searchString) || x.Kategorija.Contains(searchString) || x.SerijskiBroj == searchString).OrderBy(x => x.InventarID).Skip((page - 1) * PageSize).Take(PageSize).ToList(),
+                    PagingInfo = new Web.ViewModels.PagingInfo()
+                    {
+                        CurrentPage = page,
+                        ItemsPerPage = PageSize,
+                        TotalItems = db.Inventar.Where(x => x.Naziv.Contains(searchString) || x.Kategorija.Naziv.Contains(searchString) || x.SerijskiBroj == searchString).Count()
+                    }
+                };
+
+                return View(vm);
+            }
+        }
+
         #endregion
 
         #region Dodaj

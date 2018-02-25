@@ -30,13 +30,18 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
             this.emailSender = emailSender;
         }
         #endregion
-                
+
         #region Index
-        public IActionResult Index(int page = 1)
+        public IActionResult Index(string sortOrder, int page = 1, string searchString = null)
         {
-            KorisniciIndexViewModel vm = new KorisniciIndexViewModel()
+            ViewBag.ImeSortParm = String.IsNullOrEmpty(sortOrder) ? "Ime_desc" : "";
+            ViewBag.DatumSortParm = sortOrder == "Datum" ? "Datum_desc" : "Datum";
+
+            KorisniciIndexViewModel vm = new KorisniciIndexViewModel();
+
+            if (string.IsNullOrEmpty(searchString))
             {
-                Rows = db.Korisnici.Include(x => x.Osoba).Select(k => new KorisniciIndexViewModel.Row()
+                vm.Rows = db.Korisnici.Include(x => x.Osoba).Select(k => new KorisniciIndexViewModel.Row()
                 {
                     KorisnikID = k.KorisnikID,
                     Ime = k.Osoba.Ime,
@@ -45,14 +50,52 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
                     Email = k.Osoba.Email,
                     KorisnickoIme = k.KorisnickoIme,
                     Aktivan = k.Aktivan == true ? "Da" : "Ne"
-                }).OrderBy(x => x.KorisnikID).Skip((page - 1) * PageSize).Take(PageSize).ToList(),
-                PagingInfo = new Web.ViewModels.PagingInfo()
+                }).OrderBy(x => x.KorisnikID).Skip((page - 1) * PageSize).Take(PageSize).ToList();
+
+                vm.PagingInfo = new Web.ViewModels.PagingInfo()
                 {
                     CurrentPage = page,
                     ItemsPerPage = PageSize,
                     TotalItems = db.Korisnici.Count()
-                }
-            };
+                };
+            }
+            else
+            {
+                vm.Rows = db.Korisnici.Include(x => x.Osoba).Select(k => new KorisniciIndexViewModel.Row()
+                {
+                    KorisnikID = k.KorisnikID,
+                    Ime = k.Osoba.Ime,
+                    Prezime = k.Osoba.Prezime,
+                    DatumRegistracije = k.DatumRegistracije,
+                    Email = k.Osoba.Email,
+                    KorisnickoIme = k.KorisnickoIme,
+                    Aktivan = k.Aktivan == true ? "Da" : "Ne"
+                }).Where(x => x.Ime.Contains(searchString) || x.Prezime.Contains(searchString) || x.KorisnickoIme.Contains(searchString) || x.Email.Contains(searchString)).OrderBy(x => x.KorisnikID).Skip((page - 1) * PageSize).Take(PageSize).ToList();
+
+                vm.PagingInfo = new Web.ViewModels.PagingInfo()
+                {
+                    CurrentPage = page,
+                    ItemsPerPage = PageSize,
+                    TotalItems = db.Korisnici.Where(x => x.Osoba.Ime.Contains(searchString) || x.Osoba.Prezime.Contains(searchString) || x.KorisnickoIme.Contains(searchString) || x.Osoba.Email.Contains(searchString)).OrderBy(x => x.KorisnikID).Count()
+                };
+            }            
+
+            switch (sortOrder)
+            {
+                case "Ime_desc":
+                    vm.Rows = vm.Rows.OrderByDescending(x => x.Ime);
+                    break;
+                case "Datum":
+                    vm.Rows = vm.Rows.OrderBy(x => x.DatumRegistracije);
+                    break;
+                case "Datum_desc":
+                    vm.Rows = vm.Rows.OrderByDescending(x => x.DatumRegistracije);
+                    break;
+                default:
+                    vm.Rows = vm.Rows.OrderBy(x => x.Ime);
+                    break;
+            }
+
             return View(vm);
         }
         #endregion
@@ -182,7 +225,7 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
 
             string status = user.Aktivan ? "aktivan" : "neaktivan";
 
-            return Json(new { success = true, status});
+            return Json(new { success = true, status });
         }
         #endregion
 

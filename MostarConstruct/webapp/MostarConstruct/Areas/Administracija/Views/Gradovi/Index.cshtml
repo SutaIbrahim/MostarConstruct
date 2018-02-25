@@ -1,0 +1,93 @@
+﻿@model GradoviIndexViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+<section id="main-content">
+    <section class="wrapper">
+        <div class="panel">
+            <div class="panel-heading">
+                <h3>Lista gradova</h3>
+                
+            </div>
+            <div class="panel-body">
+                <div class="pull-right">
+                    <button type="button" class="btn btn-primary btnAdd"><i class="fa fa-plus"></i> Dodaj</button>
+                </div>
+                <br />
+                <br />
+                <br />
+
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Naziv</th>
+                            <th>Postanski broj</th>
+                            <th>Regija</th>
+                            <th>Drzava</th>
+                            <th>Akcije</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var grad in Model.Rows)
+            {
+                <tr>
+                    <td>@grad.Naziv</td>
+                    <td>@grad.PostanskiBroj</td>
+                    <td>@grad.Regija</td>
+                    <td>@grad.Drzava</td>
+                    <td>
+                        <form asp-action="Obrisi" method="post">
+                            <button type="button" class="btn btn-info btnEdit" idValue="@grad.GradId"><i class="fa fa-pencil"></i> Uredi</button>
+                            <input name="gradId" value="@grad.GradId" hidden />
+                            <button type="submit" class="btn btn-danger"><i class="fa fa-trash-o"></i> Obriši</button>
+                        </form>
+                    </td>
+                </tr>
+}
+                    </tbody>
+                </table>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div page-model="@Model.PagingInfo" page-action="Index" page-classes-enabled="true"
+                             page-class="btn" page-class-normal="btn-default"
+                             page-class-selected="btn-primary" class="btn-group pull-right">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="ajaxDiv">
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+</section>
+
+<script>
+    $(function () {
+
+        $(".btnAdd").click(function () {
+            $.get("@Url.Action("Dodaj", "Gradovi")", function (data) {
+                $("#ajaxDiv").html(data);
+            });
+        });
+
+        $(".btnEdit").click(function () {
+
+            var id = $(this).attr("idValue");
+
+
+            $.ajax({
+                url: "@Url.Action("Uredi", "Gradovi")",
+                type: "GET",
+                data: { gradId: id },
+                success: function (data) {
+                    $("#ajaxDiv").html(data);
+                }
+            });
+        });
+
+    });
+</script>

@@ -48,6 +48,15 @@
 
     <!-- Full Calendar -->
 
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+            integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+            crossorigin="anonymous"></script>
+
+    <script>
+        $(".dtp").datepicker();
+        $("#datum_rodjenja").datepicker();
+    </script>
+
     <script>
         $(function () {
             $('#calendar').fullCalendar({
@@ -71,9 +80,7 @@
                         success: function (result) {
                             var events = [];
 
-
                             $.each(result, function (i, data) {
-
                                 events.push(
                                     {
                                         title: data.title,
@@ -210,8 +217,8 @@
                                 <span>Aktivnosti</span>
                             </a>
                             @*<ul class="sub">
-                        <li><a asp-area="Administracija" asp-controller="Inventar" asp-action="Index">Prikaz</a></li>
-                    </ul>*@
+                                    <li><a asp-area="Administracija" asp-controller="Inventar" asp-action="Index">Prikaz</a></li>
+                                </ul>*@
                         </li>
 
                     }
@@ -232,7 +239,7 @@
                             <a asp-area="Poslovodja" asp-controller="OrganizacijaRadilista" asp-action="Index"><i class="fa fa-hand-o-right"></i> Organizacija radilista</a>
                         </li>
 
-                       
+
 
                     }
                     else
@@ -290,7 +297,7 @@
                         </li>
 
                         <li class="sub-menu">
-                              <a asp-area="ClanUprave" asp-controller="Izvjestaji" asp-action="Index"><i class="fa fa-reply-all"></i>Izvještaji</a>
+                            <a asp-area="ClanUprave" asp-controller="Izvjestaji" asp-action="Index"><i class="fa fa-reply-all"></i>Izvještaji</a>
 
                         </li>
                     }
@@ -325,7 +332,7 @@
     <script src="~/js/respond.min.js"></script>
     <!--right slidebar-->
     <script src="~/js/slidebars.min.js"></script>
-   
+
     <!--common script for all pages-->
     <script src="~/js/common-scripts.js"></script>
 
@@ -338,14 +345,14 @@
 
 
     @*<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.2/fullcalendar.min.js"></script>
-    <script src="~/js/script-custom-calendar.js"></script>*@
+        <script src="~/js/script-custom-calendar.js"></script>*@
 
     <script>
 
         //owl carousel
 
         $(document).ready(function () {
-                       
+
 
             $("#owl-demo").owlCarousel({
                 navigation: true,

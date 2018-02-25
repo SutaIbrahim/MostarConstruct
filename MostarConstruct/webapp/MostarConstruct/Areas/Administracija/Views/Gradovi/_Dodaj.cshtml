@@ -1,0 +1,48 @@
+﻿@model GradoviDodajViewModel
+<form id="forma">   
+    <div class="form-group">
+        <label asp-for="Grad.Naziv">Naziv:</label>
+        <input asp-for="Grad.Naziv" class="form-control" />
+        <div><span asp-validation-for="Grad.Naziv" class="text-danger"></span></div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Grad.PostanskiBroj">Postanski broj:</label>
+        <input asp-for="Grad.PostanskiBroj" class="form-control" />
+        <div><span asp-validation-for="Grad.PostanskiBroj"></span></div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Grad.RegijaID">Regija:</label>
+        <select asp-for="Grad.RegijaID" asp-items="Model.Regije" class="form-control"></select>
+    </div>
+
+    <div class="pull-right">
+        <button type="button" class="btn btn-primary btnSubmit"><i class="fa fa-save"></i> Sačuvaj</button>
+        <button type="button" class="btn btn-default btnCancel"><i class="fa fa-times-circle"></i> Odustani</button>
+    </div>
+</form>
+<script>
+
+    $(".btnSubmit").click(function () {
+
+        var forma = $("#forma");
+
+        $.ajax({
+            url: "@Url.Action("Dodaj", "Gradovi")",
+            type: "POST",
+            data: forma.serialize(),
+            success: function (data) {
+                if (data.success) {
+                    window.location.href = "/Administracija/Gradovi/Index?page=1";
+                }
+            }
+        });
+
+    });
+
+    $(".btnCancel").click(function () {
+        window.location.href = "/Administracija/Gradovi/Index?page=1";
+    });
+
+</script>

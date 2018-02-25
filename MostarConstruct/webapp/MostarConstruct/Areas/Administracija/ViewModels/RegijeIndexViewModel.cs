@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using MostarConstruct.Web.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,7 @@ namespace MostarConstruct.Web.Areas.Administracija.ViewModels
     public class RegijeIndexViewModel
     {
         public List<Row> Rows { get; set; }
-        public string Pretraga { get; set; }
-        public int BrojRezultata { get; set; }
-        public List<SelectListItem> UkupnoRezultata{ get; set; }
+        public PagingInfo PagingInfo { get; set; }
 
         public class Row
         {

@@ -1,7 +1,6 @@
 ﻿@model KorisniciIndexViewModel
 @{
     ViewData["Title"] = "Index";
-    int brojac = 1;
 }
 
 <section id="main-content">
@@ -10,20 +9,30 @@
         <section class="panel">
             <section class="panel-heading">
                 <h2>Lista korisnika</h2>
-
             </section>
-
-
             <section class="panel-body">
+
+                <form>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <input name="searchString" asp-for="SearchString" class="form-control" placeholder="Unesite ime, prezime, email ili korisničko ime" />
+                        </div>
+                        <div class="col-md-2">
+                            <button style="width:157px" class="btn btn-primary"><i class="fa fa-search"></i> Pretraga</button>
+                        </div>
+                    </div>
+                </form>
+
+                <br />
+
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th>Redni broj</th>
-                            <th>Ime</th>
+                            <th>@Html.ActionLink("Ime", "Index", new { sortOrder = ViewBag.ImeSortParm, page = Model.PagingInfo.CurrentPage })</th>
                             <th>Prezime</th>
                             <th>Korisnicko ime</th>
                             <th>Email</th>
-                            <th>Datum registracije</th>
+                            <th>@Html.ActionLink("Datum registracije", "Index", new { sortOrder = ViewBag.DatumSortParm, page = Model.PagingInfo.CurrentPage })</th>
                             <th>Aktivan</th>
                             <th class="text-center">Akcije</th>
                         </tr>
@@ -32,7 +41,6 @@
                         @foreach (var k in Model.Rows)
                         {
                             <tr>
-                                <td>@(brojac++)</td>
                                 <td>@k.Ime</td>
                                 <td>@k.Prezime</td>
                                 <td>@k.KorisnickoIme</td>
@@ -53,7 +61,7 @@
                                                 else
                                                 {
                                                     @:Aktiviraj
-                                }
+                                                }
                                             </span>
                                         </button>
                                     </form>

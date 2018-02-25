@@ -21,6 +21,7 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
         private DatabaseContext db;
         private IHttpContextAccessor httpContext;
         private IDropdown dd;
+        public int PageSize = 4;
 
         public RegijeController(DatabaseContext db, IDropdown dd, IHttpContextAccessor httpContext)
         {
@@ -31,29 +32,31 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
 
         #endregion
 
-        private RegijeIndexViewModel SessionRegijeIndex
-        {
-            get { return httpContext.HttpContext.Session.GetJson<RegijeIndexViewModel>(Konfiguracija.Sesija1); }
-            set { httpContext.HttpContext.Session.SetJson(Konfiguracija.Sesija1, value); }
-        }
+      
 
         #region Index
-        public IActionResult Index()
+        public IActionResult Index(int page = 1)
         {
-            if(SessionRegijeIndex != null)
+            RegijeIndexViewModel vm = new RegijeIndexViewModel()
             {
-                return View(GetDefaultViewModel(new RegijeIndexViewModel()));
-            }
-            return View(GetDefaultViewModel(new RegijeIndexViewModel()));
+                Rows = db.Regije.Select(x => new RegijeIndexViewModel.Row()
+                {
+                    RegijaID = x.RegijaID,
+                    Drzava = x.Drzava.Naziv,
+                    Naziv = x.Naziv,
+                    Oznaka = x.Oznaka
+                }).OrderBy(x => x.RegijaID).Skip((page - 1) * PageSize).Take(PageSize).ToList(),
+                PagingInfo = new Web.ViewModels.PagingInfo()
+                {
+                    CurrentPage = page,
+                    ItemsPerPage = PageSize,
+                    TotalItems = db.Regije.Count()
+                }
+            };
+
+            return View(vm);
         }
 
-        [HttpPost]
-        public IActionResult Index(RegijeIndexViewModel viewModel)
-        {
-            SessionRegijeIndex = viewModel;
-
-            return RedirectToAction(nameof(Index));
-        }
         #endregion
 
         #region Dodaj
@@ -68,7 +71,7 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
             db.Regije.Add(viewModel.Regija);
             db.SaveChanges();
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index), new { page = 1});
         }
         #endregion
 
@@ -82,7 +85,8 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
                 return View(GetDefaultViewModel(viewModel));
 
             db.Regije.Update(viewModel.Regija);
-            return RedirectToAction(nameof(Index));
+            db.SaveChanges();
+            return RedirectToAction(nameof(Index), new { page = 1 });
         }
         #endregion
 
@@ -91,18 +95,17 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
         public IActionResult Obrisi(int id)
         {
             db.Regije.Remove(db.Regije.Find(id));
-            return RedirectToAction(nameof(Index));
+            db.SaveChanges();
+            return RedirectToAction(nameof(Index), new { page = 1 });
         }
         #endregion
 
         #region Helpers
-
         public JsonResult GetRegijeByDrzavaId(int drzavaId)
         {
             List<SelectListItem> regije = dd.Regije(drzavaId).ToList();
             return Json(regije);
         }
-
 
         private RegijeDodajViewModel GetDefaultViewModel(RegijeDodajViewModel viewModel)
         {
@@ -114,8 +117,6 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
 
         private RegijeIndexViewModel GetDefaultViewModel(RegijeIndexViewModel viewModel)
         {
-            viewModel.BrojRezultata = 5;
-            viewModel.UkupnoRezultata = dd.Rezultati().ToList();
 
             viewModel.Rows = db.Regije.Select(x => new RegijeIndexViewModel.Row()
             {
@@ -123,10 +124,12 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
                 Drzava = x.Drzava.Naziv,
                 Naziv = x.Naziv,
                 Oznaka = x.Oznaka
-            }).Take(viewModel.BrojRezultata).ToList();
+            }).ToList();
 
             return viewModel;
         }
         #endregion
+
+
     }
 }

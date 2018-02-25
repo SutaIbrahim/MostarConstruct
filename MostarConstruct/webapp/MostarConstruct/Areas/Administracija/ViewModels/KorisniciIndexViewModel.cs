@@ -10,7 +10,7 @@ namespace MostarConstruct.Web.Areas.Administracija.ViewModels
     {
         public IEnumerable<Row> Rows { get; set; }
         public PagingInfo PagingInfo { get; set; }
-
+        public string SearchString { get; set; }
         public class Row
         {
             public int KorisnikID { get; set; }

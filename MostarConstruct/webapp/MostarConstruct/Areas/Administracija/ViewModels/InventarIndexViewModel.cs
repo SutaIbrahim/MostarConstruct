@@ -1,4 +1,5 @@
-﻿using MostarConstruct.Web.ViewModels;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using MostarConstruct.Web.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace MostarConstruct.Web.Areas.Administracija.ViewModels
     {
         public List<Row> Rows{ get; set; }
         public PagingInfo PagingInfo{ get; set; }
+        public string SearchString { get; set; }
         public class Row
         {
             public int InventarID { get; set; }
