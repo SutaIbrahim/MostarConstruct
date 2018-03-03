@@ -74,7 +74,6 @@ namespace MostarConstruct.Web.Areas.Poslovodja.Controllers
             Model.listaRadnika = new List<SelectListItem>();
             List<RadniNalog> listaNaloga = new List<RadniNalog>();
             listaNaloga = _db.RadniNalozi.Where(x => x.RadilisteID == RadilisteId).Include(x=>x.Radnik).ThenInclude(x=>x.Osoba).ToList();
-
             Model.listaRadnika = listaNaloga.Select(x => new SelectListItem
             {
                 Value = x.Radnik.RadnikID.ToString(),
@@ -96,6 +95,7 @@ namespace MostarConstruct.Web.Areas.Poslovodja.Controllers
             List<Radnik> listaRadnika = new List<Radnik>();
             List<Radnik> slobodniRadnici = new List<Radnik>();
             listaRadnika = _db.Radnici.ToList();
+            Model.DatumDo = DateTime.Now.AddDays(10);
             foreach (var item in listaRadnika)
             {
                 if(_db.RadniNalozi.Where(x=>x.RadnikID==item.RadnikID).FirstOrDefault()==null)
@@ -134,6 +134,10 @@ namespace MostarConstruct.Web.Areas.Poslovodja.Controllers
         }
         public IActionResult SnimiRadnika(OrganizacijaRadilistaDodajRadnikaVM model)
         {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("DodajRadnika", model);
+            }
             RadniNalog novi = new RadniNalog
             {
                 DatumDo = model.DatumDo,
