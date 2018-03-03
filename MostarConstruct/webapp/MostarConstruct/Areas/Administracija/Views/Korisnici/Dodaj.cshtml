@@ -27,7 +27,7 @@
                     </header>
                     <div class="panel-body">
                         <div class="stepy-tab"><ul id="default-titles" class="stepy-titles clearfix"><li id="default-title-0" class="current-step"><div>Step1</div><span> </span></li><li id="default-title-1" class=""><div>Step 2</div><span> </span></li><li id="default-title-2" class=""><div>Step 3</div><span> </span></li></ul></div>
-                        <form asp-action="Dodaj" method="post" class="form-horizontal" id="default">
+                        <form  asp-action="Dodaj" method="post" class="form-horizontal" id="default">
 
                             @if (!ViewData.ModelState.IsValid)
                             {
@@ -170,6 +170,7 @@
 
 <script>
 
+   
     var Timer;
 
     function Start() {
@@ -204,6 +205,20 @@
     }
 
     $(Start);
+
+    if ($("#ime_p").val() === "") {
+
+        //$("#ime_p").text($("#ime").val());
+
+        var ime = $("#ime").val();
+        var prezime = $("#prezime").val();
+        var email = $("#email").val();
+        var ki = $("#korisnicko_ime").val();
+        $("#ime_p").text(ime);
+        $("#prezime_p").text(prezime);
+        $("#email_p").text(email);
+        $("#korisnicko_ime_p").text(ki);
+    }
 
     //step wizard
 
