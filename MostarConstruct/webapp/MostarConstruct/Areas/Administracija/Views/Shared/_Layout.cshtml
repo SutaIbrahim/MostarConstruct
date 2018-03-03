@@ -36,6 +36,22 @@
     <link href="~/css/style-responsive.css" rel="stylesheet" />
 
 
+
+    <script type="text/javascript">
+        $(function () {
+            $('.dp').datepicker({
+                format: 'dd.mm.yyyy',
+                weekStart: 1,
+                clearBtn: true,
+                language: 'de-DE',
+                autoclose: true,
+                forceParse: false,
+                calendarWeeks: true
+            });
+        });
+    </script>
+
+
 </head>
 
 <body>
@@ -67,9 +83,7 @@
                         </a>
                         <ul class="dropdown-menu extended logout">
                             <div class="log-arrow-up"></div>
-                            <li><a href="#"><i class=" fa fa-suitcase"></i>Profil</a></li>
-                            <li><a href="#"><i class="fa fa-cog"></i> Postavke</a></li>
-                            <li><a href="#"><i class="fa fa-bell-o"></i> Notifikacije</a></li>
+
                             <li>
                                 <a asp-area="" asp-controller="Racun" asp-action="Odjava"><i class="fa fa-bell-o"></i> Odjava</a>
                             </li>
@@ -139,12 +153,12 @@
                         </ul>
                     </li>
                     <li class="sub-menu">
-                        <a asp-area="Administracija" asp-controller="Inventar" asp-action="Index">
+                        <a asp-area="Administracija" asp-controller="Aktivnosti" asp-action="Index">
                             <i class="fa fa-list-ol"></i>
                             <span>Aktivnosti</span>
                         </a>
                     </li>
-                    
+
 
                 </ul>
                 <!-- sidebar menu end-->
@@ -191,7 +205,7 @@
     <script src="~/js/count.js"></script>
     <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
 
-   
+
     <script>
 
         //owl carousel
@@ -220,6 +234,9 @@
         });
 
     </script>
+
+   
+    
 </body>
 
 <!-- Mirrored from thevectorlab.net/flatlab/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 19 Dec 2017 18:09:06 GMT -->

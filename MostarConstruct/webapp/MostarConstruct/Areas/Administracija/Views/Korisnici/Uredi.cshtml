@@ -11,6 +11,8 @@
             <section class="panel-body">
                 <form asp-action="Uredi" method="post">
 
+                    <input asp-for="Osoba.OsobaID" hidden/>
+
                     @if (!ViewData.ModelState.IsValid)
                     {
                         <div asp-validation-summary="All" class="alert alert-danger"></div>
@@ -32,7 +34,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label asp-for="Osoba.DatumRodjenja" >Datum rodjenja:</label>
-                                <input asp-for="Osoba.DatumRodjenja" class="form-control" />
+                                <input type="text" asp-for="Osoba.DatumRodjenja" class="form-control dp" />
                             </div>
                         </div>
 

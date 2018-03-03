@@ -6,7 +6,7 @@
     <section class="wrapper">
         <section class="panel">
             <header class="panel-heading">
-                <h3>Novo vozilo</h3>
+                <h3>Novi inventar</h3>
             </header>
             <div class="panel-body">
                 <form asp-action="Dodaj" method="post">
@@ -43,7 +43,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label asp-for="Inventar.DatumKupovine">Datum kupovine:</label>
-                                <input asp-for="Inventar.DatumKupovine" class="form-control default-date-picker" />
+                                <input type="text"  asp-for="Inventar.DatumKupovine" class="form-control dp" />
                             </div>
                         </div>
 
@@ -56,7 +56,7 @@
 
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label asp-for="Inventar.Tezina">Tezina:</label>
+                                <label asp-for="Inventar.Tezina">Težina:</label>
                                 <input asp-for="Inventar.Tezina" class="form-control" />
                             </div>
                         </div>

@@ -125,9 +125,9 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
             korisnik.Aktivan = true;
             korisnik.PromijenioLozinku = false;
 
-            string poruka = $"Poštovani {osoba.Ime} {osoba.Prezime}, na sistem se možete logovati sa sljedećim podacima:\nEmail: <strong>{osoba.Email}</strong>\nLozinka: <strong>{lozinka}</strong>\n\nNapomena: Prilikom prvog logiranja morate promijeniti vašu lozinku.";
+            string poruka = $"Poštovani {osoba.Ime} {osoba.Prezime}, na sistem se možete logovati sa sljedećim podacima:\nEmail: [<strong>{osoba.Email}</strong>]\nLozinka: [<strong>{lozinka}</strong>]\n\nNapomena: Prilikom prvog logiranja morate promijeniti vašu lozinku.";
 
-            emailSender.SendEmailAsync(osoba.Email, "Prisutni podaci", poruka);
+            emailSender.SendEmailAsync(osoba.Email, "Pristupni podaci", poruka);
 
             if (model.TipKorisnika == TipKorisnika.Administrator)
             {
@@ -203,6 +203,7 @@ namespace MostarConstruct.Web.Areas.Administracija.Controllers
             db.Osobe.Update(o);
 
             Korisnik k = viewModel.Korisnik;
+            k.KorisnikID = o.OsobaID;
             db.Korisnici.Update(k);
 
             db.SaveChanges();

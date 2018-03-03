@@ -63,15 +63,14 @@
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <img alt="" src="img/avatar1_small.jpg">
-                            <span class="username">Test Korisnik</span>
+                            <span class="username">@trenutniKorisnik.KorisnickoIme</span>
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu extended logout">
                             <div class="log-arrow-up"></div>
-                            <li><a href="#"><i class=" fa fa-suitcase"></i>Profil</a></li>
-                            <li><a href="#"><i class="fa fa-cog"></i> Postavke</a></li>
-                            <li><a href="#"><i class="fa fa-bell-o"></i> Notifikacije</a></li>
-                            <li><a href="login.html"><i class="fa fa-key"></i> Odjava</a></li>
+                            <li>
+                                <a asp-area="" asp-controller="Racun" asp-action="Odjava"><i class="fa fa-bell-o"></i> Odjava</a>
+                            </li>
                         </ul>
                     </li>
 
