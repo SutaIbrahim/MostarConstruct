@@ -14,11 +14,11 @@
                         </div>
                         <div class="col-md-1">
                             <br />
-                            <a asp-action="Dodaj" class="btn btn-primary"><i class="fa fa-plus"></i> Dodaj</a>
+                            <a asp-action="Dodaj"  class="btn btn-primary"><i class="fa fa-plus"></i> Dodaj</a>
                         </div>
                         <div class="col-md-2">
                             <br />
-                            <button id="showFilters" type="button" class="btn btn-info"><i class="fa fa-filter"></i> Prikazi filtere</button>
+                            <button id="showFilters"  style="width:157px;" type="button" class="btn btn-info"><i class="fa fa-filter"></i> Prikazi filtere</button>
                         </div>
                     </div>
                 </header>
@@ -27,14 +27,12 @@
 
                     <form>
                         <div class="row" id="filteri" hidden>
-                            <div class="col-md-12">
                                 <div class="col-md-10">
                                     <input name="searchString" asp-for="SearchString" class="form-control" placeholder="Unesite naziv, serijski broj ili kategoriju" />
                                 </div>
                                 <div class="col-md-2">
-                                    <button id="btnSubmit" type="submit" class="btn btn-info"><i class="fa fa-search"></i> Pretraga</button>
+                                    <button id="btnSubmit"  style="width:157px" type="submit" class="btn btn-info"><i class="fa fa-search"></i> Pretraga</button>
                                 </div>
-                            </div>
                         </div>
                     </form>
                     <br />
@@ -47,7 +45,7 @@
                                 <th>Datum kupovine</th>
                                 <th>Ispravan</th>
                                 <th>Zauzet</th>
-                                <th>Akcije</th>
+                                <th class="text-center">Akcije</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -60,11 +58,11 @@
                                 <td>@i.DatumKupovine</td>
                                 <td>@i.Ispravan</td>
                                 <td>@i.Zauzet</td>
-                                <td>
+                                <td class="text-center">
                                     <form asp-action="Obrisi" method="post">
                                         <input hidden name="InventarID" value="@i.InventarID" />
-                                        <a asp-action="Uredi" asp-route-inventarID="@i.InventarID" class="btn btn-info">Uredi</a>
-                                        <button type="submit" class="btn btn-danger">Obrisi</button>
+                                        <a asp-action="Uredi" asp-route-inventarID="@i.InventarID" class="btn btn-info"><i class="fa fa-pencil"></i> Uredi</a>
+                                        <button type="submit" class="btn btn-danger"><i class="fa fa-trash-o"></i> Obrisi</button>
                                     </form>
                                 </td>
                             </tr>

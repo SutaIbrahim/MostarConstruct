@@ -1,5 +1,5 @@
 ﻿@{
-    var trenutniKorisnik = ViewData[Konfiguracija.LogiraniKorisnik] as Korisnik ?? null;
+    var trenutniKorisnik = httpContextAccessor.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik) ?? new Korisnik();
 }
 <!DOCTYPE html>
 <html lang="en">
