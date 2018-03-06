@@ -82,7 +82,16 @@ namespace MostarConstruct.Web.Areas.ClanUprave.Controllers
 
             LogiranjeAktivnosti logiranje = new LogiranjeAktivnosti(db);
             Korisnik k = context.HttpContext.Session.GetJson<Korisnik>(Konfiguracija.LogiraniKorisnik);
-            logiranje.Logiraj(korisnik.KorisnikID, DateTime.Now, context.HttpContext.Connection.RemoteIpAddress.ToString(), context.HttpContext.Request.Headers["User-Agent"].ToString().Substring(0, 100), "Dodavanje radilista", "Radilista");
+            try
+            {
+                logiranje.Logiraj(korisnik.KorisnikID, DateTime.Now, context.HttpContext.Connection.RemoteIpAddress.ToString(), context.HttpContext.Request.Headers["User-Agent"].ToString().Substring(0, 100), "Dodavanje radilista", "Radilista");
+
+            }
+            catch(Exception e)
+            {
+                logiranje.Logiraj(korisnik.KorisnikID, DateTime.Now, context.HttpContext.Connection.RemoteIpAddress.ToString(), "Mozzila Firefox","Dodavanje radilista!","Radilista");
+
+            }
 
 
 
